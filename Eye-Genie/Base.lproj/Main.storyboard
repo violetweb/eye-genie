@@ -38,7 +38,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gaz-X7-XBQ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg-home" translatesAutoresizingMaskIntoConstraints="NO" id="Gaz-X7-XBQ">
                                 <rect key="frame" x="37" y="203" width="588" height="330"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="seD-Iq-Q8x">
@@ -49,35 +49,43 @@
                                             <action selector="btnItem:" destination="yKN-1g-Kqo" id="EDu-ll-kwZ"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Button 1" id="o77-MM-pbl">
+                                    <barButtonItem title="Lens Design 1" id="o77-MM-pbl">
                                         <connections>
                                             <action selector="btnButton1:" destination="yKN-1g-Kqo" id="n54-q4-2Oe"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Button 2" id="mTL-2G-fld">
+                                    <barButtonItem title="Lens Design 2" id="mTL-2G-fld">
                                         <connections>
                                             <action selector="btnButton2:" destination="yKN-1g-Kqo" id="QQp-Bc-UFu"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Lens Design 3" id="Mox-YU-eYA">
+                                        <connections>
+                                            <action selector="btnButton3:" destination="yKN-1g-Kqo" id="Z4w-dT-fLt"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Lens Design 4" id="173-sb-Pth">
+                                        <connections>
+                                            <action selector="btnButton4:" destination="yKN-1g-Kqo" id="yve-dE-HMq"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Lens Design 5" id="Jam-zG-vMU">
+                                        <connections>
+                                            <action selector="btnButton5:" destination="yKN-1g-Kqo" id="RBw-g3-FD5"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19f-cz-dco">
-                                <rect key="frame" x="37" y="546" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="btnLaunchPicker:" destination="yKN-1g-Kqo" eventType="touchUpInside" id="RS9-cV-Yje"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dTp-Vi-dMy">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="btn-conventional" translatesAutoresizingMaskIntoConstraints="NO" id="dTp-Vi-dMy">
                                 <rect key="frame" x="650" y="203" width="175" height="57"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7jT-4Z-9qI">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="btn-jenna" translatesAutoresizingMaskIntoConstraints="NO" id="7jT-4Z-9qI">
                                 <rect key="frame" x="650" y="268" width="175" height="58"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vuL-WO-4U4">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="btn-jenna-wide" translatesAutoresizingMaskIntoConstraints="NO" id="vuL-WO-4U4">
                                 <rect key="frame" x="650" y="334" width="175" height="63"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L6l-og-298">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="btn-jenna-4k" translatesAutoresizingMaskIntoConstraints="NO" id="L6l-og-298">
                                 <rect key="frame" x="650" y="407" width="175" height="57"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8fy-pb-BCq">
@@ -345,6 +353,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bg-home" width="800" height="680"/>
         <image name="bg-home.jpg" width="800" height="680"/>
         <image name="btn-conventional" width="175" height="75"/>
         <image name="btn-jenna" width="175" height="75"/>

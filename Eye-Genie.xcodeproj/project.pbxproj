@@ -22,6 +22,7 @@
 		F454B82F1C0E07E9005427A8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F454B82E1C0E07E9005427A8 /* LoginViewController.swift */; };
 		F454B8311C0E0E6A005427A8 /* bg-home.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F454B8301C0E0E6A005427A8 /* bg-home.jpg */; };
 		F454B8331C0E1D36005427A8 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F454B8321C0E1D36005427A8 /* SettingsController.swift */; };
+		F454B8351C0F8E0A005427A8 /* AppImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F454B8341C0F8E0A005427A8 /* AppImageController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		F454B82E1C0E07E9005427A8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F454B8301C0E0E6A005427A8 /* bg-home.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "bg-home.jpg"; path = "appdefaults/bg-home.jpg"; sourceTree = "<group>"; };
 		F454B8321C0E1D36005427A8 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		F454B8341C0F8E0A005427A8 /* AppImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppImageController.swift; path = ../AppImageController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,9 +88,10 @@
 				F454B8181C0DFFAA005427A8 /* fmdb */,
 				F454B7F11C0DFC73005427A8 /* AppDelegate.swift */,
 				F454B7F51C0DFC73005427A8 /* Main.storyboard */,
-				F454B7F31C0DFC73005427A8 /* ViewController.swift */,
+				F454B8341C0F8E0A005427A8 /* AppImageController.swift */,
 				F454B82E1C0E07E9005427A8 /* LoginViewController.swift */,
 				F454B8321C0E1D36005427A8 /* SettingsController.swift */,
+				F454B7F31C0DFC73005427A8 /* ViewController.swift */,
 				F454B82A1C0E057D005427A8 /* appdefaults */,
 				F454B7F81C0DFC73005427A8 /* Assets.xcassets */,
 				F454B8301C0E0E6A005427A8 /* bg-home.jpg */,
@@ -193,6 +196,7 @@
 				F454B8331C0E1D36005427A8 /* SettingsController.swift in Sources */,
 				F454B8241C0DFFAA005427A8 /* FMDatabase.m in Sources */,
 				F454B7F41C0DFC73005427A8 /* ViewController.swift in Sources */,
+				F454B8351C0F8E0A005427A8 /* AppImageController.swift in Sources */,
 				F454B8281C0DFFAA005427A8 /* FMResultSet.m in Sources */,
 				F454B8261C0DFFAA005427A8 /* FMDatabasePool.m in Sources */,
 				F454B82F1C0E07E9005427A8 /* LoginViewController.swift in Sources */,

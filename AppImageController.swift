@@ -1,4 +1,13 @@
 //
+//  AppImageController.swift
+//  Eye-Genie
+//
+//  Created by Ryan Maxwell on 2015-12-02.
+//  Copyright © 2015 Bceen Ventures. All rights reserved.
+//
+
+import Foundation
+//
 //  SettingsController.swift
 //  Eye-Genie
 //
@@ -9,7 +18,7 @@
 import UIKit
 
 
-class SettingsController: UIViewController, UIImagePickerControllerDelegate,
+class AppImageController: UIViewController, UIImagePickerControllerDelegate,
 UINavigationControllerDelegate {
     
     
@@ -17,86 +26,7 @@ UINavigationControllerDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func btnBack(sender: UIBarButtonItem) {
-         self.performSegueWithIdentifier("LogoutSegue", sender: self)
-    
-        
-    }
-    
-     @IBOutlet weak var appImageView: UIImageView!
-    
-    @IBAction func btnButton1(sender: UIBarButtonItem) {
-        
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
-        imagePicker.modalPresentationStyle = .Popover
-        imagePicker.popoverPresentationController?.barButtonItem = sender
-        presentViewController(imagePicker, animated: true, completion: nil)
-        
-        
-        chosenButton = "1"
-    }
-    
-    @IBAction func btnButton2(sender: UIBarButtonItem) {
-      
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
-        imagePicker.modalPresentationStyle = .Popover
-        imagePicker.popoverPresentationController?.barButtonItem = sender
-        presentViewController(imagePicker, animated: true, completion: nil)
-     
-        chosenButton = "2"
-    }
-    
-    @IBAction func btnItem(sender: UIBarButtonItem) {
-        
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
-        imagePicker.modalPresentationStyle = .Popover
-        imagePicker.popoverPresentationController?.barButtonItem = sender
-        presentViewController(imagePicker, animated: true, completion:nil)
-        chosenButton = "Main"
-        
-       
-    }
-    
-    @IBAction func btnButton3(sender: UIBarButtonItem) {
-        
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
-        imagePicker.modalPresentationStyle = .Popover
-        imagePicker.popoverPresentationController?.barButtonItem = sender
-        presentViewController(imagePicker, animated: true, completion:nil)
-        chosenButton = "3"
-    }
-    
-    
-    @IBAction func btnButton4(sender: UIBarButtonItem) {
-        
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
-        imagePicker.modalPresentationStyle = .Popover
-        imagePicker.popoverPresentationController?.barButtonItem = sender
-        presentViewController(imagePicker, animated: true, completion:nil)
-        chosenButton = "4"
-    }
-    
-    
-    
-    @IBAction func btnButton5(sender: UIBarButtonItem) {
-        
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
-        imagePicker.modalPresentationStyle = .Popover
-        imagePicker.popoverPresentationController?.barButtonItem = sender
-        presentViewController(imagePicker, animated: true, completion:nil)
-        chosenButton = "5"
-    }
-    
     let imagePicker = UIImagePickerController()
-   
-    
-    var chosenButton = "Main"
     
     func setImageFromDirectory(findimage: String){
         
@@ -219,16 +149,6 @@ UINavigationControllerDelegate {
     
     
     }*/
-
-    
-    @IBOutlet weak var btn1ImageView: UIImageView!
-    @IBOutlet weak var btn2ImageView: UIImageView!
-    @IBOutlet weak var btn3ImageView: UIImageView!
-    @IBOutlet weak var btn4ImageView: UIImageView!
-    @IBOutlet weak var btn5ImageView: UIImageView!
-  
-    
-    
     
     var pickedImage: UIImage!
     
@@ -236,7 +156,7 @@ UINavigationControllerDelegate {
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-       
+        
         
         var newImage: UIImage
         
@@ -246,15 +166,8 @@ UINavigationControllerDelegate {
         } else if let possibleImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             newImage = possibleImage
             pickedImage = possibleImage
-       }
-       
-        if chosenButton=="1" {
-            btn1ImageView.image = pickedImage
-        }else if chosenButton == "2"{
-            btn2ImageView.image = pickedImage
-        }else if chosenButton == "Main" {
-            appImageView.image = pickedImage
         }
+        
         dismissViewControllerAnimated(true, completion: nil)
         
     }
@@ -267,8 +180,8 @@ UINavigationControllerDelegate {
         UIDevice.currentDevice().setValue(value, forKey: "orientation")
         imagePicker.delegate = self
     }
-
-
+    
+    
     
     
 }
