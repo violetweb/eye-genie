@@ -1,25 +1,357 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ukz-Tl-yTL">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Page View Controller-->
+        <scene sceneID="P6R-A7-gpA">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="Pb9-vD-HNM" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hpz-ZP-x2M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1856" y="309"/>
+        </scene>
+        <!--SettingsController-->
+        <scene sceneID="kyo-U0-OD4">
+            <objects>
+                <viewController title="SettingsController" id="yKN-1g-Kqo" customClass="SettingsController" customModule="Eye_Genie" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="j5K-an-9sg"/>
+                        <viewControllerLayoutGuide type="bottom" id="4xr-jF-9lA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fZK-YG-GDJ">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xOv-r1-7Cs">
+                                <rect key="frame" x="0.0" y="28" width="1024" height="74"/>
+                                <items>
+                                    <navigationItem title="Settings" prompt="Eye Genie" id="skc-mP-gJk">
+                                        <barButtonItem key="backBarButtonItem" title="Back" id="cXe-I5-j3C"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="b6s-bE-Thf">
+                                            <connections>
+                                                <action selector="btnBack:" destination="yKN-1g-Kqo" id="gPG-0K-VCq"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gaz-X7-XBQ">
+                                <rect key="frame" x="37" y="203" width="588" height="330"/>
+                            </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="seD-Iq-Q8x">
+                                <rect key="frame" x="0.0" y="724" width="1024" height="44"/>
+                                <items>
+                                    <barButtonItem title="Choose Cover Image" id="5we-Bn-BQ3">
+                                        <connections>
+                                            <action selector="btnItem:" destination="yKN-1g-Kqo" id="EDu-ll-kwZ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Button 1" id="o77-MM-pbl">
+                                        <connections>
+                                            <action selector="btnButton1:" destination="yKN-1g-Kqo" id="n54-q4-2Oe"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Button 2" id="mTL-2G-fld">
+                                        <connections>
+                                            <action selector="btnButton2:" destination="yKN-1g-Kqo" id="QQp-Bc-UFu"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19f-cz-dco">
+                                <rect key="frame" x="37" y="546" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="btnLaunchPicker:" destination="yKN-1g-Kqo" eventType="touchUpInside" id="RS9-cV-Yje"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dTp-Vi-dMy">
+                                <rect key="frame" x="650" y="203" width="175" height="57"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7jT-4Z-9qI">
+                                <rect key="frame" x="650" y="268" width="175" height="58"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vuL-WO-4U4">
+                                <rect key="frame" x="650" y="334" width="175" height="63"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L6l-og-298">
+                                <rect key="frame" x="650" y="407" width="175" height="57"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8fy-pb-BCq">
+                                <rect key="frame" x="650" y="474" width="175" height="59"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+                    <connections>
+                        <outlet property="appImageView" destination="Gaz-X7-XBQ" id="PwZ-ro-RCV"/>
+                        <outlet property="btn1ImageView" destination="dTp-Vi-dMy" id="R0v-Yo-3KY"/>
+                        <outlet property="btn2ImageView" destination="7jT-4Z-9qI" id="7Jq-jc-5oY"/>
+                        <outlet property="btn3ImageView" destination="vuL-WO-4U4" id="fvb-kQ-CKF"/>
+                        <outlet property="btn4ImageView" destination="L6l-og-298" id="fQA-JC-z6W"/>
+                        <outlet property="btn5ImageView" destination="8fy-pb-BCq" id="2Kp-wg-UoL"/>
+                        <outlet property="btnTest" destination="5we-Bn-BQ3" id="4Jj-48-Oyo"/>
+                        <segue destination="BYZ-38-t0r" kind="showDetail" identifier="LogoutSegue" id="Age-On-96A"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vEF-gh-ioQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1023" y="225"/>
+        </scene>
+        <!--MainViewController-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="MainViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="Eye_Genie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nar-OY-1kf">
+                                <rect key="frame" x="816" y="73" width="208" height="651"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRu-hT-f9E">
+                                        <rect key="frame" x="20" y="103" width="175" height="75"/>
+                                        <state key="normal" title="Button" image="btn-jenna"/>
+                                        <connections>
+                                            <action selector="btnJena:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Szw-9O-p1j"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odI-Nj-Ehh">
+                                        <rect key="frame" x="15" y="186" width="175" height="75"/>
+                                        <state key="normal" title="Button" image="btn-jenna-wide"/>
+                                        <connections>
+                                            <action selector="btnJenaW:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qgy-cr-5Sx"/>
+                                        </connections>
+                                    </button>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="DbY-vW-uBv">
+                                        <rect key="frame" x="74" y="430" width="118" height="31"/>
+                                        <connections>
+                                            <action selector="sliderAdd:" destination="BYZ-38-t0r" eventType="valueChanged" id="1yf-gM-Esy"/>
+                                        </connections>
+                                    </slider>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="4Ri-ec-uKk">
+                                        <rect key="frame" x="74" y="479" width="118" height="31"/>
+                                        <connections>
+                                            <action selector="sliderPower:" destination="BYZ-38-t0r" eventType="valueChanged" id="d4m-WU-rGb"/>
+                                        </connections>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Power" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1j-1V-9io">
+                                        <rect key="frame" x="20" y="479" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bH1-uv-JMC">
+                                        <rect key="frame" x="15" y="434" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hez-pH-2cQ">
+                                        <rect key="frame" x="-818" y="0.0" width="808" height="708"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUa-Y1-6Xo">
+                                        <rect key="frame" x="17" y="34" width="175" height="75"/>
+                                        <state key="normal" title="Button" image="btn-conventional"/>
+                                        <connections>
+                                            <action selector="btnConventional:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aeo-Vl-3gu"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPR-jq-1B8">
+                                        <rect key="frame" x="15" y="269" width="175" height="75"/>
+                                        <state key="normal" title="Button" image="btn-jenna-4k"/>
+                                        <connections>
+                                            <action selector="btnJena4k:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4yC-x3-2bZ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kES-vR-GKL">
+                                <rect key="frame" x="0.0" y="724" width="1024" height="44"/>
+                                <items>
+                                    <barButtonItem title="Cockpit" id="iZu-V5-JZi">
+                                        <connections>
+                                            <action selector="btnCockpit:" destination="BYZ-38-t0r" id="dxb-Ik-6Hc"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Sailing" width="69" id="6rY-RA-sgU">
+                                        <connections>
+                                            <action selector="btnSailing:" destination="BYZ-38-t0r" id="WVW-aS-6Fl"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Autumn" id="G8I-pp-WRw">
+                                        <connections>
+                                            <action selector="btnAutumn:" destination="BYZ-38-t0r" id="YYC-a1-Sab"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="64" style="plain" systemItem="fixedSpace" id="rxh-19-oSV"/>
+                                    <barButtonItem title="Blue" width="40" id="wF8-D5-TVn"/>
+                                    <barButtonItem title="Green" style="plain" id="vsW-Za-D6X">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Mo4-zi-HEo">
+                                            <rect key="frame" x="352" y="7" width="54" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Green"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem width="60" style="plain" systemItem="fixedSpace" id="LFb-lh-Cyd"/>
+                                    <barButtonItem title="Hydro" style="plain" id="Fld-bk-HGC">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7pm-MU-FFG">
+                                            <rect key="frame" x="476" y="7" width="67" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Hydro"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem title="AR Coating" style="plain" id="uTq-vv-5hK">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Juv-ep-TJs">
+                                            <rect key="frame" x="553" y="7" width="93" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="A/R Coating"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem title="Hard Coat" style="plain" id="yry-A8-bal">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Jtr-SY-dQH">
+                                            <rect key="frame" x="656" y="7" width="74" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Hard Coat"/>
+                                        </button>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="edc-aE-JTf">
+                                <rect key="frame" x="0.0" y="28" width="1024" height="44"/>
+                                <items>
+                                    <navigationItem title="Eye Genie" id="leb-2b-TYm">
+                                        <barButtonItem key="leftBarButtonItem" title="Settings" id="cmd-wn-D8q">
+                                            <connections>
+                                                <action selector="btnSettings:" destination="BYZ-38-t0r" id="C2E-hF-mUW"/>
+                                                <segue destination="yKN-1g-Kqo" kind="showDetail" identifier="SettingsSegue" id="1bv-uH-hNk"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Logout" width="18" style="plain" id="k2E-ly-TLn">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WeK-f0-XKg">
+                                                <rect key="frame" x="886" y="7" width="118" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Logout"/>
+                                                <connections>
+                                                    <segue destination="ukz-Tl-yTL" kind="showDetail" id="CBm-ws-SYB"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+                    <connections>
+                        <outlet property="mainImageView" destination="Hez-pH-2cQ" id="HKN-9t-Ibk"/>
+                        <outlet property="sliderAddOutlet" destination="DbY-vW-uBv" id="3om-er-YGD"/>
+                        <outlet property="sliderPowerOutlet" destination="4Ri-ec-uKk" id="UPC-1X-P04"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="377" y="179"/>
+        </scene>
+        <!--LoginViewController-->
+        <scene sceneID="wWV-PR-SkS">
+            <objects>
+                <viewController title="LoginViewController" id="ukz-Tl-yTL" customClass="LoginViewController" customModule="Eye_Genie" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bAw-tU-jmo"/>
+                        <viewControllerLayoutGuide type="bottom" id="NLR-s0-Fvf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7dk-FJ-MIk">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Drb-CC-8Ad">
+                                <rect key="frame" x="0.0" y="65" width="1024" height="535"/>
+                                <subviews>
+                                    <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.34999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg-home.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="9nv-on-VjF">
+                                        <rect key="frame" x="0.0" y="2" width="1024" height="705"/>
+                                    </imageView>
+                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wie-3V-mhl">
+                                        <rect key="frame" x="406" y="229" width="305" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                    </textField>
+                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GWB-Ns-rVR">
+                                        <rect key="frame" x="406" y="287" width="305" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                    </textField>
+                                    <button clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsi-c2-Rkl">
+                                        <rect key="frame" x="446" y="359" width="204" height="30"/>
+                                        <color key="backgroundColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="LOGIN">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnLogin:" destination="ukz-Tl-yTL" eventType="touchUpInside" id="GY0-MC-5ae"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to Eye-Genie" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ck7-yC-UcX">
+                                        <rect key="frame" x="0.0" y="74" width="1024" height="59"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your credentials below to login and begin using EyeGenie." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbv-Ss-dt3">
+                                        <rect key="frame" x="0.0" y="168" width="1066" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hHl-AM-iFU">
+                                <rect key="frame" x="0.0" y="21" width="1024" height="74"/>
+                                <items>
+                                    <navigationItem title="Welcome to Eye Genie" prompt="Eye Genie" id="WL2-bt-cNh"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+                    <connections>
+                        <outlet property="Password" destination="GWB-Ns-rVR" id="v3Y-uT-YNw"/>
+                        <outlet property="Username" destination="wie-3V-mhl" id="Jgr-Xh-X8l"/>
+                        <outlet property="appImageView" destination="9nv-on-VjF" id="fc8-1J-zAW"/>
+                        <outlet property="lblInstruction" destination="Qbv-Ss-dt3" id="cGW-d7-suv"/>
+                        <outlet property="lblWelcome" destination="ck7-yC-UcX" id="Hyg-jw-cwk"/>
+                        <segue destination="BYZ-38-t0r" kind="showDetail" identifier="LoginSegue" id="mLC-4b-ATL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PSF-eH-TZI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1807" y="244"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bg-home.jpg" width="800" height="680"/>
+        <image name="btn-conventional" width="175" height="75"/>
+        <image name="btn-jenna" width="175" height="75"/>
+        <image name="btn-jenna-4k" width="175" height="75"/>
+        <image name="btn-jenna-wide" width="175" height="75"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Age-On-96A"/>
+    </inferredMetricsTieBreakers>
 </document>

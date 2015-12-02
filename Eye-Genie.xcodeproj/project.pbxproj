@@ -12,6 +12,16 @@
 		F454B7F71C0DFC73005427A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F454B7F51C0DFC73005427A8 /* Main.storyboard */; };
 		F454B7F91C0DFC73005427A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F454B7F81C0DFC73005427A8 /* Assets.xcassets */; };
 		F454B7FC1C0DFC73005427A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F454B7FA1C0DFC73005427A8 /* LaunchScreen.storyboard */; };
+		F454B8171C0DFD16005427A8 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F454B8161C0DFD16005427A8 /* libsqlite3.tbd */; };
+		F454B8241C0DFFAA005427A8 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = F454B81A1C0DFFAA005427A8 /* FMDatabase.m */; };
+		F454B8251C0DFFAA005427A8 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F454B81C1C0DFFAA005427A8 /* FMDatabaseAdditions.m */; };
+		F454B8261C0DFFAA005427A8 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = F454B81E1C0DFFAA005427A8 /* FMDatabasePool.m */; };
+		F454B8271C0DFFAA005427A8 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F454B8201C0DFFAA005427A8 /* FMDatabaseQueue.m */; };
+		F454B8281C0DFFAA005427A8 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F454B8231C0DFFAA005427A8 /* FMResultSet.m */; };
+		F454B82B1C0E057D005427A8 /* appdefaults in Resources */ = {isa = PBXBuildFile; fileRef = F454B82A1C0E057D005427A8 /* appdefaults */; };
+		F454B82F1C0E07E9005427A8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F454B82E1C0E07E9005427A8 /* LoginViewController.swift */; };
+		F454B8311C0E0E6A005427A8 /* bg-home.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F454B8301C0E0E6A005427A8 /* bg-home.jpg */; };
+		F454B8331C0E1D36005427A8 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F454B8321C0E1D36005427A8 /* SettingsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +32,23 @@
 		F454B7F81C0DFC73005427A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F454B7FB1C0DFC73005427A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F454B7FD1C0DFC73005427A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F454B8161C0DFD16005427A8 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		F454B8191C0DFFAA005427A8 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		F454B81A1C0DFFAA005427A8 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		F454B81B1C0DFFAA005427A8 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		F454B81C1C0DFFAA005427A8 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		F454B81D1C0DFFAA005427A8 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		F454B81E1C0DFFAA005427A8 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		F454B81F1C0DFFAA005427A8 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		F454B8201C0DFFAA005427A8 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		F454B8211C0DFFAA005427A8 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		F454B8221C0DFFAA005427A8 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		F454B8231C0DFFAA005427A8 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		F454B8291C0DFFC7005427A8 /* Eye-Genie-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Eye-Genie-Bridging-Header.h"; sourceTree = "<group>"; };
+		F454B82A1C0E057D005427A8 /* appdefaults */ = {isa = PBXFileReference; lastKnownFileType = folder; path = appdefaults; sourceTree = "<group>"; };
+		F454B82E1C0E07E9005427A8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		F454B8301C0E0E6A005427A8 /* bg-home.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "bg-home.jpg"; path = "appdefaults/bg-home.jpg"; sourceTree = "<group>"; };
+		F454B8321C0E1D36005427A8 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F454B8171C0DFD16005427A8 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +66,7 @@
 		F454B7E51C0DFC73005427A8 = {
 			isa = PBXGroup;
 			children = (
+				F454B8161C0DFD16005427A8 /* libsqlite3.tbd */,
 				F454B7F01C0DFC73005427A8 /* Eye-Genie */,
 				F454B7EF1C0DFC73005427A8 /* Products */,
 			);
@@ -54,14 +83,38 @@
 		F454B7F01C0DFC73005427A8 /* Eye-Genie */ = {
 			isa = PBXGroup;
 			children = (
+				F454B8181C0DFFAA005427A8 /* fmdb */,
 				F454B7F11C0DFC73005427A8 /* AppDelegate.swift */,
-				F454B7F31C0DFC73005427A8 /* ViewController.swift */,
 				F454B7F51C0DFC73005427A8 /* Main.storyboard */,
+				F454B7F31C0DFC73005427A8 /* ViewController.swift */,
+				F454B82E1C0E07E9005427A8 /* LoginViewController.swift */,
+				F454B8321C0E1D36005427A8 /* SettingsController.swift */,
+				F454B82A1C0E057D005427A8 /* appdefaults */,
 				F454B7F81C0DFC73005427A8 /* Assets.xcassets */,
+				F454B8301C0E0E6A005427A8 /* bg-home.jpg */,
 				F454B7FA1C0DFC73005427A8 /* LaunchScreen.storyboard */,
 				F454B7FD1C0DFC73005427A8 /* Info.plist */,
 			);
 			path = "Eye-Genie";
+			sourceTree = "<group>";
+		};
+		F454B8181C0DFFAA005427A8 /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				F454B8191C0DFFAA005427A8 /* FMDatabase.h */,
+				F454B81A1C0DFFAA005427A8 /* FMDatabase.m */,
+				F454B81B1C0DFFAA005427A8 /* FMDatabaseAdditions.h */,
+				F454B81C1C0DFFAA005427A8 /* FMDatabaseAdditions.m */,
+				F454B81D1C0DFFAA005427A8 /* FMDatabasePool.h */,
+				F454B81E1C0DFFAA005427A8 /* FMDatabasePool.m */,
+				F454B81F1C0DFFAA005427A8 /* FMDatabaseQueue.h */,
+				F454B8201C0DFFAA005427A8 /* FMDatabaseQueue.m */,
+				F454B8211C0DFFAA005427A8 /* FMDB.h */,
+				F454B8221C0DFFAA005427A8 /* FMResultSet.h */,
+				F454B8231C0DFFAA005427A8 /* FMResultSet.m */,
+				F454B8291C0DFFC7005427A8 /* Eye-Genie-Bridging-Header.h */,
+			);
+			path = fmdb;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,7 +175,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F454B82B1C0E057D005427A8 /* appdefaults in Resources */,
 				F454B7FC1C0DFC73005427A8 /* LaunchScreen.storyboard in Resources */,
+				F454B8311C0E0E6A005427A8 /* bg-home.jpg in Resources */,
 				F454B7F91C0DFC73005427A8 /* Assets.xcassets in Resources */,
 				F454B7F71C0DFC73005427A8 /* Main.storyboard in Resources */,
 			);
@@ -135,8 +190,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F454B8331C0E1D36005427A8 /* SettingsController.swift in Sources */,
+				F454B8241C0DFFAA005427A8 /* FMDatabase.m in Sources */,
 				F454B7F41C0DFC73005427A8 /* ViewController.swift in Sources */,
+				F454B8281C0DFFAA005427A8 /* FMResultSet.m in Sources */,
+				F454B8261C0DFFAA005427A8 /* FMDatabasePool.m in Sources */,
+				F454B82F1C0E07E9005427A8 /* LoginViewController.swift in Sources */,
 				F454B7F21C0DFC73005427A8 /* AppDelegate.swift in Sources */,
+				F454B8251C0DFFAA005427A8 /* FMDatabaseAdditions.m in Sources */,
+				F454B8271C0DFFAA005427A8 /* FMDatabaseQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,10 +311,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = "Eye-Genie/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.optikkandr.eyegenie.Eye-Genie";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Eye-Genie/fmdb/Eye-Genie-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -260,10 +324,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = "Eye-Genie/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.optikkandr.eyegenie.Eye-Genie";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Eye-Genie/fmdb/Eye-Genie-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -286,6 +352,7 @@
 				F454B8021C0DFC73005427A8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
