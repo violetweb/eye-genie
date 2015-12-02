@@ -49,6 +49,35 @@ class ViewController: UIViewController {
     @IBOutlet weak var mainImageView: UIView!
     
     @IBAction func btnConventional(sender: AnyObject) {
+        
+        
+        leftLayer.removeFromSuperlayer()
+        let newLeftLayer = CAShapeLayer()
+        //newLeftLayer.path = drawStrokePath(180, x: -80, y: 400, radius: 480)
+        newLeftLayer.path = drawShapePath(1,reverse: false)
+        newLeftLayer.zPosition = 6
+        newLeftLayer.strokeColor = UIColor.yellowColor().CGColor
+        newLeftLayer.fillColor = UIColor.clearColor().CGColor;
+        newLeftLayer.lineWidth = 8.0
+        leftLayer = newLeftLayer
+        lensShapelayer.addSublayer(leftLayer)
+        
+        
+        
+        rightLayer.removeFromSuperlayer()
+        let newRightLayer = CAShapeLayer()
+        newRightLayer.path = drawStrokePath(180, x:920,y:400,radius: 480)
+        newRightLayer.zPosition = 6
+        newRightLayer.strokeColor = UIColor.yellowColor().CGColor
+        newRightLayer.fillColor = UIColor.clearColor().CGColor;
+        newRightLayer.lineWidth = 8.0
+        rightLayer = newRightLayer
+        lensShapelayer.addSublayer(rightLayer)
+        
+        
+        leftMask.path = drawShapePath(1, reverse: false)
+        rightMask.path = drawStrokePath(180, x:920, y:400, radius: 480)
+
     }
     
     
@@ -57,10 +86,68 @@ class ViewController: UIViewController {
     
     
     @IBAction func btnJenaW(sender: AnyObject) {
+        
+        leftLayer.removeFromSuperlayer()
+        let newLeftLayer = CAShapeLayer()
+        newLeftLayer.path = drawStrokePath(180, x: -160, y: 400, radius: 480)
+        newLeftLayer.zPosition = 6
+        newLeftLayer.strokeColor = UIColor.yellowColor().CGColor
+        newLeftLayer.fillColor = UIColor.clearColor().CGColor;
+        newLeftLayer.lineWidth = 8.0
+        leftLayer = newLeftLayer
+        lensShapelayer.addSublayer(leftLayer)
+        
+        
+        
+        rightLayer.removeFromSuperlayer()
+        let newRightLayer = CAShapeLayer()
+        newRightLayer.path = drawStrokePath(180, x:1020,y:400,radius: 480)
+        newRightLayer.zPosition = 6
+        newRightLayer.strokeColor = UIColor.yellowColor().CGColor
+        newRightLayer.fillColor = UIColor.clearColor().CGColor;
+        newRightLayer.lineWidth = 8.0
+        rightLayer = newRightLayer
+        lensShapelayer.addSublayer(rightLayer)
+        
+        
+        leftMask.path = drawStrokePath(180, x:-160, y:400, radius: 480)
+        rightMask.path = drawStrokePath(180, x:1020, y:400, radius: 480)
+
+        
     }
     
     
     @IBAction func btnJena4k(sender: AnyObject) {
+        
+        leftLayer.removeFromSuperlayer()
+        let newLeftLayer = CAShapeLayer()
+        newLeftLayer.path = drawStrokePath(180, x: -200, y: 400, radius: 480)
+        newLeftLayer.zPosition = 6
+        newLeftLayer.strokeColor = UIColor.yellowColor().CGColor
+        newLeftLayer.fillColor = UIColor.clearColor().CGColor;
+        newLeftLayer.lineWidth = 8.0
+        leftLayer = newLeftLayer
+        lensShapelayer.addSublayer(leftLayer)
+        
+        
+        
+        rightLayer.removeFromSuperlayer()
+        let newRightLayer = CAShapeLayer()
+        newRightLayer.path = drawStrokePath(180, x:1040,y:400,radius: 480)
+        newRightLayer.zPosition = 6
+        newRightLayer.strokeColor = UIColor.yellowColor().CGColor
+        newRightLayer.fillColor = UIColor.clearColor().CGColor;
+        newRightLayer.lineWidth = 8.0
+        rightLayer = newRightLayer
+        lensShapelayer.addSublayer(rightLayer)
+        
+        
+        leftMask.path = drawStrokePath(180, x:-200, y:400, radius: 480)
+        rightMask.path = drawStrokePath(180, x:1040, y:400, radius: 480)
+        
+        currentPath = "Jenna4K"
+
+        
     }
     
     @IBAction func sliderAdd(sender: UISlider) {

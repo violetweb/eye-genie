@@ -239,26 +239,30 @@ UINavigationControllerDelegate {
        
         
         var newImage: UIImage
-        
         if let possibleImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
             newImage = possibleImage
             pickedImage = possibleImage
         } else if let possibleImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             newImage = possibleImage
             pickedImage = possibleImage
-       }
+        }
        
         if chosenButton=="1" {
             btn1ImageView.image = pickedImage
         }else if chosenButton == "2"{
             btn2ImageView.image = pickedImage
+        }else if chosenButton == "3"{
+            btn3ImageView.image = pickedImage
+        }else if chosenButton == "4"{
+            btn4ImageView.image = pickedImage
+        }else if chosenButton == "5" {
+            btn5ImageView.image = pickedImage
         }else if chosenButton == "Main" {
             appImageView.image = pickedImage
         }
         dismissViewControllerAnimated(true, completion: nil)
         
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
