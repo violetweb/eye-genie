@@ -46,6 +46,20 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction func pinchGesture(sender: UIPinchGestureRecognizer) {
+        
+            let translate = CATransform3DMakeTranslation(0, 0, 0);
+            let scale = CATransform3DMakeScale(sender.scale, sender.scale, 1);
+            let transform = CATransform3DConcat(translate, scale);
+            
+            let image = UIImageView(image: currentBackground)
+            
+            imageLayer.addSublayer(image.layer) //
+            lensShapelayer.transform = transform
+
+    }
+    
+    
     @IBOutlet weak var mainImageView: UIView!
     
     @IBAction func btnConventional(sender: AnyObject) {
@@ -66,7 +80,7 @@ class ViewController: UIViewController {
         
         rightLayer.removeFromSuperlayer()
         let newRightLayer = CAShapeLayer()
-        newRightLayer.path = drawStrokePath(180, x:920,y:400,radius: 480)
+        newRightLayer.path = drawShapeMirrorPath(1, reverse: false)
         newRightLayer.zPosition = 6
         newRightLayer.strokeColor = UIColor.yellowColor().CGColor
         newRightLayer.fillColor = UIColor.clearColor().CGColor;
@@ -76,20 +90,21 @@ class ViewController: UIViewController {
         
         
         leftMask.path = drawShapePath(1, reverse: false)
-        rightMask.path = drawStrokePath(180, x:920, y:400, radius: 480)
+        rightMask.path = drawShapeMirrorPath(1, reverse:false)
+        
+        let blurRadius = Float(sliderPowerOutlet.value)
+        swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
 
     }
     
     
+    
+    
     @IBAction func btnJena(sender: AnyObject) {
-    }
-    
-    
-    @IBAction func btnJenaW(sender: AnyObject) {
         
         leftLayer.removeFromSuperlayer()
         let newLeftLayer = CAShapeLayer()
-        newLeftLayer.path = drawStrokePath(180, x: -160, y: 400, radius: 480)
+        newLeftLayer.path = drawShapePath(2, reverse: false)
         newLeftLayer.zPosition = 6
         newLeftLayer.strokeColor = UIColor.yellowColor().CGColor
         newLeftLayer.fillColor = UIColor.clearColor().CGColor;
@@ -101,7 +116,7 @@ class ViewController: UIViewController {
         
         rightLayer.removeFromSuperlayer()
         let newRightLayer = CAShapeLayer()
-        newRightLayer.path = drawStrokePath(180, x:1020,y:400,radius: 480)
+        newRightLayer.path = drawShapeMirrorPath(2, reverse: false)
         newRightLayer.zPosition = 6
         newRightLayer.strokeColor = UIColor.yellowColor().CGColor
         newRightLayer.fillColor = UIColor.clearColor().CGColor;
@@ -110,9 +125,45 @@ class ViewController: UIViewController {
         lensShapelayer.addSublayer(rightLayer)
         
         
-        leftMask.path = drawStrokePath(180, x:-160, y:400, radius: 480)
-        rightMask.path = drawStrokePath(180, x:1020, y:400, radius: 480)
+        leftMask.path = drawShapePath(2, reverse:false)
+        rightMask.path = drawShapeMirrorPath(2, reverse:false)
 
+        let blurRadius = Float(sliderPowerOutlet.value)
+        swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
+        
+    }
+    
+    
+    @IBAction func btnJenaW(sender: AnyObject) {
+        
+        leftLayer.removeFromSuperlayer()
+        let newLeftLayer = CAShapeLayer()
+        newLeftLayer.path = drawShapePath(3, reverse: false)
+        newLeftLayer.zPosition = 6
+        newLeftLayer.strokeColor = UIColor.yellowColor().CGColor
+        newLeftLayer.fillColor = UIColor.clearColor().CGColor;
+        newLeftLayer.lineWidth = 8.0
+        leftLayer = newLeftLayer
+        lensShapelayer.addSublayer(leftLayer)
+        
+        
+        
+        rightLayer.removeFromSuperlayer()
+        let newRightLayer = CAShapeLayer()
+        newLeftLayer.path = drawShapeMirrorPath(3,reverse: false)
+        newRightLayer.zPosition = 6
+        newRightLayer.strokeColor = UIColor.yellowColor().CGColor
+        newRightLayer.fillColor = UIColor.clearColor().CGColor;
+        newRightLayer.lineWidth = 8.0
+        rightLayer = newRightLayer
+        lensShapelayer.addSublayer(rightLayer)
+        
+        
+        leftMask.path = drawShapePath(3, reverse: false)
+        rightMask.path = drawShapeMirrorPath(3, reverse:false)
+
+        let blurRadius = Float(sliderPowerOutlet.value)
+        swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
         
     }
     
@@ -121,7 +172,7 @@ class ViewController: UIViewController {
         
         leftLayer.removeFromSuperlayer()
         let newLeftLayer = CAShapeLayer()
-        newLeftLayer.path = drawStrokePath(180, x: -200, y: 400, radius: 480)
+        newLeftLayer.path = drawShapePath(4, reverse: false)
         newLeftLayer.zPosition = 6
         newLeftLayer.strokeColor = UIColor.yellowColor().CGColor
         newLeftLayer.fillColor = UIColor.clearColor().CGColor;
@@ -133,7 +184,7 @@ class ViewController: UIViewController {
         
         rightLayer.removeFromSuperlayer()
         let newRightLayer = CAShapeLayer()
-        newRightLayer.path = drawStrokePath(180, x:1040,y:400,radius: 480)
+        newRightLayer.path = drawShapeMirrorPath(4, reverse:false)
         newRightLayer.zPosition = 6
         newRightLayer.strokeColor = UIColor.yellowColor().CGColor
         newRightLayer.fillColor = UIColor.clearColor().CGColor;
@@ -142,9 +193,8 @@ class ViewController: UIViewController {
         lensShapelayer.addSublayer(rightLayer)
         
         
-        leftMask.path = drawStrokePath(180, x:-200, y:400, radius: 480)
-        rightMask.path = drawStrokePath(180, x:1040, y:400, radius: 480)
-        
+        leftMask.path = drawShapePath(4, reverse:false)
+        rightMask.path = drawShapeMirrorPath(4, reverse:false)
         currentPath = "Jenna4K"
 
         
@@ -154,12 +204,16 @@ class ViewController: UIViewController {
         //Magnify layer : add this image to the magnify layer.
         blurRadius = sender.value
         swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
+        drawMainLayer(blurRadius, imageName: currentBackground!)
+
 
     }
     
     @IBAction func sliderPower(sender: UISlider) {
         blurRadius = sender.value
         drawMainLayer(blurRadius, imageName: currentBackground!)
+        swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
+
     }
  
     
@@ -173,23 +227,25 @@ class ViewController: UIViewController {
         let blurRadius = Float(sliderPowerOutlet.value)
         drawMainLayer(blurRadius, imageName: UIImage(named: "cockpit-n")!)
         currentBackground = UIImage(named: "cockpit-v")
-        //swapLensImage(Float(0), swapToImage: UIImage(named: "cockpit-v")!)
+        swapLensImage(blurRadius, swapToImage: UIImage(named: "cockpit-v")!)
     }
     
     @IBAction func btnAutumn(sender: UIBarButtonItem) {
         let blurRadius = Float(sliderPowerOutlet.value)
         drawMainLayer(blurRadius, imageName: UIImage(named: "autumn-n")!)
+        print(blurRadius)
         currentBackground = UIImage(named: "autumn")
-       // swapLensImage(Float(0), swapToImage: UIImage(named: "autumn")!)
+        swapLensImage(blurRadius, swapToImage: UIImage(named: "autumn")!)
     }
     
     @IBAction func btnSailing(sender: UIBarButtonItem) {
         let blurRadius = Float(sliderPowerOutlet.value)
         drawMainLayer(blurRadius, imageName: UIImage(named: "sailing-n")!)
-        currentBackground = UIImage(named: "autumn")
-     //   swapLensImage(Float(0), swapToImage: UIImage(named: "sailing")!)
+        currentBackground = UIImage(named: "sailing")
+        swapLensImage(blurRadius, swapToImage: UIImage(named: "sailing")!)
 
     }
+    
     
     func swapLensImage(blurRadius: Float, swapToImage: UIImage){
         //Magnify layer : add this image to the magnify layer.
@@ -311,17 +367,17 @@ class ViewController: UIViewController {
             if (designId>0){
                 //Grabe the values.
                 
-                let sql_stmt = "SELECT P1X, P1Y, C1X, C1Y, P2X, P2Y, C2X,C2Y,C3X,C3Y,P3X, P3Y, C4X, C4Y,C5X,C5Y, P4X,P4Y,C6X,C6Y from DESIGNPOINTS WHERE DESIGNID=1"
+                let sql_stmt = "SELECT P1X, P1Y, C1X, C1Y, P2X, P2Y, C2X,C2Y,C3X,C3Y,P3X, P3Y, C4X, C4Y,C5X,C5Y, P4X,P4Y,C6X,C6Y from DESIGNPOINTS WHERE DESIGNID=\(designId)"
                 print(sql_stmt)
                 let results:FMResultSet? = genieDB.executeQuery(sql_stmt, withArgumentsInArray: nil)
                
                 if ((results?.next()) != nil) {
                     print("pre-results next")
                     
-                    while results?.next() == true {
+                
                         
                         let shapes = results?.resultDictionary()
-                      
+                        print(shapes)
                         //TODO:  CHANGE TO ARRAY.
                         var p1x = shapes!["P1X"] as! CGFloat
                         var p1y = shapes!["P1Y"] as! CGFloat
@@ -371,23 +427,23 @@ class ViewController: UIViewController {
                         c6x = (c6x+40)*10
                         c6y = (-c6y+40)*10
                         
-                        
-                        print(p1x)
-                        print(p1y)
-                        print(p2x)
-                        print(p2y)
                         CGPathMoveToPoint(shape, nil, p1x, p1y)
                         CGPathAddCurveToPoint(shape, nil, c1x, c1y, c2x, c2y, p2x, p2y)
                         CGPathAddCurveToPoint(shape, nil, c3x, c3y, c4x, c4y, p3x, p3y)
                         CGPathAddCurveToPoint(shape, nil, c5x, c5y, c6x, c6y, p4x, p4y)
-                      
-                    }
+                        CGPathAddLineToPoint(shape, nil, 0, p4y)
+                        CGPathAddLineToPoint(shape, nil, 0, p1y)
+                        CGPathCloseSubpath(shape)
+                    
+                    
+                
                 }else{
                     print("No results")
                 }
             }else{
                 print("NIL RESULTS")
             }
+            genieDB.close()
         }else{
             print("database failed to open.")
         }
@@ -395,6 +451,108 @@ class ViewController: UIViewController {
         
         return shape
     }
+    
+    
+    
+    //TODO:  WRITE THIS TO SWING BOTH WAYS.
+    //
+    func drawShapeMirrorPath(designId: Int, reverse: Bool)->CGPathRef{
+        
+        
+        let shape = CGPathCreateMutable()
+        let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
+        let databasePath = documentsURL.URLByAppendingPathComponent("genie.db").path!
+        let genieDB = FMDatabase(path: String(databasePath))
+        
+        if genieDB.open() {
+            if (designId>0){
+                //Grabe the values.
+                
+                let sql_stmt = "SELECT P1X, P1Y, C1X, C1Y, P2X, P2Y, C2X,C2Y,C3X,C3Y,P3X, P3Y, C4X, C4Y,C5X,C5Y, P4X,P4Y,C6X,C6Y from DESIGNPOINTS WHERE DESIGNID=\(designId)"
+                print(sql_stmt)
+                let results:FMResultSet? = genieDB.executeQuery(sql_stmt, withArgumentsInArray: nil)
+                
+                if ((results?.next()) != nil) {
+                    
+                    let shapes = results?.resultDictionary()
+                   
+                    //TODO:  CHANGE TO ARRAY.
+                    var p1x = shapes!["P1X"] as! CGFloat
+                    var p1y = shapes!["P1Y"] as! CGFloat
+                    var p2x = shapes!["P2X"] as! CGFloat
+                    var p2y = shapes!["P2Y"] as! CGFloat
+                    var p3x = shapes!["P3X"] as! CGFloat
+                    var p3y = shapes!["P3Y"] as! CGFloat
+                    var p4x = shapes!["P4X"] as! CGFloat
+                    var p4y = shapes!["P4Y"] as! CGFloat
+                    
+                    
+                    
+                    var c1x = shapes!["C1X"] as! CGFloat
+                    var c1y = shapes!["C1Y"] as! CGFloat
+                    var c2x = shapes!["C2X"] as! CGFloat
+                    var c2y = shapes!["C2Y"] as! CGFloat
+                    var c3x = shapes!["C3X"] as! CGFloat
+                    var c3y = shapes!["C3Y"] as! CGFloat
+                    var c4x = shapes!["C4X"] as! CGFloat
+                    var c4y = shapes!["C4Y"] as! CGFloat
+                    var c5x = shapes!["C5X"] as! CGFloat
+                    var c5y = shapes!["C5Y"] as! CGFloat
+                    var c6x = shapes!["C6X"] as! CGFloat
+                    var c6y = shapes!["C6Y"] as! CGFloat
+                    
+                    
+                    //formula :  p1x + 80 = brings our starting point to the middle (half of our 800 wide).
+                    // to mirror:  800 - (point value + 80) + gives us the mirror point
+                    //  + 400 moves over by 400
+                    
+                    p1x = 800-((p1x+80)*10)+400
+                    p1y = (-p1y+40)*10
+                    p2x = 800-((p2x+80)*10)+400
+                    p2y = (-p2y+40)*10
+                    p3x = 800-((p3x+80)*10)+400
+                    p3y = (-p3y+40)*10
+                    p4x = 800-((p4x+80)*10)+400
+                    p4y = (-p4y+40)*10
+                    
+                    
+                    c1x = 800-((c1x+80)*10)+400
+                    c1y = (-c1y+40)*10
+                    c2x = 800-((c2x+80)*10)+400
+                    c2y = (-c2y+40)*10
+                    c3x = 800-((c3x+80)*10)+400
+                    c3y = (-c3y+40)*10
+                    c4x = 800-((c4x+80)*10)+400
+                    c4y = (-c4y+40)*10
+                    c5x = 800-((c5x+80)*10)+400
+                    c5y = (-c5y+40)*10
+                    c6x = 800-((c6x+80)*10)+400
+                    c6y = (-c6y+40)*10
+                    
+                    CGPathMoveToPoint(shape, nil, p1x, p1y)
+                    CGPathAddCurveToPoint(shape, nil, c1x, c1y, c2x, c2y, p2x, p2y)
+                    CGPathAddCurveToPoint(shape, nil, c3x, c3y, c4x, c4y, p3x, p3y)
+                    CGPathAddCurveToPoint(shape, nil, c5x, c5y, c6x, c6y, p4x, p4y)
+                    CGPathAddLineToPoint(shape, nil, 800, p4y)
+                    CGPathAddLineToPoint(shape, nil, 800, p1y)
+                    CGPathCloseSubpath(shape)
+                    
+                }else{
+                    print("No results")
+                }
+            }else{
+                print("NIL RESULTS")
+            }
+            genieDB.close()
+        }else{
+            print("database failed to open.")
+        }
+        
+        
+        return shape
+    }
+
+    
     
     //Convert Degrees to Radians!!!!
     func degree2radian(a:CGFloat)->CGFloat {
@@ -622,10 +780,7 @@ class ViewController: UIViewController {
         
         //  Stroke layer
         rightLayer.contentsGravity = kCAGravityCenter
-      //  rightLayer.path = drawRightPath(665,ystart:50, cp:430, yp:380, x:550, y:600, numPoints:4)
-        
-        
-        rightLayer.path = drawStrokePath(180, x:980,y:400,radius: 480)
+        rightLayer.path = drawShapeMirrorPath(1,reverse:false)
         rightLayer.strokeColor = UIColor.yellowColor().CGColor
         rightLayer.fillColor = UIColor.clearColor().CGColor
         rightLayer.lineWidth = 8.0
@@ -647,7 +802,7 @@ class ViewController: UIViewController {
         
         
         leftMask.path = drawShapePath(1, reverse: false)
-        rightMask.path = drawShapePath(1, reverse: true)
+        rightMask.path = drawShapeMirrorPath(1, reverse: true)
         currentBackground = UIImage(named: "cockpit-v")
          
         pilotsLayer.addSublayer(lensShapelayer)  // append the new layer to the pilotslayer

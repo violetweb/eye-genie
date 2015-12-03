@@ -271,6 +271,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="55Y-bR-e3P">
+                    <connections>
+                        <action selector="pinchGesture:" destination="BYZ-38-t0r" id="vC5-Fw-RAr"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="377" y="179"/>
         </scene>

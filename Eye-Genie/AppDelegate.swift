@@ -165,7 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Jenna 4 K Added")
             }
             
-            
+        genieDB.close()
         }else{
             print("Database failed to open")
         }
@@ -194,6 +194,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }else{
                 print("inserted general")
             }
+            
+            genieDB.close()
         } else {
             print("Error: \(genieDB.lastErrorMessage())")
         }
