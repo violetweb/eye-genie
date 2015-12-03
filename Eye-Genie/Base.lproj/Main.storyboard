@@ -119,21 +119,21 @@
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nar-OY-1kf">
                                 <rect key="frame" x="816" y="73" width="208" height="651"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRu-hT-f9E">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRu-hT-f9E">
                                         <rect key="frame" x="20" y="103" width="175" height="75"/>
                                         <state key="normal" title="Button" image="btn-jenna"/>
                                         <connections>
                                             <action selector="btnJena:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Szw-9O-p1j"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odI-Nj-Ehh">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odI-Nj-Ehh">
                                         <rect key="frame" x="15" y="186" width="175" height="75"/>
                                         <state key="normal" title="Button" image="btn-jenna-wide"/>
                                         <connections>
@@ -141,47 +141,52 @@
                                         </connections>
                                     </button>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="DbY-vW-uBv">
-                                        <rect key="frame" x="74" y="430" width="118" height="31"/>
+                                        <rect key="frame" x="53" y="430" width="118" height="31"/>
                                         <connections>
                                             <action selector="sliderAdd:" destination="BYZ-38-t0r" eventType="valueChanged" id="1yf-gM-Esy"/>
                                         </connections>
                                     </slider>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="4Ri-ec-uKk">
-                                        <rect key="frame" x="74" y="479" width="118" height="31"/>
+                                        <rect key="frame" x="55" y="479" width="118" height="31"/>
                                         <connections>
                                             <action selector="sliderPower:" destination="BYZ-38-t0r" eventType="valueChanged" id="d4m-WU-rGb"/>
                                         </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Power" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1j-1V-9io">
-                                        <rect key="frame" x="20" y="479" width="42" height="21"/>
+                                        <rect key="frame" x="1" y="479" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bH1-uv-JMC">
-                                        <rect key="frame" x="15" y="434" width="42" height="21"/>
+                                        <rect key="frame" x="-6" y="434" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hez-pH-2cQ">
-                                        <rect key="frame" x="-818" y="0.0" width="808" height="708"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUa-Y1-6Xo">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUa-Y1-6Xo">
                                         <rect key="frame" x="17" y="34" width="175" height="75"/>
                                         <state key="normal" title="Button" image="btn-conventional"/>
                                         <connections>
                                             <action selector="btnConventional:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aeo-Vl-3gu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPR-jq-1B8">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPR-jq-1B8">
                                         <rect key="frame" x="15" y="269" width="175" height="75"/>
                                         <state key="normal" title="Button" image="btn-jenna-4k"/>
                                         <connections>
                                             <action selector="btnJena4k:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4yC-x3-2bZ"/>
                                         </connections>
                                     </button>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="7" minValue="7" maxValue="13" translatesAutoresizingMaskIntoConstraints="NO" id="mBr-Zf-dAU">
+                                        <rect key="frame" x="53" y="524" width="118" height="31"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CL (mm)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBk-k2-N7o">
+                                        <rect key="frame" x="-6" y="528" width="53" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -259,8 +264,18 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hez-pH-2cQ">
+                                <rect key="frame" x="0.0" y="73" width="808" height="651"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Oat-9n-wVy" appends="YES" id="hYk-un-x7r"/>
+                                    <outletCollection property="gestureRecognizers" destination="SVR-fg-geF" appends="YES" id="f4o-Ok-Tnu"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
@@ -271,9 +286,14 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <pinchGestureRecognizer id="55Y-bR-e3P">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Oat-9n-wVy">
                     <connections>
-                        <action selector="pinchGesture:" destination="BYZ-38-t0r" id="vC5-Fw-RAr"/>
+                        <action selector="panGesture:" destination="BYZ-38-t0r" id="De1-rK-Lxw"/>
+                    </connections>
+                </panGestureRecognizer>
+                <pinchGestureRecognizer id="SVR-fg-geF">
+                    <connections>
+                        <action selector="pinchGesture:" destination="BYZ-38-t0r" id="hSV-qz-iRU"/>
                     </connections>
                 </pinchGestureRecognizer>
             </objects>

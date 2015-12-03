@@ -46,17 +46,38 @@ class ViewController: UIViewController {
     }
     
     
+    var timer = NSTimer()
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        let interval = Double(60) // four hours check it...
+        timer = NSTimer.scheduledTimerWithTimeInterval(interval, target:self, selector: Selector("Logout"), userInfo: nil, repeats: true)
+        
+    }
+
+    
+    
+    
+    @IBAction func panGesture(sender: UIPanGestureRecognizer) {
+        
+       // let currentposx = sender.locationInView(self.view)
+       // let currentposy = sender.locationInView(self.view)
+       // lensShapelayer.position = CGPointMake(lensShapelayer.position.x+currentposx.x, lensShapelayer.position.y+currentposy.y);
+
+        
+    }
+    
+    
     @IBAction func pinchGesture(sender: UIPinchGestureRecognizer) {
         
-            let translate = CATransform3DMakeTranslation(0, 0, 0);
-            let scale = CATransform3DMakeScale(sender.scale, sender.scale, 1);
-            let transform = CATransform3DConcat(translate, scale);
-            
-            let image = UIImageView(image: currentBackground)
-            
-            imageLayer.addSublayer(image.layer) //
-            lensShapelayer.transform = transform
-
+        
+        let translate = CATransform3DMakeTranslation(0, 0, 0);
+        let scale = CATransform3DMakeScale(sender.scale, sender.scale, 1);
+        let transform = CATransform3DConcat(translate, scale);
+        //imageLayer.removeFromSuperlayer()
+        lensShapelayer.transform = transform
+        
+        
     }
     
     
@@ -233,7 +254,6 @@ class ViewController: UIViewController {
     @IBAction func btnAutumn(sender: UIBarButtonItem) {
         let blurRadius = Float(sliderPowerOutlet.value)
         drawMainLayer(blurRadius, imageName: UIImage(named: "autumn-n")!)
-        print(blurRadius)
         currentBackground = UIImage(named: "autumn")
         swapLensImage(blurRadius, swapToImage: UIImage(named: "autumn")!)
     }
@@ -345,7 +365,7 @@ class ViewController: UIViewController {
         
         bulgeFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
         bulgeFilter.setValue(30*blurRadius, forKey: "inputRadius")
-        bulgeFilter.setValue(CIVector(x: 860/2, y: 140), forKey: kCIInputCenterKey)
+        bulgeFilter.setValue(CIVector(x: 840/2, y: 140), forKey: kCIInputCenterKey)
         bulgeFilter.setValue(1, forKey: "inputScale")
         
         let cgimg = context.createCGImage(bulgeFilter.outputImage!, fromRect: beginImage!.extent)
@@ -724,26 +744,45 @@ class ViewController: UIViewController {
     func setDefaultLayers(imageName: UIImage){
         
         
-        //Pilots (Vibrance)
-        let img = UIImageView(image: imageName) //change this to the eyeglasses, /lens glass image.
-        currentAdd = img
-        lensShapelayer.frame = pilotsLayer.bounds
-        lensShapelayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
-        lensShapelayer.contentsGravity = kCAGravityCenter
-        currentAdd.layer.zPosition = 3
         
-        lensShapelayer.addSublayer(currentAdd.layer) //add pilots image (vib version) to this layer
-        lensShapelayer.addSublayer(imageLayer)
         
         //Mask:  Apply Lens Shape
-        let maskLayer = drawMaskLayer(UIColor.whiteColor().CGColor)  // replace testing with this when you're ready.
+        let maskLayerForImage = drawMaskLayer(UIColor.whiteColor().CGColor)  // replace testing with this when you're ready.
+        
+        //Background Image has its own layer now.
+        let img = UIImageView(image: imageName) //The vibrant version of the image name will be sent over.
+        currentAdd = img
+        //currentAdd.layer.zPosition = 2
+        //currentAdd.layer.mask = maskLayer
+
+        imageLayer.frame = pilotsLayer.bounds
+        imageLayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
+        imageLayer.contentsGravity = kCAGravityCenter
+        imageLayer.fillColor = nil
+        imageLayer.zPosition = 2
+        imageLayer.mask = maskLayerForImage
+        imageLayer.addSublayer(currentAdd.layer)
+        pilotsLayer.addSublayer(imageLayer)  // remove from pilotslayer on pinch, and add back with resized mask (resize based on mask + scale)
+        
+        
+        
+        lensShapelayer.frame = pilotsLayer.bounds
+        lensShapelayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
+        let maskLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
+        lensShapelayer.contentsGravity = kCAGravityCenter
+        lensShapelayer.fillColor = UIColor.clearColor().CGColor;
         lensShapelayer.mask = maskLayer
+        //lensShapelayer.addSublayer(currentAdd.layer) //add pilots image (vib version) to this layer
+        //lensShapelayer.addSublayer(imageLayer)
+        
+      
+
         
         
         //Add a non colored color layer (can be replaced using buttons : color).
         //Color Layer.
         let newColorLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
-        newColorLayer.fillColor = UIColor.whiteColor().CGColor
+        newColorLayer.fillColor = UIColor.clearColor().CGColor
         newColorLayer.fillRule = kCAFillRuleNonZero
         newColorLayer.zPosition = 7
         newColorLayer.opacity = 0.0
@@ -756,6 +795,7 @@ class ViewController: UIViewController {
         let strokeLensShapeLayer = drawStrokeLayer(drawLensPath(), strokeWidth:2.0)
         let strokeline = CAShapeLayer()
         strokeline.strokeColor = UIColor.whiteColor().CGColor
+        strokeline.fillColor = UIColor.clearColor().CGColor
         strokeline.path = strokeLensShapeLayer
         strokeline.zPosition = 8
         lensShapelayer.addSublayer(strokeline)
@@ -789,16 +829,16 @@ class ViewController: UIViewController {
         
         
         //LEFT & RIGHT DOTS (laser marks)
-        let leftDot = drawPolygonLayer((lensShapelayer.bounds.size.width/2)/2, y: (lensShapelayer.bounds.size.height/2), radius:5, sides: 360, color: UIColor.yellowColor())
+        let leftDot = drawPolygonLayer((lensShapelayer.bounds.size.width/2)/2, y: (lensShapelayer.bounds.size.height/2), radius:15, sides: 360, color: UIColor.yellowColor())
         leftDot.zPosition = 9
         lensShapelayer.addSublayer(leftDot)
-        let rightDot = drawPolygonLayer(lensShapelayer.bounds.size.width-(lensShapelayer.bounds.size.width/2)/2, y: (lensShapelayer.bounds.size.height/2), radius:5, sides: 360, color: UIColor.yellowColor())
+        let rightDot = drawPolygonLayer(lensShapelayer.bounds.size.width-(lensShapelayer.bounds.size.width/2)/2, y: (lensShapelayer.bounds.size.height/2), radius:15, sides: 360, color: UIColor.yellowColor())
         rightDot.zPosition = 9
         lensShapelayer.addSublayer(rightDot)
         
         
         //After adding everything to the lens shape... now add this to the CAlayer TopLayer
-        lensLayer.addSublayer(lensShapelayer) // testing to see if adding to a CALayer will allow me to pinch size.
+       // lensLayer.addSublayer(lensShapelayer) // testing to see if adding to a CALayer will allow me to pinch size.
         
         
         leftMask.path = drawShapePath(1, reverse: false)
@@ -806,7 +846,7 @@ class ViewController: UIViewController {
         currentBackground = UIImage(named: "cockpit-v")
          
         pilotsLayer.addSublayer(lensShapelayer)  // append the new layer to the pilotslayer
-        lensShapelayer.zPosition = 2
+        lensShapelayer.zPosition = 3
         
         
         
@@ -826,7 +866,6 @@ class ViewController: UIViewController {
         //Set this to current background.
         let beginImage = CIImage(image: imageName)
         currentBackground = imageName
-       
         
         let transform = CGAffineTransformIdentity
         clampFilter.setValue(beginImage!, forKey: "inputImage")
@@ -834,12 +873,11 @@ class ViewController: UIViewController {
         currentFilter.setValue(clampFilter.outputImage, forKey: "inputImage")
         currentFilter.setValue(blurRadius, forKey: "inputRadius")
         
-        
         let cgimg = context.createCGImage(currentFilter.outputImage!, fromRect: beginImage!.extent)
         let processedImage = UIImage(CGImage: cgimg).CGImage //has to have the CGImage piece on the end!!!!!
         
         pilotsLayer.zPosition = 1
-        pilotsLayer.backgroundColor = UIColor.blackColor().CGColor
+        pilotsLayer.backgroundColor = UIColor.whiteColor().CGColor
         pilotsLayer.contentsGravity = kCAGravityBottomLeft
         pilotsLayer.masksToBounds = true  //Important: tell this layer to be the boundary which cuts other layers (rect)
         pilotsLayer.contents = processedImage
