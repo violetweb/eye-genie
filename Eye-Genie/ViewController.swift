@@ -74,11 +74,26 @@ class ViewController: UIViewController {
         let translate = CATransform3DMakeTranslation(0, 0, 0);
         let scale = CATransform3DMakeScale(sender.scale, sender.scale, 1);
         let transform = CATransform3DConcat(translate, scale);
-        //imageLayer.removeFromSuperlayer()
+        
         lensShapelayer.transform = transform
         
+        let grow = CIFilter(name: "CGAffineTransform")
+        let transformedPath = CGPathCreateCopyByTransformingPath(lensShapelayer.path, grow)
+        imageLayer.path = transformedPath
         
-    }
+        /*  THIS DOESNT WORK
+        let newPath = lensShapelayer.path
+        let animation = CABasicAnimation(keyPath: "path")
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut) // animation curve is Ease Out
+        animation.fillMode = kCAFillModeBoth // keep to value after finishing
+        animation.removedOnCompletion = false // don't remove after finishing
+        animation.fromValue = imageLayer.path
+        animation.toValue = newPath
+        animation.duration = 1 // duration is 1 sec
+        imageLayer.addAnimation(animation, forKey: "path")
+        imageLayer.needsDisplayOnBoundsChange = true
+        */
+   }
     
     
     @IBOutlet weak var mainImageView: UIView!
@@ -650,6 +665,8 @@ class ViewController: UIViewController {
         let shape = CAShapeLayer()
         shape.path = drawLensPath()
         return shape
+        
+        
     }
         
         func lensPoints()->[CGPoint]{
@@ -766,12 +783,17 @@ class ViewController: UIViewController {
         
         
         
+        //Stroke the outside of the LensShape.
+        let strokeLensShapeLayer = drawStrokeLayer(drawLensPath(), strokeWidth:2.0)
+        
+        
         lensShapelayer.frame = pilotsLayer.bounds
         lensShapelayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
         let maskLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
         lensShapelayer.contentsGravity = kCAGravityCenter
         lensShapelayer.fillColor = UIColor.clearColor().CGColor;
         lensShapelayer.mask = maskLayer
+        lensShapelayer.path = strokeLensShapeLayer
         //lensShapelayer.addSublayer(currentAdd.layer) //add pilots image (vib version) to this layer
         //lensShapelayer.addSublayer(imageLayer)
         
@@ -791,8 +813,7 @@ class ViewController: UIViewController {
         //COLOR LAYER
         lensShapelayer.addSublayer(colorLayer)
         
-        //Stroke the outside of the LensShape.
-        let strokeLensShapeLayer = drawStrokeLayer(drawLensPath(), strokeWidth:2.0)
+    
         let strokeline = CAShapeLayer()
         strokeline.strokeColor = UIColor.whiteColor().CGColor
         strokeline.fillColor = UIColor.clearColor().CGColor
@@ -829,10 +850,10 @@ class ViewController: UIViewController {
         
         
         //LEFT & RIGHT DOTS (laser marks)
-        let leftDot = drawPolygonLayer((lensShapelayer.bounds.size.width/2)/2, y: (lensShapelayer.bounds.size.height/2), radius:15, sides: 360, color: UIColor.yellowColor())
+        let leftDot = drawPolygonLayer((lensShapelayer.bounds.size.width/2)/2, y: (lensShapelayer.bounds.size.height/2), radius:10, sides: 360, color: UIColor.yellowColor())
         leftDot.zPosition = 9
         lensShapelayer.addSublayer(leftDot)
-        let rightDot = drawPolygonLayer(lensShapelayer.bounds.size.width-(lensShapelayer.bounds.size.width/2)/2, y: (lensShapelayer.bounds.size.height/2), radius:15, sides: 360, color: UIColor.yellowColor())
+        let rightDot = drawPolygonLayer(lensShapelayer.bounds.size.width-(lensShapelayer.bounds.size.width/2)/2, y: (lensShapelayer.bounds.size.height/2), radius:10, sides: 360, color: UIColor.yellowColor())
         rightDot.zPosition = 9
         lensShapelayer.addSublayer(rightDot)
         

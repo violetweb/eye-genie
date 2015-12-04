@@ -166,7 +166,7 @@ UINavigationControllerDelegate {
     }
     
     
-    func saveDesignButton(designId: String, designImage: String){
+    func saveDesignButton(designId: Int, designImage: String){
         
         let databasePath = getSupportPath("genie.db") // grab the database.
         let genieDB = FMDatabase(path: String(databasePath))
@@ -267,28 +267,27 @@ UINavigationControllerDelegate {
             saveImage(pickedImage, path: path, filename: "btn1-user.jpg")
         }else if chosenButton == "2"{
             btn2ImageView.image = pickedImage
-            setDefaultGeneral("",button1: "",button2: "btn2-user",button3: "",button4: "",button5: "")
+            saveDesignButton(2, designImage: "btn2-user")
             let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "button2-user.jpg")
+            saveImage(pickedImage, path: path, filename: "btn2-user.jpg")
         }else if chosenButton == "3"{
             btn3ImageView.image = pickedImage
-            setDefaultGeneral("",button1: "",button2: "",button3: "button3-user",button4: "",button5: "")
+            saveDesignButton(3, designImage: "btn3-user")
             let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "button3-user.jpg")
+            saveImage(pickedImage, path: path, filename: "btn3-user.jpg")
         }else if chosenButton == "4"{
             btn4ImageView.image = pickedImage
-            setDefaultGeneral("",button1: "",button2: "",button3: "",button4: "button4-user",button5: "")
-
+            saveDesignButton(4, designImage: "btn4-user")
             let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "button4-user.jpg")
+            saveImage(pickedImage, path: path, filename: "btn4-user.jpg")
         }else if chosenButton == "5" {
             btn5ImageView.image = pickedImage
-            setDefaultGeneral("",button1: "",button2: "",button3: "",button4: "",button5: "button5-user")
+            saveDesignButton(5, designImage: "btn5-user")
             let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "button5-user.jpg")
+            saveImage(pickedImage, path: path, filename: "btn5-user.jpg")
         }else if chosenButton == "Main" {
             appImageView.image = pickedImage
-            setDefaultGeneral("bg-home-user",button1: "", button2: "", button3:"", button4:"", button5:"")
+            setDefaultGeneral("bg-home-user")
             let path = getSupportPath("images")
             saveImage(pickedImage, path: path, filename: "bg-home-user.jpg")
                       
@@ -297,7 +296,7 @@ UINavigationControllerDelegate {
         
     }
     
-    func grabGeneralImages(){
+    func grabMainImage(){
         let databasePath = getSupportPath("genie.db") // grab the database.
         let genieDB = FMDatabase(path: String(databasePath))
         if genieDB.open() {
@@ -314,13 +313,37 @@ UINavigationControllerDelegate {
 
     }
     
+    func grabButtonImageName(designId: Int)-> String{
+        let databasePath = getSupportPath("genie.db") // grab the database.
+        let genieDB = FMDatabase(path: String(databasePath))
+        var imageName = ""
+        if genieDB.open() {
+            let querySQL = "SELECT DESIGNIMAGE FROM DESIGNS where DESIGNID=\(designId)"
+            let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
+            if results?.next() == true {
+                imageName = (results?.stringForColumn("DESIGNIMAGE"))!
+                print(results?.stringForColumn("designimage")!)
+            } else {
+                print("Records not found in database for 'General Settings'.")
+            }
+            genieDB.close()
+        }
+        return imageName
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //Reset to Defaults
         let value = UIInterfaceOrientation.LandscapeRight.rawValue
         UIDevice.currentDevice().setValue(value, forKey: "orientation")
         imagePicker.delegate = self
-        grabGeneralImages() // Sets the initial values imageray based on any saved results.
+        grabMainImage() // Sets the initial values imageray based on any saved results.
+        //Set up 4 button images (4 were saved as defaults) (currently hard coded, but will likely be dynamically set from a back end maybe at some point.
+        btn1ImageView.image = UIImage(named: (fileInDocumentsDirectory(grabButtonImageName(1))))
+        btn2ImageView.image = UIImage(named: (fileInDocumentsDirectory(grabButtonImageName(2))))
+        btn3ImageView.image = UIImage(named: (fileInDocumentsDirectory(grabButtonImageName(3))))
+        btn4ImageView.image = UIImage(named: (fileInDocumentsDirectory(grabButtonImageName(4))))
         
 
         
