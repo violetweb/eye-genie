@@ -114,21 +114,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if genieDB.open() {
             
-            var insertSQL = "INSERT INTO DESIGNS (DESIGNTYPENAME, IMAGENAME, MAXBLUR) VALUES ('Conventional', 'conventional', '10')"
+            var insertSQL = "INSERT INTO DESIGNS (DESIGNTYPENAME, IMAGENAME, MAXBLUR) VALUES ('Conventional', 'btn-conventional', '10')"
             if genieDB.executeUpdate(insertSQL,  withArgumentsInArray: nil){
                 print("Conventional added")
             }
             
-            insertSQL = "INSERT INTO DESIGNS (DESIGNTYPENAME, IMAGENAME, MAXBLUR) VALUES ('Jenna', 'jenna', '10')"
+            insertSQL = "INSERT INTO DESIGNS (DESIGNTYPENAME, IMAGENAME, MAXBLUR) VALUES ('Jenna', 'btn-jenna', '10')"
             if genieDB.executeUpdate(insertSQL,  withArgumentsInArray: nil){
                 print("Jenna Image added")
             }
-            insertSQL = "INSERT INTO DESIGNS (DESIGNTYPENAME, IMAGENAME, MAXBLUR) VALUES ('Jenna Wide', 'jenna-wide', '10')"
+            insertSQL = "INSERT INTO DESIGNS (DESIGNTYPENAME, IMAGENAME, MAXBLUR) VALUES ('Jenna Wide', 'btn-jenna-wide', '10')"
             if genieDB.executeUpdate(insertSQL,  withArgumentsInArray: nil){
                 print("Jenna Wide Image added")
             }
             
-            insertSQL = "INSERT INTO DESIGNS (DESIGNTYPENAME, IMAGENAME, MAXBLUR) VALUES ('Jenna 4K', 'jenna-4k', '10')"
+            insertSQL = "INSERT INTO DESIGNS (DESIGNTYPENAME, IMAGENAME, MAXBLUR) VALUES ('Jenna 4K', 'btn-jenna-4k', '10')"
             if genieDB.executeUpdate(insertSQL,  withArgumentsInArray: nil){
                 print("Jenna 4K Image added")
             }
@@ -182,7 +182,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         let genieDB = FMDatabase(path: String(databasePath))
-        
         if genieDB.open() {
             
             let insertSQL = "INSERT INTO GENERAL (HOMEIMAGE, COMPANYNAME, COMPANYPHONE, ACTIVE) VALUES ('bg-home', 'OPTIK KANDR', '416-915-1550', 1)"

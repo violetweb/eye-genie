@@ -207,7 +207,7 @@ class LoginViewController: UIViewController {
             self.lblInstruction.center.y += self.view.bounds.height/4
             }, completion: nil)
         
-        getHomeImage()
+        getSavedImages()
         
     }
     
@@ -254,14 +254,14 @@ class LoginViewController: UIViewController {
     
     
     
-    func getHomeImage(){
+    func getSavedImages(){
         
         //Save to DATABASE.
         databasePath = getSupportPath("genie.db") // grab the database.
         let genieDB = FMDatabase(path: databasePath)
         
         if genieDB.open() {
-            let querySQL = "SELECT HOMEIMAGE, ACTIVE FROM GENERAL WHERE ACTIVE=1"
+            let querySQL = "SELECT HOMEIMAGE, ACTIVE FROM GENERAL WHERE id=1"
             
             let results:FMResultSet? = genieDB.executeQuery(querySQL,
                 withArgumentsInArray: nil)
@@ -270,7 +270,6 @@ class LoginViewController: UIViewController {
                 let homeimage = results?.stringForColumn("HOMEIMAGE")!
                 setImageFromDirectory(homeimage!)
             } else {
-                
                 setImageFromDirectory("bg-home")
             }
             genieDB.close()
@@ -340,7 +339,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        getSavedImages()
         // Do any additional setup after loading the view.
         
         //  let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")

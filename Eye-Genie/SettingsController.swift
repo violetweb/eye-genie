@@ -57,7 +57,6 @@ UINavigationControllerDelegate {
         presentViewController(imagePicker, animated: true, completion:nil)
         chosenButton = "Main"
         
-       
     }
     
     @IBAction func btnButton3(sender: UIBarButtonItem) {
@@ -121,10 +120,10 @@ UINavigationControllerDelegate {
     }
     
     
-    func saveImage (image: UIImage, path: String ) -> Bool{
+    func saveImage (image: UIImage, path: String, filename: String) -> Bool{
         //let pngImageData = UIImagePNGRepresentation(image)
         let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
-        let result = jpgImageData!.writeToFile(path, atomically: true)
+        let result = jpgImageData!.writeToFile(path + "/" + filename, atomically: true)
         return result
         
     }
@@ -167,8 +166,35 @@ UINavigationControllerDelegate {
     }
     
     
+    func saveDesignButton(designId: String, designImage: String){
+        
+        let databasePath = getSupportPath("genie.db") // grab the database.
+        let genieDB = FMDatabase(path: String(databasePath))
+        
+        if genieDB.open() {
+            
+            
+            let insertSQL = "UPDATE DESIGNS SET DESIGNIMAGE='\(designImage)' where id=\(designId)"
+            let result = genieDB.executeStatements(insertSQL)
+            
+            if !result {
+                print("Error: \(genieDB.lastErrorMessage())")
+            }else{
+                
+            }
+            genieDB.close()
+            
+            
+        } else {
+            print("Error: \(genieDB.lastErrorMessage())")
+        }
+        
+        
+
+        
+    }
     
-    func setDefaultGeneral(imagename: String){
+    func setDefaultGeneral(homeimage: String){
         
         
         let databasePath = getSupportPath("genie.db") // grab the database.
@@ -176,28 +202,15 @@ UINavigationControllerDelegate {
         
         if genieDB.open() {
             
-            let insertSQL = "UPDATE GENERAL SET HOMEIMAGE='\(imagename)' where id=1"
-            let result = genieDB.executeStatements(insertSQL)
             
-            if !result {
-                print("Error: \(genieDB.lastErrorMessage())")
-            }else{
-                /* not necessary
-                let querySQL = "SELECT HOMEIMAGE, ACTIVE FROM GENERAL WHERE ACTIVE=1"
-                
-                let results:FMResultSet? = genieDB.executeQuery(querySQL,
-                withArgumentsInArray: nil)
-                
-                if results?.next() == true {
-                appImageView.image = UIImage(named: (results?.stringForColumn("HOMEIMAGE"))!)
-                print(results?.stringForColumn("HOMEIMAGE")!)
-                } else {
-                print("Record not found, setting to default")
-                // appImageView.image = UIImage(named: "bg-home") // default.
-                }
-                */
-                
-            }
+           let insertSQL = "UPDATE GENERAL SET HOMEIMAGE='\(homeimage)' where id=1"
+           let result = genieDB.executeStatements(insertSQL)
+            
+           if !result {
+                    print("Error: \(genieDB.lastErrorMessage())")
+           }else{
+                    
+           }
             genieDB.close()
             
             
@@ -249,19 +262,56 @@ UINavigationControllerDelegate {
        
         if chosenButton=="1" {
             btn1ImageView.image = pickedImage
+            saveDesignButton(1, designImage: "btn1-user")
+            let path = getSupportPath("images")
+            saveImage(pickedImage, path: path, filename: "btn1-user.jpg")
         }else if chosenButton == "2"{
             btn2ImageView.image = pickedImage
+            setDefaultGeneral("",button1: "",button2: "btn2-user",button3: "",button4: "",button5: "")
+            let path = getSupportPath("images")
+            saveImage(pickedImage, path: path, filename: "button2-user.jpg")
         }else if chosenButton == "3"{
             btn3ImageView.image = pickedImage
+            setDefaultGeneral("",button1: "",button2: "",button3: "button3-user",button4: "",button5: "")
+            let path = getSupportPath("images")
+            saveImage(pickedImage, path: path, filename: "button3-user.jpg")
         }else if chosenButton == "4"{
             btn4ImageView.image = pickedImage
+            setDefaultGeneral("",button1: "",button2: "",button3: "",button4: "button4-user",button5: "")
+
+            let path = getSupportPath("images")
+            saveImage(pickedImage, path: path, filename: "button4-user.jpg")
         }else if chosenButton == "5" {
             btn5ImageView.image = pickedImage
+            setDefaultGeneral("",button1: "",button2: "",button3: "",button4: "",button5: "button5-user")
+            let path = getSupportPath("images")
+            saveImage(pickedImage, path: path, filename: "button5-user.jpg")
         }else if chosenButton == "Main" {
             appImageView.image = pickedImage
+            setDefaultGeneral("bg-home-user",button1: "", button2: "", button3:"", button4:"", button5:"")
+            let path = getSupportPath("images")
+            saveImage(pickedImage, path: path, filename: "bg-home-user.jpg")
+                      
         }
         dismissViewControllerAnimated(true, completion: nil)
         
+    }
+    
+    func grabGeneralImages(){
+        let databasePath = getSupportPath("genie.db") // grab the database.
+        let genieDB = FMDatabase(path: String(databasePath))
+        if genieDB.open() {
+            let querySQL = "SELECT HOMEIMAGE FROM GENERAL WHERE id=1"
+            let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
+            if results?.next() == true {
+                appImageView.image = UIImage(named: (fileInDocumentsDirectory((results?.stringForColumn("HOMEIMAGE"))!)))
+                print(results?.stringForColumn("HOMEIMAGE")!)
+            } else {
+                print("Records not found in database for 'General Settings'.")
+            }
+            genieDB.close()
+        }
+
     }
     
     override func viewDidLoad() {
@@ -270,6 +320,10 @@ UINavigationControllerDelegate {
         let value = UIInterfaceOrientation.LandscapeRight.rawValue
         UIDevice.currentDevice().setValue(value, forKey: "orientation")
         imagePicker.delegate = self
+        grabGeneralImages() // Sets the initial values imageray based on any saved results.
+        
+
+        
     }
 
 
