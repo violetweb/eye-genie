@@ -41,41 +41,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gaz-X7-XBQ">
                                 <rect key="frame" x="37" y="203" width="588" height="330"/>
                             </imageView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="seD-Iq-Q8x">
-                                <rect key="frame" x="0.0" y="724" width="1024" height="44"/>
-                                <items>
-                                    <barButtonItem title="Choose Cover Image" id="5we-Bn-BQ3">
-                                        <connections>
-                                            <action selector="btnItem:" destination="yKN-1g-Kqo" id="EDu-ll-kwZ"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Lens Design 1" id="o77-MM-pbl">
-                                        <connections>
-                                            <action selector="btnButton1:" destination="yKN-1g-Kqo" id="n54-q4-2Oe"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Lens Design 2" id="mTL-2G-fld">
-                                        <connections>
-                                            <action selector="btnButton2:" destination="yKN-1g-Kqo" id="QQp-Bc-UFu"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Lens Design 3" id="Mox-YU-eYA">
-                                        <connections>
-                                            <action selector="btnButton3:" destination="yKN-1g-Kqo" id="Z4w-dT-fLt"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Lens Design 4" id="173-sb-Pth">
-                                        <connections>
-                                            <action selector="btnButton4:" destination="yKN-1g-Kqo" id="yve-dE-HMq"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Lens Design 5" id="Jam-zG-vMU">
-                                        <connections>
-                                            <action selector="btnButton5:" destination="yKN-1g-Kqo" id="RBw-g3-FD5"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dTp-Vi-dMy">
                                 <rect key="frame" x="650" y="219" width="175" height="57"/>
                             </imageView>
@@ -112,6 +77,44 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vuL-WO-4U4">
                                 <rect key="frame" x="650" y="384" width="175" height="63"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="seD-Iq-Q8x">
+                                <rect key="frame" x="0.0" y="724" width="1024" height="44"/>
+                                <items>
+                                    <barButtonItem title="Choose Cover Image" id="5we-Bn-BQ3">
+                                        <connections>
+                                            <action selector="btnItem:" destination="yKN-1g-Kqo" id="EDu-ll-kwZ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Button #1" id="o77-MM-pbl">
+                                        <connections>
+                                            <action selector="btnButton1:" destination="yKN-1g-Kqo" id="n54-q4-2Oe"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Button #2" id="mTL-2G-fld">
+                                        <connections>
+                                            <action selector="btnButton2:" destination="yKN-1g-Kqo" id="QQp-Bc-UFu"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Button #3" id="Mox-YU-eYA">
+                                        <connections>
+                                            <action selector="btnButton3:" destination="yKN-1g-Kqo" id="Z4w-dT-fLt"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Button #4" id="173-sb-Pth">
+                                        <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="btnButton4:" destination="yKN-1g-Kqo" id="yve-dE-HMq"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Reset to Defaults" id="Jam-zG-vMU">
+                                        <connections>
+                                            <action selector="btnReset:" destination="yKN-1g-Kqo" id="9QQ-Zd-Erq"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="barTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -146,16 +149,16 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nar-OY-1kf">
                                 <rect key="frame" x="816" y="73" width="208" height="651"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRu-hT-f9E">
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRu-hT-f9E">
                                         <rect key="frame" x="20" y="103" width="175" height="75"/>
-                                        <state key="normal" title="Button" image="btn-jenna"/>
+                                        <state key="normal" backgroundImage="btn-jenna"/>
                                         <connections>
                                             <action selector="btnJena:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Szw-9O-p1j"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odI-Nj-Ehh">
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odI-Nj-Ehh">
                                         <rect key="frame" x="15" y="186" width="175" height="75"/>
-                                        <state key="normal" title="Button" image="btn-jenna-wide"/>
+                                        <state key="normal" backgroundImage="btn-jenna-wide"/>
                                         <connections>
                                             <action selector="btnJenaW:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qgy-cr-5Sx"/>
                                         </connections>
@@ -184,16 +187,9 @@
                                         <color key="textColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUa-Y1-6Xo">
-                                        <rect key="frame" x="17" y="34" width="175" height="75"/>
-                                        <state key="normal" title="Button" image="btn-conventional"/>
-                                        <connections>
-                                            <action selector="btnConventional:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aeo-Vl-3gu"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPR-jq-1B8">
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPR-jq-1B8">
                                         <rect key="frame" x="15" y="269" width="175" height="75"/>
-                                        <state key="normal" title="Button" image="btn-jenna-4k"/>
+                                        <state key="normal" backgroundImage="btn-jenna-4k"/>
                                         <connections>
                                             <action selector="btnJena4k:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4yC-x3-2bZ"/>
                                         </connections>
@@ -207,60 +203,16 @@
                                         <color key="textColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUa-Y1-6Xo">
+                                        <rect key="frame" x="17" y="34" width="175" height="75"/>
+                                        <state key="normal" backgroundImage="btn-conventional"/>
+                                        <connections>
+                                            <action selector="btnConventional:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aeo-Vl-3gu"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kES-vR-GKL">
-                                <rect key="frame" x="0.0" y="724" width="1024" height="44"/>
-                                <items>
-                                    <barButtonItem title="Cockpit" id="iZu-V5-JZi">
-                                        <connections>
-                                            <action selector="btnCockpit:" destination="BYZ-38-t0r" id="dxb-Ik-6Hc"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Sailing" width="69" id="6rY-RA-sgU">
-                                        <connections>
-                                            <action selector="btnSailing:" destination="BYZ-38-t0r" id="WVW-aS-6Fl"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Autumn" id="G8I-pp-WRw">
-                                        <connections>
-                                            <action selector="btnAutumn:" destination="BYZ-38-t0r" id="YYC-a1-Sab"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="64" style="plain" systemItem="fixedSpace" id="rxh-19-oSV"/>
-                                    <barButtonItem title="Blue" width="40" id="wF8-D5-TVn"/>
-                                    <barButtonItem title="Green" style="plain" id="vsW-Za-D6X">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Mo4-zi-HEo">
-                                            <rect key="frame" x="352" y="7" width="54" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Green"/>
-                                        </button>
-                                    </barButtonItem>
-                                    <barButtonItem width="60" style="plain" systemItem="fixedSpace" id="LFb-lh-Cyd"/>
-                                    <barButtonItem title="Hydro" style="plain" id="Fld-bk-HGC">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7pm-MU-FFG">
-                                            <rect key="frame" x="476" y="7" width="67" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Hydro"/>
-                                        </button>
-                                    </barButtonItem>
-                                    <barButtonItem title="AR Coating" style="plain" id="uTq-vv-5hK">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Juv-ep-TJs">
-                                            <rect key="frame" x="553" y="7" width="93" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="A/R Coating"/>
-                                        </button>
-                                    </barButtonItem>
-                                    <barButtonItem title="Hard Coat" style="plain" id="yry-A8-bal">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Jtr-SY-dQH">
-                                            <rect key="frame" x="656" y="7" width="74" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Hard Coat"/>
-                                        </button>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="edc-aE-JTf">
                                 <rect key="frame" x="0.0" y="28" width="1024" height="44"/>
                                 <items>
@@ -293,6 +245,48 @@
                                     <outletCollection property="gestureRecognizers" destination="SVR-fg-geF" appends="YES" id="f4o-Ok-Tnu"/>
                                 </connections>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kES-vR-GKL">
+                                <rect key="frame" x="0.0" y="724" width="1024" height="44"/>
+                                <items>
+                                    <barButtonItem title="Cockpit" id="iZu-V5-JZi">
+                                        <connections>
+                                            <action selector="btnCockpit:" destination="BYZ-38-t0r" id="dxb-Ik-6Hc"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Sailing" width="69" id="6rY-RA-sgU">
+                                        <connections>
+                                            <action selector="btnSailing:" destination="BYZ-38-t0r" id="WVW-aS-6Fl"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Autumn" id="G8I-pp-WRw">
+                                        <connections>
+                                            <action selector="btnAutumn:" destination="BYZ-38-t0r" id="YYC-a1-Sab"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="363" style="plain" systemItem="fixedSpace" id="rxh-19-oSV"/>
+                                    <barButtonItem title="Hydro" style="plain" id="Fld-bk-HGC">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7pm-MU-FFG">
+                                            <rect key="frame" x="601" y="7" width="67" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Hydro"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem title="AR Coating" style="plain" id="uTq-vv-5hK">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Juv-ep-TJs">
+                                            <rect key="frame" x="678" y="7" width="93" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="A/R Coating"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem title="Hard Coat" style="plain" id="yry-A8-bal">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Jtr-SY-dQH">
+                                            <rect key="frame" x="781" y="7" width="74" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Hard Coat"/>
+                                        </button>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -300,6 +294,10 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                     <connections>
+                        <outlet property="Button1" destination="dUa-Y1-6Xo" id="wgy-YK-b47"/>
+                        <outlet property="Button2" destination="IRu-hT-f9E" id="Pxs-Q9-C12"/>
+                        <outlet property="Button3" destination="odI-Nj-Ehh" id="kER-FH-VSa"/>
+                        <outlet property="Button4" destination="EPR-jq-1B8" id="DP9-a7-Wyp"/>
                         <outlet property="mainImageView" destination="Hez-pH-2cQ" id="HKN-9t-Ibk"/>
                         <outlet property="sliderAddOutlet" destination="DbY-vW-uBv" id="3om-er-YGD"/>
                         <outlet property="sliderPowerOutlet" destination="4Ri-ec-uKk" id="UPC-1X-P04"/>
@@ -313,7 +311,7 @@
                 </panGestureRecognizer>
                 <pinchGestureRecognizer id="SVR-fg-geF">
                     <connections>
-                        <action selector="pinchGesture:" destination="BYZ-38-t0r" id="hSV-qz-iRU"/>
+                        <action selector="pinchGesture:" destination="BYZ-38-t0r" id="W9M-Qp-xAz"/>
                     </connections>
                 </pinchGestureRecognizer>
             </objects>
@@ -338,17 +336,29 @@
                                         <rect key="frame" x="0.0" y="2" width="1024" height="705"/>
                                     </imageView>
                                     <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wie-3V-mhl">
-                                        <rect key="frame" x="406" y="229" width="305" height="30"/>
+                                        <rect key="frame" x="360" y="229" width="305" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                     </textField>
                                     <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GWB-Ns-rVR">
-                                        <rect key="frame" x="406" y="287" width="305" height="30"/>
+                                        <rect key="frame" x="360" y="284" width="305" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                                     </textField>
-                                    <button clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsi-c2-Rkl">
-                                        <rect key="frame" x="446" y="359" width="204" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to Eye-Genie" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ck7-yC-UcX">
+                                        <rect key="frame" x="0.0" y="74" width="1024" height="59"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your credentials below to login and begin using EyeGenie." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbv-Ss-dt3">
+                                        <rect key="frame" x="0.0" y="168" width="1024" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsi-c2-Rkl">
+                                        <rect key="frame" x="360" y="359" width="305" height="55"/>
                                         <color key="backgroundColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="LOGIN">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -357,25 +367,13 @@
                                             <action selector="btnLogin:" destination="ukz-Tl-yTL" eventType="touchUpInside" id="GY0-MC-5ae"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to Eye-Genie" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ck7-yC-UcX">
-                                        <rect key="frame" x="0.0" y="74" width="1024" height="59"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your credentials below to login and begin using EyeGenie." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbv-Ss-dt3">
-                                        <rect key="frame" x="0.0" y="168" width="1066" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hHl-AM-iFU">
-                                <rect key="frame" x="0.0" y="21" width="1024" height="74"/>
+                                <rect key="frame" x="0.0" y="21" width="1024" height="44"/>
                                 <items>
-                                    <navigationItem title="Welcome to Eye Genie" prompt="Eye Genie" id="WL2-bt-cNh"/>
+                                    <navigationItem title="Welcome to Eye Genie" id="WL2-bt-cNh"/>
                                 </items>
                             </navigationBar>
                         </subviews>

@@ -10,6 +10,7 @@ import UIKit
 import GLKit
 
 
+
 class ViewController: UIViewController {
 
    
@@ -74,14 +75,10 @@ class ViewController: UIViewController {
         let translate = CATransform3DMakeTranslation(0, 0, 0);
         let scale = CATransform3DMakeScale(sender.scale, sender.scale, 1);
         let transform = CATransform3DConcat(translate, scale);
-        
+    
         lensShapelayer.transform = transform
-        
-        let grow = CIFilter(name: "CGAffineTransform")
-        let transformedPath = CGPathCreateCopyByTransformingPath(lensShapelayer.path, grow)
-        imageLayer.path = transformedPath
-        
-        /*  THIS DOESNT WORK
+        lensShapelayer.addSublayer(currentAdd.layer)
+           /*  THIS DOESNT WORK
         let newPath = lensShapelayer.path
         let animation = CABasicAnimation(keyPath: "path")
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut) // animation curve is Ease Out
@@ -96,9 +93,11 @@ class ViewController: UIViewController {
    }
     
     
+    
+    
     @IBOutlet weak var mainImageView: UIView!
     
-    @IBAction func btnConventional(sender: AnyObject) {
+    @IBAction func btnConventional(sender: UIButton) {
         
         
         leftLayer.removeFromSuperlayer()
@@ -130,14 +129,18 @@ class ViewController: UIViewController {
         
         let blurRadius = Float(sliderPowerOutlet.value)
         swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
-
+        Button2.fadeOut()
+        Button3.fadeOut()
+        Button4.fadeOut()
+        sender.fadeIn()
     }
     
     
     
     
-    @IBAction func btnJena(sender: AnyObject) {
+    @IBAction func btnJena(sender: UIButton) {
         
+       
         leftLayer.removeFromSuperlayer()
         let newLeftLayer = CAShapeLayer()
         newLeftLayer.path = drawShapePath(2, reverse: false)
@@ -166,11 +169,15 @@ class ViewController: UIViewController {
 
         let blurRadius = Float(sliderPowerOutlet.value)
         swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
-        
+      
+        Button1.fadeOut()
+        Button3.fadeOut()
+        Button4.fadeOut()
+          sender.fadeIn()
     }
     
     
-    @IBAction func btnJenaW(sender: AnyObject) {
+    @IBAction func btnJenaW(sender: UIButton) {
         
         leftLayer.removeFromSuperlayer()
         let newLeftLayer = CAShapeLayer()
@@ -200,11 +207,14 @@ class ViewController: UIViewController {
 
         let blurRadius = Float(sliderPowerOutlet.value)
         swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
-        
+        Button1.fadeOut()
+        Button2.fadeOut()
+        Button4.fadeOut()
+        sender.fadeIn()
     }
     
     
-    @IBAction func btnJena4k(sender: AnyObject) {
+    @IBAction func btnJena4k(sender: UIButton) {
         
         leftLayer.removeFromSuperlayer()
         let newLeftLayer = CAShapeLayer()
@@ -232,7 +242,10 @@ class ViewController: UIViewController {
         leftMask.path = drawShapePath(4, reverse:false)
         rightMask.path = drawShapeMirrorPath(4, reverse:false)
         currentPath = "Jenna4K"
-
+        Button1.fadeOut()
+        Button2.fadeOut()
+        Button3.fadeOut()
+        sender.fadeIn()
         
     }
     
@@ -260,6 +273,7 @@ class ViewController: UIViewController {
     
     @IBAction func btnCockpit(sender: UIBarButtonItem) {
         
+       
         let blurRadius = Float(sliderPowerOutlet.value)
         drawMainLayer(blurRadius, imageName: UIImage(named: "cockpit-n")!)
         currentBackground = UIImage(named: "cockpit-v")
@@ -280,6 +294,33 @@ class ViewController: UIViewController {
         swapLensImage(blurRadius, swapToImage: UIImage(named: "sailing")!)
 
     }
+    
+    
+    
+    func getSupportPath(fileName: String) -> String {
+        let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
+        let fileURL = documentsURL.URLByAppendingPathComponent(fileName)
+        return fileURL.path!
+    }
+    
+    func grabButtonImageName(designId: Int)-> String{
+        let databasePath = getSupportPath("genie.db") // grab the database.
+        let genieDB = FMDatabase(path: String(databasePath))
+        var imageName = ""
+        if genieDB.open() {
+            let querySQL = "SELECT IMAGENAME FROM DESIGNS where ID=\(designId)"
+            let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
+            if results?.next() == true {
+                imageName = (results?.stringForColumn("IMAGENAME"))!
+                print(results?.stringForColumn("IMAGENAME")!)
+            } else {
+                print("Records not found in database for 'General Settings'.")
+            }
+            genieDB.close()
+        }
+        return imageName
+    }
+
     
     
     func swapLensImage(blurRadius: Float, swapToImage: UIImage){
@@ -905,11 +946,85 @@ class ViewController: UIViewController {
         
         
     }
+    
+    func setBtn1FromDirectory(findimage: String){
+        
+        let fm = NSFileManager.defaultManager()
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix(findimage) {
+                let itemImage = path + "/" + item
+                Button1.setBackgroundImage(UIImage.init(contentsOfFile: itemImage), forState: UIControlState.Normal)
+                
+                
+            }
+        }
+        
+    }
+    @IBOutlet weak var Button4: UIButton!
+    @IBOutlet weak var Button3: UIButton!
+    @IBOutlet weak var Button2: UIButton!
+    @IBOutlet weak var Button1: UIButton!
+    
+    
+    
+    
+    
+    func setBtn2FromDirectory(findimage: String){
+        
+        let fm = NSFileManager.defaultManager()
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix(findimage) {
+                let itemImage = path + "/" + item
+                
+                Button2.setBackgroundImage(UIImage.init(contentsOfFile: itemImage),forState: UIControlState.Normal)
+                
+            }
+        }
+        
+    }
+    func setBtn3FromDirectory(findimage: String){
+        
+        let fm = NSFileManager.defaultManager()
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix(findimage) {
+                let itemImage = path + "/" + item
+                Button3.setBackgroundImage(UIImage.init(contentsOfFile: itemImage), forState: UIControlState.Normal)
+                
+            }
+        }
+        
+    }
+    func setBtn4FromDirectory(findimage: String){
+        
+        let fm = NSFileManager.defaultManager()
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix(findimage) {
+                let itemImage = path + "/" + item
+                Button4.setBackgroundImage(UIImage.init(contentsOfFile: itemImage), forState: UIControlState.Normal)
+                
+            }
+        }
+        
+    }
+
     override func viewDidAppear(animated: Bool)
     {
         drawMainLayer(0.0,imageName: imgPilots!)
         setDefaultLayers(imgPilotsVib!)
-       // resetColor()
+        
+        setBtn1FromDirectory(grabButtonImageName(1))
+        setBtn2FromDirectory(grabButtonImageName(2))
+        setBtn3FromDirectory(grabButtonImageName(3))
+        setBtn4FromDirectory(grabButtonImageName(4))
+       // Color()
         
         
     }

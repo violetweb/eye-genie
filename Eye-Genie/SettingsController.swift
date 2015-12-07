@@ -26,6 +26,10 @@ UINavigationControllerDelegate {
      @IBOutlet weak var appImageView: UIImageView!
     
     @IBAction func btnButton1(sender: UIBarButtonItem) {
+        UIView.animateWithDuration(0.5, animations: {
+            sender.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.blackColor()], forState: UIControlState.Normal)
+        })
+
         
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
@@ -38,6 +42,7 @@ UINavigationControllerDelegate {
     }
     
     @IBAction func btnButton2(sender: UIBarButtonItem) {
+      
       
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
@@ -60,6 +65,10 @@ UINavigationControllerDelegate {
     }
     
     @IBAction func btnButton3(sender: UIBarButtonItem) {
+        UIView.animateWithDuration(0.5, animations: {
+            sender.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.blackColor()], forState: UIControlState.Normal)
+        })
+
         
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
@@ -71,6 +80,10 @@ UINavigationControllerDelegate {
     
     
     @IBAction func btnButton4(sender: UIBarButtonItem) {
+        UIView.animateWithDuration(0.5, animations: {
+            sender.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.blackColor()], forState: UIControlState.Normal)
+        })
+
         
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
@@ -82,13 +95,26 @@ UINavigationControllerDelegate {
     
     
     
-    @IBAction func btnButton5(sender: UIBarButtonItem) {
+    @IBAction func btnReset(sender: UIBarButtonItem) {
         
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
-        imagePicker.modalPresentationStyle = .Popover
-        imagePicker.popoverPresentationController?.barButtonItem = sender
-        presentViewController(imagePicker, animated: true, completion:nil)
+        UIView.animateWithDuration(0.5, animations: {
+            sender.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.blackColor()], forState: UIControlState.Normal)
+        })
+        
+        //Buttons
+        saveDesignButton(1, designImage: "btn-conventional")
+        saveDesignButton(2, designImage: "btn-jenna")
+        saveDesignButton(3, designImage: "btn-jenna-wide")
+        saveDesignButton(4, designImage: "btn-jenna-4k")
+        setBtn1FromDirectory("btn-conventional")
+        setBtn2FromDirectory("btn-jenna")
+        setBtn3FromDirectory("btn-jenna-wide")
+        setBtn4FromDirectory("btn-jenna-4k")
+        
+        //Main Image.
+        saveMainImage("bg-home")
+        setMainImageFromDirectory("bg-home")
+        //Reset values to their defaults.
         chosenButton = "5"
     }
     
@@ -97,26 +123,82 @@ UINavigationControllerDelegate {
     
     var chosenButton = "Main"
     
-    func setImageFromDirectory(findimage: String){
+    
+    func setMainImageFromDirectory(findimage: String){
         
         let fm = NSFileManager.defaultManager()
-        //let path = NSBundle.mainBundle().resourcePath!
-        let path = getSupportPath("Genie")
-        print(path)
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
         let items = try! fm.contentsOfDirectoryAtPath(path)
-        
-        /*
-        
         for item in items {
-        if item.hasPrefix(findimage) {
-        appImageView.image = UIImage(named: findimage)
-        let saved = saveImage(appImageView.image!, path: path)
-        if saved {
-        print(path)
+            if item.hasPrefix(findimage) {
+                var itemImage = path + "/" + item
+                appImageView.image = UIImage.init(contentsOfFile: itemImage)
+                
+            }
         }
+        
+    }
+    func setBtn1FromDirectory(findimage: String){
+        
+        let fm = NSFileManager.defaultManager()
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix(findimage) {
+                var itemImage = path + "/" + item
+                btn1ImageView.image = UIImage.init(contentsOfFile: itemImage)
+                
+            }
         }
+        
+    }
+    func setBtn2FromDirectory(findimage: String){
+        
+        let fm = NSFileManager.defaultManager()
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix(findimage) {
+                var itemImage = path + "/" + item
+                btn2ImageView.image = UIImage.init(contentsOfFile: itemImage)
+                
+            }
         }
-        */
+        
+    }
+    func setBtn3FromDirectory(findimage: String){
+        
+        let fm = NSFileManager.defaultManager()
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix(findimage) {
+                var itemImage = path + "/" + item
+                btn3ImageView.image = UIImage.init(contentsOfFile: itemImage)
+                
+            }
+        }
+        
+    }
+    func setBtn4FromDirectory(findimage: String){
+        
+        let fm = NSFileManager.defaultManager()
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix(findimage) {
+                var itemImage = path + "/" + item
+                btn4ImageView.image = UIImage.init(contentsOfFile: itemImage)
+                
+            }
+        }
+        
+    }
+   
+
+    func resetToDefaults(){
+        
+        
     }
     
     
@@ -134,15 +216,15 @@ UINavigationControllerDelegate {
         
         
         let folderPath = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)[0]
-        let writePath = (folderPath as NSString).stringByAppendingPathComponent("Genie") //  Can we specific ourselves??
+        let writePath = (folderPath as NSString).stringByAppendingPathComponent("/images") //  Can we specific ourselves??
         return writePath
     }
     
     
     // Get path for a file in the directory
     func fileInDocumentsDirectory(filename: String) -> String {
-        
-        return supportDirectory() + filename
+        //print(supportDirectory() + filename)
+        return supportDirectory() + "/" + filename
     }
     
     
@@ -154,7 +236,7 @@ UINavigationControllerDelegate {
         if image == nil {
             print("missing image at: (path)")
         }
-        print("(path)") // this is just for you to see the path in case you want to go to the directory, using Finder.
+      //  print("(path)") // this is just for you to see the path in case you want to go to the directory, using Finder.
         return image
         
     }
@@ -174,7 +256,7 @@ UINavigationControllerDelegate {
         if genieDB.open() {
             
             
-            let insertSQL = "UPDATE DESIGNS SET DESIGNIMAGE='\(designImage)' where id=\(designId)"
+            let insertSQL = "UPDATE DESIGNS SET imagename='\(designImage)' where id=\(designId)"
             let result = genieDB.executeStatements(insertSQL)
             
             if !result {
@@ -194,7 +276,7 @@ UINavigationControllerDelegate {
         
     }
     
-    func setDefaultGeneral(homeimage: String){
+    func saveMainImage(homeimage: String){
         
         
         let databasePath = getSupportPath("genie.db") // grab the database.
@@ -238,7 +320,7 @@ UINavigationControllerDelegate {
     @IBOutlet weak var btn2ImageView: UIImageView!
     @IBOutlet weak var btn3ImageView: UIImageView!
     @IBOutlet weak var btn4ImageView: UIImageView!
-    @IBOutlet weak var btn5ImageView: UIImageView!
+  
   
     
     
@@ -261,6 +343,7 @@ UINavigationControllerDelegate {
         }
        
         if chosenButton=="1" {
+
             btn1ImageView.image = pickedImage
             saveDesignButton(1, designImage: "btn1-user")
             let path = getSupportPath("images")
@@ -280,14 +363,9 @@ UINavigationControllerDelegate {
             saveDesignButton(4, designImage: "btn4-user")
             let path = getSupportPath("images")
             saveImage(pickedImage, path: path, filename: "btn4-user.jpg")
-        }else if chosenButton == "5" {
-            btn5ImageView.image = pickedImage
-            saveDesignButton(5, designImage: "btn5-user")
-            let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "btn5-user.jpg")
         }else if chosenButton == "Main" {
             appImageView.image = pickedImage
-            setDefaultGeneral("bg-home-user")
+            saveMainImage("bg-home-user")
             let path = getSupportPath("images")
             saveImage(pickedImage, path: path, filename: "bg-home-user.jpg")
                       
@@ -303,8 +381,7 @@ UINavigationControllerDelegate {
             let querySQL = "SELECT HOMEIMAGE FROM GENERAL WHERE id=1"
             let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
             if results?.next() == true {
-                appImageView.image = UIImage(named: (fileInDocumentsDirectory((results?.stringForColumn("HOMEIMAGE"))!)))
-                print(results?.stringForColumn("HOMEIMAGE")!)
+                setMainImageFromDirectory((results?.stringForColumn("HOMEIMAGE")!)!)
             } else {
                 print("Records not found in database for 'General Settings'.")
             }
@@ -318,11 +395,11 @@ UINavigationControllerDelegate {
         let genieDB = FMDatabase(path: String(databasePath))
         var imageName = ""
         if genieDB.open() {
-            let querySQL = "SELECT DESIGNIMAGE FROM DESIGNS where DESIGNID=\(designId)"
+            let querySQL = "SELECT IMAGENAME FROM DESIGNS where ID=\(designId)"
             let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
             if results?.next() == true {
-                imageName = (results?.stringForColumn("DESIGNIMAGE"))!
-                print(results?.stringForColumn("designimage")!)
+                imageName = (results?.stringForColumn("IMAGENAME"))!
+                print(results?.stringForColumn("IMAGENAME")!)
             } else {
                 print("Records not found in database for 'General Settings'.")
             }
@@ -332,18 +409,23 @@ UINavigationControllerDelegate {
     }
 
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //Reset to Defaults
+    override func viewDidAppear(animated: Bool)
+    {
         let value = UIInterfaceOrientation.LandscapeRight.rawValue
         UIDevice.currentDevice().setValue(value, forKey: "orientation")
         imagePicker.delegate = self
         grabMainImage() // Sets the initial values imageray based on any saved results.
         //Set up 4 button images (4 were saved as defaults) (currently hard coded, but will likely be dynamically set from a back end maybe at some point.
-        btn1ImageView.image = UIImage(named: (fileInDocumentsDirectory(grabButtonImageName(1))))
-        btn2ImageView.image = UIImage(named: (fileInDocumentsDirectory(grabButtonImageName(2))))
-        btn3ImageView.image = UIImage(named: (fileInDocumentsDirectory(grabButtonImageName(3))))
-        btn4ImageView.image = UIImage(named: (fileInDocumentsDirectory(grabButtonImageName(4))))
+        setBtn1FromDirectory(grabButtonImageName(1))
+        setBtn2FromDirectory(grabButtonImageName(2))
+        setBtn3FromDirectory(grabButtonImageName(3))
+        setBtn4FromDirectory(grabButtonImageName(4))
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //Reset to Defaults
         
 
         

@@ -42,8 +42,10 @@ class LoginViewController: UIViewController {
         defaults.synchronize()
     }
     
-    @IBAction func btnLogin(sender: AnyObject) {
+    @IBAction func btnLogin(sender: UIButton) {
         
+        
+        sender.buttonBounce()
         
         // resign the keyboard for text fields
         // by asking if its the first responder, we're saying it has a touch event + ties directly to the touch features...
@@ -134,7 +136,6 @@ class LoginViewController: UIViewController {
                 //Add popup to let user know that it was unsuccessful.
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
                 self.displayAlert("Login Result", message: "We are unable to login at this time; please try again in a few minutes.")
-                print(myJSONError)
             }
             
         })
