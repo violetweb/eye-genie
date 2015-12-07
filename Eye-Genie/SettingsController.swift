@@ -124,6 +124,9 @@ UINavigationControllerDelegate {
     var chosenButton = "Main"
     
     
+    @IBOutlet weak var btnCoverImage: UIBarButtonItem!
+    
+    
     func setMainImageFromDirectory(findimage: String){
         
         let fm = NSFileManager.defaultManager()
