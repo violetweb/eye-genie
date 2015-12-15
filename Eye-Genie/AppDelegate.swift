@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        dropData() //- dumps the genie.db and resets up everything... used while testing.
+        //dropData() //- dumps the genie.db and resets up everything... used while testing.
         setUpDatabase()
         setUpFiles()
 
@@ -225,8 +225,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let images = try! fm.contentsOfDirectoryAtPath(copyfrompath)
         
         for image in images {
-            var copyitem = copyfrompath + "/" + image
-            var copytoitem = copytopath + "/" + image
+            let copyitem = copyfrompath + "/" + image
+            let copytoitem = copytopath + "/" + image
             do {
                 try fm.copyItemAtPath(copyitem,toPath: copytoitem)
                 print("Copied files from appdefaults to application support directory.")

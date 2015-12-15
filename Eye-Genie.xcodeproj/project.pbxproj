@@ -25,6 +25,10 @@
 		F454B8351C0F8E0A005427A8 /* AppImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F454B8341C0F8E0A005427A8 /* AppImageController.swift */; };
 		F460A9781C15F20300C63D91 /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F460A9771C15F20300C63D91 /* FileHelper.swift */; };
 		F460A97A1C16117800C63D91 /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F460A9791C16117800C63D91 /* AnimationHelper.swift */; };
+		F468EFB41C17670B00C9F237 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F468EFB31C17670B00C9F237 /* MenuItem.swift */; };
+		F468EFB61C1770BF00C9F237 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F468EFB51C1770BF00C9F237 /* MenuCell.swift */; };
+		F468EFB81C1792A400C9F237 /* DesignsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F468EFB71C1792A400C9F237 /* DesignsController.swift */; };
+		F468EFBA1C18A0A800C9F237 /* CustomizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F468EFB91C18A0A800C9F237 /* CustomizationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +59,10 @@
 		F454B8341C0F8E0A005427A8 /* AppImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppImageController.swift; path = ../AppImageController.swift; sourceTree = "<group>"; };
 		F460A9771C15F20300C63D91 /* FileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHelper.swift; sourceTree = "<group>"; };
 		F460A9791C16117800C63D91 /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
+		F468EFB31C17670B00C9F237 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		F468EFB51C1770BF00C9F237 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		F468EFB71C1792A400C9F237 /* DesignsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignsController.swift; sourceTree = "<group>"; };
+		F468EFB91C18A0A800C9F237 /* CustomizationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,10 +97,14 @@
 		F454B7F01C0DFC73005427A8 /* Eye-Genie */ = {
 			isa = PBXGroup;
 			children = (
+				F468EFAE1C175ACC00C9F237 /* Model */,
 				F454B8181C0DFFAA005427A8 /* fmdb */,
 				F454B7F11C0DFC73005427A8 /* AppDelegate.swift */,
 				F454B7F51C0DFC73005427A8 /* Main.storyboard */,
+				F468EFB91C18A0A800C9F237 /* CustomizationController.swift */,
+				F468EFB51C1770BF00C9F237 /* MenuCell.swift */,
 				F454B82E1C0E07E9005427A8 /* LoginViewController.swift */,
+				F468EFB71C1792A400C9F237 /* DesignsController.swift */,
 				F454B8341C0F8E0A005427A8 /* AppImageController.swift */,
 				F454B8321C0E1D36005427A8 /* SettingsController.swift */,
 				F454B7F31C0DFC73005427A8 /* ViewController.swift */,
@@ -124,6 +136,14 @@
 				F454B8291C0DFFC7005427A8 /* Eye-Genie-Bridging-Header.h */,
 			);
 			path = fmdb;
+			sourceTree = "<group>";
+		};
+		F468EFAE1C175ACC00C9F237 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F468EFB31C17670B00C9F237 /* MenuItem.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,14 +220,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				F454B8331C0E1D36005427A8 /* SettingsController.swift in Sources */,
+				F468EFBA1C18A0A800C9F237 /* CustomizationController.swift in Sources */,
 				F454B8241C0DFFAA005427A8 /* FMDatabase.m in Sources */,
+				F468EFB81C1792A400C9F237 /* DesignsController.swift in Sources */,
 				F454B7F41C0DFC73005427A8 /* ViewController.swift in Sources */,
 				F454B8351C0F8E0A005427A8 /* AppImageController.swift in Sources */,
 				F460A9781C15F20300C63D91 /* FileHelper.swift in Sources */,
 				F454B8281C0DFFAA005427A8 /* FMResultSet.m in Sources */,
+				F468EFB41C17670B00C9F237 /* MenuItem.swift in Sources */,
 				F454B8261C0DFFAA005427A8 /* FMDatabasePool.m in Sources */,
 				F454B82F1C0E07E9005427A8 /* LoginViewController.swift in Sources */,
 				F460A97A1C16117800C63D91 /* AnimationHelper.swift in Sources */,
+				F468EFB61C1770BF00C9F237 /* MenuCell.swift in Sources */,
 				F454B7F21C0DFC73005427A8 /* AppDelegate.swift in Sources */,
 				F454B8251C0DFFAA005427A8 /* FMDatabaseAdditions.m in Sources */,
 				F454B8271C0DFFAA005427A8 /* FMDatabaseQueue.m in Sources */,

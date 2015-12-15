@@ -35,12 +35,16 @@ class ViewController: UIViewController {
     var rightLayer = CAShapeLayer()
     var leftMask =  CAShapeLayer()
     var rightMask = CAShapeLayer()
+    var existingMask = CAShapeLayer().mask
     var imageLayer = CAShapeLayer()
+    var reflectionLayer = CAShapeLayer()
+    var hardcoatLayer = CAShapeLayer()
+    var hydroLayer = CAShapeLayer()
     var blurRadius: Float = 0
     var context: CIContext!
     var addSlider: Float = 0
     var currentPath = "Conventional"
-
+    var lastSavedLocation = CGPointZero
     
     var pilotsLayer: CALayer{
         return mainImageView.layer
@@ -49,48 +53,37 @@ class ViewController: UIViewController {
     
     var timer = NSTimer()
     
+ 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-        let interval = Double(60) // four hours check it...
-        timer = NSTimer.scheduledTimerWithTimeInterval(interval, target:self, selector: Selector("Logout"), userInfo: nil, repeats: true)
+      //  let interval = Double(60) // four hours check it...
+     //   timer = NSTimer.scheduledTimerWithTimeInterval(interval, target:self, selector: Selector("Logout"), userInfo: nil, repeats: true)
+        
+        self.lastSavedLocation = lensShapelayer.position  // Works with panGesture... track the last position.
         
     }
 
-    
-    
     
     @IBAction func panGesture(sender: UIPanGestureRecognizer) {
-        
-       // let currentposx = sender.locationInView(self.view)
-       // let currentposy = sender.locationInView(self.view)
-       // lensShapelayer.position = CGPointMake(lensShapelayer.position.x+currentposx.x, lensShapelayer.position.y+currentposy.y);
+     
+        let newTranslation = sender.translationInView(mainImageView)
+        lensShapelayer.position = CGPointMake(self.lastSavedLocation.x + newTranslation.x , self.lastSavedLocation.y + newTranslation.y)
+    
+       // imageLayer.mask!.position = CGPointMake(newTranslation.x , newTranslation.y)
+       // imageLayer.mask!.anchorPoint = lensShapelayer.anchorPoint
+        imageLayer.mask!.position = CGPointMake(newTranslation.x , newTranslation.y)
 
         
     }
     
-    
     @IBAction func pinchGesture(sender: UIPinchGestureRecognizer) {
-        
         
         let translate = CATransform3DMakeTranslation(0, 0, 0);
         let scale = CATransform3DMakeScale(sender.scale, sender.scale, 1);
         let transform = CATransform3DConcat(translate, scale);
-    
         lensShapelayer.transform = transform
-        lensShapelayer.addSublayer(currentAdd.layer)
-           /*  THIS DOESNT WORK
-        let newPath = lensShapelayer.path
-        let animation = CABasicAnimation(keyPath: "path")
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut) // animation curve is Ease Out
-        animation.fillMode = kCAFillModeBoth // keep to value after finishing
-        animation.removedOnCompletion = false // don't remove after finishing
-        animation.fromValue = imageLayer.path
-        animation.toValue = newPath
-        animation.duration = 1 // duration is 1 sec
-        imageLayer.addAnimation(animation, forKey: "path")
-        imageLayer.needsDisplayOnBoundsChange = true
-        */
-   }
+        imageLayer.mask!.transform = transform
+    }
     
     
     
@@ -128,7 +121,7 @@ class ViewController: UIViewController {
         rightMask.path = drawShapeMirrorPath(1, reverse:false)
         
         let blurRadius = Float(sliderPowerOutlet.value)
-        swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
+     //   swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
         Button2.fadeOut()
         Button3.fadeOut()
         Button4.fadeOut()
@@ -136,8 +129,107 @@ class ViewController: UIViewController {
     }
     
     
+    @IBOutlet weak var switchAntiReflection: UISwitch!
+    @IBOutlet weak var switchHydrophop: UISwitch!
+    @IBOutlet weak var switchHardCoat: UISwitch!
     
     
+    @IBAction func btnAntiReflectionCoating(sender: UISwitch) {
+       
+        if self.switchAntiReflection.on {
+            
+            self.switchAntiReflection.setOn(true, animated: true)
+            reflectionLayer.removeFromSuperlayer()
+
+          
+        } else {
+            reflectionLayer.mask = drawMaskLayer(UIColor.blackColor().CGColor)
+            reflectionLayer.fillColor = UIColor.blackColor().CGColor
+            reflectionLayer.fillRule = kCAFillRuleNonZero
+            reflectionLayer.zPosition = 9
+            
+            //Background Image has its own layer now.
+            let img = UIImageView(image: UIImage(named: "AntiReflection"))
+            reflectionLayer.addSublayer(img.layer)
+            reflectionLayer.opacity = 1.0
+            lensShapelayer.addSublayer(reflectionLayer)
+             self.switchAntiReflection.setOn(false, animated: true)
+
+            
+        }
+        
+        
+    }
+    
+    @IBAction func btnHydrophop(sender: UISwitch) {
+        
+        if self.switchHydrophop.on {
+            
+            self.switchHydrophop.setOn(true, animated: true)
+            hydroLayer.removeFromSuperlayer()
+            
+            
+        } else {
+            hydroLayer.mask = drawMaskLayer(UIColor.blackColor().CGColor)
+            hydroLayer.fillColor = UIColor.blackColor().CGColor
+            hydroLayer.fillRule = kCAFillRuleNonZero
+            hydroLayer.zPosition = 9
+            
+            //Background Image has its own layer now.
+            let img = UIImageView(image: UIImage(named: "TestWater"))
+            hydroLayer.addSublayer(img.layer)
+            hydroLayer.opacity = 1.0
+            lensShapelayer.addSublayer(hydroLayer)
+            self.switchHydrophop.setOn(false, animated: true)
+            
+            
+        }
+
+        
+    }
+    
+    @IBAction func btnHardCoating(sender: UISwitch) {
+        
+        
+        if self.switchHardCoat.on {
+            
+            self.switchHardCoat.setOn(true, animated: false)
+            hardcoatLayer.removeFromSuperlayer()
+            
+            
+        } else {
+            hardcoatLayer.mask = drawMaskLayer(UIColor.clearColor().CGColor)
+            hardcoatLayer.fillColor = UIColor.clearColor().CGColor
+            hardcoatLayer.fillRule = kCAFillRuleNonZero
+            hardcoatLayer.zPosition = 9
+            
+            //Background Image has its own layer now.
+            let img = UIImageView(image: UIImage(named: "TestWater"))
+            hardcoatLayer.addSublayer(img.layer)
+            hardcoatLayer.opacity = 1.0
+            lensShapelayer.addSublayer(hardcoatLayer)
+            self.switchHardCoat.setOn(false, animated: true)
+            
+            
+        }
+
+        
+    }
+    
+    @IBOutlet weak var switchPhotochrom: UISwitch!
+    
+    
+    @IBAction func btnPhotochrom(sender: UISwitch) {
+        if self.switchPhotochrom.on{
+            self.switchPhotochrom.setOn(true, animated: false)
+            drawMainLayer(blurRadius, imageName: UIImage(named: "Bright-Sun-2")!)
+            
+        }else{
+            drawMainLayer(blurRadius, imageName: UIImage(named: "Cockpit-n")!)
+        }
+        
+        
+    }
     @IBAction func btnJena(sender: UIButton) {
         
        
@@ -168,7 +260,7 @@ class ViewController: UIViewController {
         rightMask.path = drawShapeMirrorPath(2, reverse:false)
 
         let blurRadius = Float(sliderPowerOutlet.value)
-        swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
+       // swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
       
         Button1.fadeOut()
         Button3.fadeOut()
@@ -206,7 +298,7 @@ class ViewController: UIViewController {
         rightMask.path = drawShapeMirrorPath(3, reverse:false)
 
         let blurRadius = Float(sliderPowerOutlet.value)
-        swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
+       // swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
         Button1.fadeOut()
         Button2.fadeOut()
         Button4.fadeOut()
@@ -242,6 +334,8 @@ class ViewController: UIViewController {
         leftMask.path = drawShapePath(4, reverse:false)
         rightMask.path = drawShapeMirrorPath(4, reverse:false)
         currentPath = "Jenna4K"
+        let blurRadius = Float(sliderPowerOutlet.value)
+      //  swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
         Button1.fadeOut()
         Button2.fadeOut()
         Button3.fadeOut()
@@ -249,11 +343,14 @@ class ViewController: UIViewController {
         
     }
     
+    
+    
+    
     @IBAction func sliderAdd(sender: UISlider) {
         //Magnify layer : add this image to the magnify layer.
         blurRadius = sender.value
         swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
-        drawMainLayer(blurRadius, imageName: currentBackground!)
+       // drawMainLayer(blurRadius, imageName: currentBackground!)
 
 
     }
@@ -261,7 +358,7 @@ class ViewController: UIViewController {
     @IBAction func sliderPower(sender: UISlider) {
         blurRadius = sender.value
         drawMainLayer(blurRadius, imageName: currentBackground!)
-        swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
+       // swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
 
     }
  
@@ -277,21 +374,21 @@ class ViewController: UIViewController {
         let blurRadius = Float(sliderPowerOutlet.value)
         drawMainLayer(blurRadius, imageName: UIImage(named: "cockpit-n")!)
         currentBackground = UIImage(named: "cockpit-v")
-        swapLensImage(blurRadius, swapToImage: UIImage(named: "cockpit-v")!)
+       // swapLensImage(blurRadius, swapToImage: UIImage(named: "cockpit-v")!)
     }
     
     @IBAction func btnAutumn(sender: UIBarButtonItem) {
         let blurRadius = Float(sliderPowerOutlet.value)
         drawMainLayer(blurRadius, imageName: UIImage(named: "autumn-n")!)
         currentBackground = UIImage(named: "autumn")
-        swapLensImage(blurRadius, swapToImage: UIImage(named: "autumn")!)
+       // swapLensImage(blurRadius, swapToImage: UIImage(named: "autumn")!)
     }
     
     @IBAction func btnSailing(sender: UIBarButtonItem) {
         let blurRadius = Float(sliderPowerOutlet.value)
         drawMainLayer(blurRadius, imageName: UIImage(named: "sailing-n")!)
         currentBackground = UIImage(named: "sailing")
-        swapLensImage(blurRadius, swapToImage: UIImage(named: "sailing")!)
+       // swapLensImage(blurRadius, swapToImage: UIImage(named: "sailing")!)
 
     }
     
@@ -322,16 +419,24 @@ class ViewController: UIViewController {
     }
 
     
+    func moveLensImageMask(){
+        //1.  Need to measure the current position
+        //2. Force imageLayer to stay put, at 0, 0 position
+        imageLayer.position = CGPoint(x: 0, y: 0)
+    }
+    
     
     func swapLensImage(blurRadius: Float, swapToImage: UIImage){
         //Magnify layer : add this image to the magnify layer.
         
         let img = magnifyImage(blurRadius,imageName: swapToImage)
         let image = UIImageView(image: img)
-        
         magnifyLayer.addSublayer(image.layer) //
+        
+        
         let blurimg = UIImageView(image: blurImg(blurRadius, imageName: image.image!))
         let leftimg = UIImageView(image: blurImg(blurRadius, imageName: image.image!))
+        
         
         let leftBlurLayer = CAShapeLayer()
         leftBlurLayer.zPosition = 5
@@ -378,7 +483,7 @@ class ViewController: UIViewController {
 
     
     func blurImg(blurRadius: Float, imageName: UIImage)->UIImage{
-        
+    
         
         let glContext = EAGLContext(API: .OpenGLES2)
         context = CIContext(EAGLContext: glContext,
@@ -686,18 +791,15 @@ class ViewController: UIViewController {
     //Feed points are specific to Lens (redo this as generic)
     func drawLensPath() ->CGPathRef {
         
-        
         let lensPath = CGPathCreateMutable()
-        
         var points = lensPoints()
-        
         let cpg = points[0]
         CGPathMoveToPoint(lensPath, nil, cpg.x, cpg.y)
         for p in points {
             CGPathAddLineToPoint(lensPath, nil, p.x, p.y)
         }
         CGPathCloseSubpath(lensPath)
-        
+    
         return lensPath
 
     }
@@ -770,29 +872,14 @@ class ViewController: UIViewController {
 
     func drawStrokePath(numPoints:Int, x: CGFloat, y: CGFloat, radius: CGFloat)->CGPathRef{
         
-        
         let drawpath = CGPathCreateMutable()
         var points = polygonPointArray(numPoints, x: x, y: y, radius: radius)
-        
-        //var points = polygonPointArray(16, x:x,y:y,radius:480)
         
         CGPathMoveToPoint(drawpath,nil,points[points.count-1].x,points[points.count-1].y)
         
         for p in points{
             CGPathAddLineToPoint(drawpath,nil,p.x,p.y)
-            
-            //pull values out of the items at every 16th... and quad your way around (first test).
-            
         }
-        
-        //  var curves = [CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2),CGFloat(2)]
-        // var i = 0
-        // for p in points {
-        
-        //   CGPathAddQuadCurveToPoint(drawpath,nil,p.x/curves[i],p.y/curves[i],p.x,p.y)
-        //    i++
-        // }
-        
         return drawpath
     }
     
@@ -800,7 +887,6 @@ class ViewController: UIViewController {
     
     //Sets all the LensShape layers DEFAULTS / CHANGE THE NAME OF THIS FUNCTION TO DEFAULT LAYERS
     func setDefaultLayers(imageName: UIImage){
-        
         
         
         
@@ -812,17 +898,17 @@ class ViewController: UIViewController {
         currentAdd = img
         //currentAdd.layer.zPosition = 2
         //currentAdd.layer.mask = maskLayer
-
+      
         imageLayer.frame = pilotsLayer.bounds
         imageLayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
         imageLayer.contentsGravity = kCAGravityCenter
         imageLayer.fillColor = nil
         imageLayer.zPosition = 2
         imageLayer.mask = maskLayerForImage
-        imageLayer.addSublayer(currentAdd.layer)
-        pilotsLayer.addSublayer(imageLayer)  // remove from pilotslayer on pinch, and add back with resized mask (resize based on mask + scale)
-        
-        
+        imageLayer.addSublayer(currentAdd.layer) // let's try not adding an image to the mask, just cut it out!!!
+        pilotsLayer.addSublayer(imageLayer)
+
+       
         
         //Stroke the outside of the LensShape.
         let strokeLensShapeLayer = drawStrokeLayer(drawLensPath(), strokeWidth:2.0)
@@ -837,9 +923,7 @@ class ViewController: UIViewController {
         lensShapelayer.path = strokeLensShapeLayer
         //lensShapelayer.addSublayer(currentAdd.layer) //add pilots image (vib version) to this layer
         //lensShapelayer.addSublayer(imageLayer)
-        
-      
-
+     
         
         
         //Add a non colored color layer (can be replaced using buttons : color).

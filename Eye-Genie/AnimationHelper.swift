@@ -35,6 +35,15 @@ extension UIView {
         
     }
     
+    func openStuff(){
+        /*
+        let tapAlert = UIAlertController(title: "Tapped", message: "You just tapped the tap view", preferredStyle: UIAlertControllerStyle.Alert)
+        tapAlert.addAction(UIAlertAction(title: "OK", style: .Destructive, handler: nil))
+        self.presentViewController(tapAlert, animated: true, completion: nil)
+        */
+
+    }
+    
     
     func setTitleAttributes(){
         
@@ -51,5 +60,34 @@ extension UIView {
         
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, forState: UIControlState.Normal)
     }
+    
+    //Takes the desired blur value and the imagename of image to apply the blur.
+    func blurImage(blurRadius: Float, imageName: UIImage)->UIImage{
+        
+        
+        let clampFilter = CIFilter(name: "CIAffineClamp")!
+        let currentFilter = CIFilter(name: "CIGaussianBlur")
+        
+        let glContext = EAGLContext(API: .OpenGLES2)
+        var context = CIContext(EAGLContext: glContext,
+            options: [
+                kCIContextWorkingColorSpace: NSNull()
+            ]
+        )
+        let beginImage = CIImage(image: imageName)
+        let transform = CGAffineTransformIdentity
+        
+        clampFilter.setValue(beginImage!, forKey: "inputImage")
+        clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
+        
+        currentFilter!.setValue(clampFilter.outputImage!, forKey: "inputImage")
+        currentFilter!.setValue(blurRadius, forKey: "inputRadius")
+        
+        let cgimg = context.createCGImage(currentFilter!.outputImage!, fromRect: beginImage!.extent)
+        return UIImage(CGImage: cgimg) //has to have the CGImage piece on the end!!!!!
+        
+    }
+
+    
     
 }

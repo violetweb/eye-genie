@@ -158,13 +158,10 @@ UINavigationControllerDelegate {
         
         
         
-        var newImage: UIImage
         
         if let possibleImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-            newImage = possibleImage
             pickedImage = possibleImage
         } else if let possibleImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-            newImage = possibleImage
             pickedImage = possibleImage
         }
         

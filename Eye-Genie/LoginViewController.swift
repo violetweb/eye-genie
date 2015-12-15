@@ -135,6 +135,7 @@ class LoginViewController: UIViewController {
             } catch let myJSONError {
                 //Add popup to let user know that it was unsuccessful.
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                
                 self.displayAlert("Login Result", message: "We are unable to login at this time; please try again in a few minutes.")
             }
             
@@ -220,7 +221,7 @@ class LoginViewController: UIViewController {
         let items = try! fm.contentsOfDirectoryAtPath(path)
         for item in items {
             if item.hasPrefix(findimage) {
-                var itemImage = path + "/" + item
+                let itemImage = path + "/" + item
                 appImageView.image = UIImage.init(contentsOfFile: itemImage)
                 
             }
