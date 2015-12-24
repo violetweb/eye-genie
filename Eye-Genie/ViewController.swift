@@ -1462,7 +1462,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
 
     override func viewDidAppear(animated: Bool)
     {
-        //drawMainLayer(0.0,imageName: imgPilots!, savebg: true)
+        
         self.view.setButtons("icon-cockpit")
         drawBackgroundLayer(0.0, imageName: "cockpit", savebg: true)
         setDefaultLayers(imgPilotsVib!)
@@ -1475,26 +1475,21 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         setBtn3FromDirectory(grabButtonImageName(3))
         setBtn4FromDirectory(grabButtonImageName(4))
         
-        
+        Carasel.type = .Linear
+        Carasel.dataSource = self
+        Carasel.centerItemWhenSelected = false
+        Carasel.contentView.frame = CGRectMake(0, 0, 800, 80)
+        Carasel.contentOffset = CGSize(width: -480,height: 0)
+        Carasel.reloadData()
+        super.viewDidLoad()
         
         
     }
-//btnAutum, btnCockpit, btnPhone, btnOffice, btnDesk, btnTakingPhoto, btnSailing
     
     var carouselImages = NSMutableArray(array: ["autumn-v","cockpit-v","office-v","phone-v","office2-v","office3-v","takingphoto-v","sailing-v"])
     
+    
     override func viewDidLoad(){
-        
-        Carasel.type = .CoverFlow
-        Carasel.center = mainImageView.center
-        Carasel.dataSource = self
-        Carasel.reloadData()
-        Carasel.centerItemWhenSelected = false
-        super.viewDidLoad()
-       
-        
-        
-
     }
     
   
@@ -1505,21 +1500,21 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     }
     
     func numberOfVisibleItemsInCarousel(carousel: iCarousel) -> Int {
-        return 7
+        return 4
     }
     
     
     func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, reusingView view: UIView?) -> UIView {
        // "autumn-v","cockpit-v","office-v","phone-v","office2-v","office3-v","takingphoto-v","sailing-v"
-        var newButton = UIButton(type: UIButtonType.Custom)
+        let newButton = UIButton(type: UIButtonType.Custom)
         if (view == nil)  {
             let buttonImage = UIImage(named: "\(carouselImages.objectAtIndex(index))")
             newButton.exclusiveTouch = true
             newButton.setImage(buttonImage, forState: .Normal)
-            newButton.frame = CGRectMake(0.0, 0.0, 140, 80)
+            newButton.frame = CGRectMake(0.0, 0.0, 145, 80)
             newButton.setBackgroundImage(buttonImage, forState: .Normal )
             newButton.backgroundColor = UIColor.clearColor()
-            newButton.layer.borderWidth = 0.8
+            newButton.layer.borderWidth = 2.0
             newButton.layer.borderColor = (UIColor( red: 255, green:255, blue:255, alpha: 1.0 )).CGColor
             if (index == 0){
                 newButton.addTarget(self, action: "btnAutumn", forControlEvents: .TouchUpInside)
@@ -1554,15 +1549,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     }
     
     
-    func buttonTapped(sender: UIButton) {
-        //get item index for button
-       
-        let index = carousel.indexOfItemViewOrSubview(sender)
-        print(index)
-    }
-
-  
-    var selectedIndex:Int = 0
     
        override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
