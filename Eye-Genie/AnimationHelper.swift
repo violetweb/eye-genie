@@ -28,7 +28,7 @@ extension UIView {
    
     //Works for UIButtons
     func buttonBounce(){
-        let bounds = self.bounds
+        var bounds = self.bounds
         UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 10, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.bounds = CGRect(x: bounds.origin.x - 20, y: bounds.origin.y, width: bounds.size.width + 60, height: bounds.size.height)
                        }, completion: nil)
@@ -45,20 +45,25 @@ extension UIView {
     }
     
     
-    func setTitleAttributes(){
+      
+    
+    func setButtons(imagename: String){
         
-        let shadow = NSShadow()
-        shadow.shadowColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        shadow.shadowOffset = CGSizeMake(0, 1)
-        let color : UIColor = UIColor(red: 220.0/255.0, green: 104.0/255.0, blue: 1.0/255.0, alpha: 1.0)
-        let titleFont : UIFont = UIFont(name: "AmericanTypewriter", size: 16.0)!
+        let normalColor : UIColor = UIColor(hexString: "#ffe700ff")!
         let attributes = [
-            NSForegroundColorAttributeName : color,
-            NSShadowAttributeName : shadow,
-            NSFontAttributeName : titleFont
+            NSForegroundColorAttributeName : normalColor
+        ]
+        
+        let highlightColor : UIColor = UIColor.lightGrayColor()
+        let hattributes = [
+            NSForegroundColorAttributeName : highlightColor
         ]
         
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, forState: UIControlState.Normal)
+       // UIBarButtonItem.appearance().setTitleTextAttributes(hattributes, forState: UIControlState.Selected)
+        UIBarButtonItem.appearance().setTitleTextAttributes(hattributes, forState: UIControlState.Highlighted)
+
+        UIBarButtonItem.appearance().setBackgroundImage(UIImage(named: imagename), forState: .Selected, style: .Plain, barMetrics: .Default)
     }
     
     //Takes the desired blur value and the imagename of image to apply the blur.
@@ -69,7 +74,7 @@ extension UIView {
         let currentFilter = CIFilter(name: "CIGaussianBlur")
         
         let glContext = EAGLContext(API: .OpenGLES2)
-        var context = CIContext(EAGLContext: glContext,
+        let context = CIContext(EAGLContext: glContext,
             options: [
                 kCIContextWorkingColorSpace: NSNull()
             ]

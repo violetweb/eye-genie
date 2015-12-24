@@ -19,6 +19,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var Username: UITextField!
     @IBOutlet weak var Password: UITextField!
     @IBOutlet weak var appImageView: UIImageView!
+    @IBOutlet weak var imageLogo: UIImageView!
     
     
     let defaults = NSUserDefaults.standardUserDefaults()
@@ -135,7 +136,6 @@ class LoginViewController: UIViewController {
             } catch let myJSONError {
                 //Add popup to let user know that it was unsuccessful.
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                
                 self.displayAlert("Login Result", message: "We are unable to login at this time; please try again in a few minutes.")
             }
             
@@ -193,6 +193,8 @@ class LoginViewController: UIViewController {
         Password.center.x = view.bounds.width
         
         
+      
+        
         UIView.animateWithDuration(0.5, animations: {
             self.lblWelcome.center.x -= self.view.bounds.width/2
         })
@@ -206,8 +208,13 @@ class LoginViewController: UIViewController {
             }, completion: nil)
         
         UIView.animateWithDuration(0.5, delay: 0.7, options: [], animations: {
-            self.lblInstruction.center.y += self.view.bounds.height/4
+            self.lblInstruction.center.y += self.view.bounds.height/6
             }, completion: nil)
+        
+        UIView.animateWithDuration(1.0, delay: 1.0, options: [], animations: {
+            self.imageLogo.center.y += (self.view.bounds.height-200)
+        },completion: nil)
+        
         
         getSavedImages()
         

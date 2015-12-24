@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        //dropData() //- dumps the genie.db and resets up everything... used while testing.
+        dropData() //- dumps the genie.db and resets up everything... used while testing.
         setUpDatabase()
         setUpFiles()
 
@@ -54,8 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    
-    func dropData(){
+      func dropData(){
         databasePath = getSupportPath("genie.db") // grab the database.
         if (NSFileManager.defaultManager().fileExistsAtPath(databasePath)) {
             do{
@@ -148,7 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             //JENNA WIDE
-            insertSQL = "INSERT INTO DESIGNPOINTS (DESIGNID,P1X, P1Y, P2X, P2Y, P3X, P3Y, P4X,P4Y,C1X,C1Y,C2X,C2Y,C3X,C3Y,C4X,C4Y,C5X,C5Y,C6X,C6Y) VALUES (3,-39.88,7.01,-10.70,1.75,-12.31,-15.40,-21.88,-40.69,-25.25, 6.45,-16.52, 7.36,-4.87,-3.86,-7.60,-8.52,-17.01,-22.27,-22.43,-29.99)"
+            insertSQL = "INSERT INTO DESIGNPOINTS (DESIGNID,P1X, P1Y, P2X, P2Y, P3X, P3Y, P4X,P4Y,C1X,C1Y,C2X,C2Y,C3X,C3Y,C4X,C4Y,C5X,C5Y,C6X,C6Y) VALUES (3,-39.88,7.01,-10.70,1.75,-12.31,-15.40,-21.88,-40.69,-25.25, 6.45,-16.52,7.36,-4.87,-3.86,-7.60,-8.52,-17.01,-22.27,-22.43,-29.99)"
             if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
                 print("Jenna Wide Added")
             }
@@ -184,7 +183,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let genieDB = FMDatabase(path: String(databasePath))
         if genieDB.open() {
             
-            let insertSQL = "INSERT INTO GENERAL (HOMEIMAGE, COMPANYNAME, COMPANYPHONE, ACTIVE) VALUES ('bg-home', 'OPTIK KANDR', '416-915-1550', 1)"
+            let insertSQL = "INSERT INTO GENERAL (HOMEIMAGE, LOGOIMAGE, COMPANYNAME, COMPANYPHONE, ACTIVE) VALUES ('bg-home', 'yourlogohere', 'OPTIK KANDR', '416-915-1550', 1)"
             let result = genieDB.executeUpdate(insertSQL,
                 withArgumentsInArray: nil)
             
@@ -228,6 +227,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let copyitem = copyfrompath + "/" + image
             let copytoitem = copytopath + "/" + image
             do {
+                try fm.removeItemAtPath(copytoitem) // If exists already, first remove it.
                 try fm.copyItemAtPath(copyitem,toPath: copytoitem)
                 print("Copied files from appdefaults to application support directory.")
             }catch let error as NSError {
@@ -285,7 +285,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if genieDB.open() {
                 print("opened the database successfully")
-                let sql_stmt1 = "CREATE TABLE IF NOT EXISTS GENERAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, HOMEIMAGE TEXT, COMPANYNAME TEXT, COMPANYPHONE TEXT, ACTIVE INTEGER)"
+                let sql_stmt1 = "CREATE TABLE IF NOT EXISTS GENERAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, HOMEIMAGE TEXT, LOGOIMAGE TEXT, COMPANYNAME TEXT, COMPANYPHONE TEXT, ACTIVE INTEGER)"
                 if !genieDB.executeStatements(sql_stmt1) {
                     print("Error: \(genieDB.lastErrorMessage())")
                 }else{

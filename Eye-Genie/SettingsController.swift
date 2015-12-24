@@ -186,7 +186,7 @@ class SettingsController: UIViewController, UIImagePickerControllerDelegate, UIN
         } else if (sender.selectedSegmentIndex==1) {
             activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("DesignsController"))! as UIViewController
             SettingsContainer.addSubview(activeViewController!.view)
-            print("its working")
+          
         }else if (sender.selectedSegmentIndex==2){
             activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("DesignsController"))! as UIViewController
             SettingsContainer.addSubview(activeViewController!.view)
@@ -194,8 +194,8 @@ class SettingsController: UIViewController, UIImagePickerControllerDelegate, UIN
             activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("CoatingsController"))! as UIViewController
             SettingsContainer.addSubview(activeViewController!.view)
         }else if (sender.selectedSegmentIndex == 4){
-            activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("ColorsController"))! as UIViewController
-            SettingsContainer.addSubview(activeViewController!.view)
+           // activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("ColorsController"))! as UIViewController
+           // SettingsContainer.addSubview(activeViewController!.view)
             
         }
         
@@ -207,8 +207,8 @@ class SettingsController: UIViewController, UIImagePickerControllerDelegate, UIN
     {
         
         RootController = (storyboard?.instantiateViewControllerWithIdentifier("SettingsController"))! as UIViewController
-       // activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("CustomizationController"))! as UIViewController
-      //  SettingsContainer.addSubview(activeViewController!.view)
+       activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("CustomizationController"))! as UIViewController
+        SettingsContainer.addSubview(activeViewController!.view)
 
         
 

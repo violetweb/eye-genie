@@ -20,6 +20,7 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
     let button3Tap = UITapGestureRecognizer()
     let button4Tap = UITapGestureRecognizer()
     let appViewTap = UITapGestureRecognizer()
+    let imageLogoTap = UITapGestureRecognizer()
 
  
     @IBOutlet weak var Button4: UIImageView!
@@ -27,8 +28,7 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var Button2: UIImageView!
     @IBOutlet weak var Button1: UIImageView!
     @IBOutlet weak var appImageView: UIImageView!
-   
-    
+    @IBOutlet weak var imageLogo: UIImageView!
     
     
     func btnDesign4() {
@@ -103,6 +103,30 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
     }
     
     
+    func btnImageLogo() {
+        
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.modalPresentationStyle = .Popover
+        imagePicker.popoverPresentationController?.sourceView = self.view
+        imagePicker.popoverPresentationController?.permittedArrowDirections = .Right
+        imagePicker.popoverPresentationController?.sourceRect = ContainerView.bounds
+        presentViewController(imagePicker, animated: true, completion: nil)
+        chosenButton = "Logo"
+        
+    }
+
+    func btnSwap(chosenB: String){
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.modalPresentationStyle = .Popover
+        imagePicker.popoverPresentationController?.sourceView = self.view
+        imagePicker.popoverPresentationController?.permittedArrowDirections = .Right
+        imagePicker.popoverPresentationController?.sourceRect = ContainerView.bounds
+        presentViewController(imagePicker, animated: true, completion: nil)
+        chosenButton = chosenB
+    
+    }
     
     
     func setMainImageFromDirectory(findimage: String){
@@ -119,6 +143,25 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
         }
         
     }
+    
+    
+    
+    
+    func setImageView(findimage: String, imageview: UIImageView){
+        
+        let fm = NSFileManager.defaultManager()
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix(findimage) {
+                let itemImage = path + "/" + item
+                imageview.image = UIImage.init(contentsOfFile: itemImage)
+                
+            }
+        }
+        
+    }
+    
     func setBtn1FromDirectory(findimage: String){
         
         let fm = NSFileManager.defaultManager()
@@ -133,6 +176,8 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
         }
         
     }
+
+    
     func setBtn2FromDirectory(findimage: String){
         
         let fm = NSFileManager.defaultManager()
@@ -278,7 +323,34 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
         
     }
 
+    func saveLogoImage(logoimage: String){
+        
+        
+        let databasePath = getSupportPath("genie.db") // grab the database.
+        let genieDB = FMDatabase(path: String(databasePath))
+        
+        if genieDB.open() {
+            
+            
+            let insertSQL = "UPDATE GENERAL SET LOGOIMAGE='\(logoimage)' where id=1"
+            let result = genieDB.executeStatements(insertSQL)
+            
+            if !result {
+                print("Error: \(genieDB.lastErrorMessage())")
+            }else{
+                
+            }
+            genieDB.close()
+            
+            
+        } else {
+            print("Error: \(genieDB.lastErrorMessage())")
+        }
+        
+        
+    }
     
+
     
     
     var pickedImage: UIImage!
@@ -298,28 +370,32 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
             Button1.image = pickedImage
             saveDesignButton(1, designImage: "btn1-user")
             let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "btn1-user.jpg")
+            saveImage(pickedImage, path: path, filename: "btn1-user")
         }else if chosenButton == "2"{
             Button2.image = pickedImage
             saveDesignButton(2, designImage: "btn2-user")
             let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "btn2-user.jpg")
+            saveImage(pickedImage, path: path, filename: "btn2-user")
         }else if chosenButton == "3"{
             Button3.image = pickedImage
             saveDesignButton(3, designImage: "btn3-user")
             let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "btn3-user.jpg")
+            saveImage(pickedImage, path: path, filename: "btn3-user")
         }else if chosenButton == "4"{
             Button4.image = pickedImage
             saveDesignButton(4, designImage: "btn4-user")
             let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "btn4-user.jpg")
+            saveImage(pickedImage, path: path, filename: "btn4-user")
         }else if chosenButton == "Main" {
             appImageView.image = pickedImage
             saveMainImage("bg-home-user")
             let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "bg-home-user.jpg")
-            
+            saveImage(pickedImage, path: path, filename: "bg-home-user")
+        }else if chosenButton == "Logo" {
+            imageLogo.image = pickedImage
+            saveLogoImage("yourlogohere")
+            let path = getSupportPath("images")
+            saveImage(pickedImage, path: path, filename: "yourlogohere")
         }
         dismissViewControllerAnimated(true, completion: nil)
         
@@ -343,22 +419,52 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
         
     }
     
+    func grabLogoImage(){
+        let databasePath = getSupportPath("genie.db") // grab the database.
+        let genieDB = FMDatabase(path: String(databasePath))
+        if genieDB.open() {
+            let querySQL = "SELECT LOGOIMAGE FROM GENERAL WHERE id=1"
+            let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
+            if results?.next() == true {
+                setImageView((results?.stringForColumn("LOGOIMAGE")!)!,imageview: imageLogo)
+                print(results?.stringForColumn("LOGOIMAGE"))
+            } else {
+                print("Records not found in database for 'General Settings'.")
+            }
+            genieDB.close()
+        }
+        
+    }
+
+    
     @IBAction func btnResetToDefaults(sender: UIButton) {
         
-        sender.buttonBounce()
+      
+        
+        
         //Buttons
         saveDesignButton(1, designImage: "btn-conventional")
         saveDesignButton(2, designImage: "btn-jenna")
         saveDesignButton(3, designImage: "btn-jenna-wide")
         saveDesignButton(4, designImage: "btn-jenna-4k")
-        setBtn1FromDirectory("btn-conventional")
-        setBtn2FromDirectory("btn-jenna")
-        setBtn3FromDirectory("btn-jenna-wide")
-        setBtn4FromDirectory("btn-jenna-4k")
+        setImageView("btn-conventional", imageview: Button1)
+        setImageView("btn-jenna", imageview: Button2)
+        setImageView("btn-jenna-wide", imageview: Button3)
+        setImageView("btn-jenna-4k", imageview: Button4)
+        
+        
+        //setBtn2FromDirectory("btn-jenna")
+       // setBtn3FromDirectory("btn-jenna-wide")
+       // setBtn4FromDirectory("btn-jenna-4k")
         
         //Main Image.
         saveMainImage("bg-home")
-        setMainImageFromDirectory("bg-home")
+        //setMainImageFromDirectory("bg-home")
+        setImageView("bg-home", imageview: appImageView)
+        
+        saveLogoImage("yourlogohere")
+        setImageView("yourlogohere", imageview: imageLogo)
+        
         //Reset values to their defaults.
         chosenButton = "5"
 
@@ -391,30 +497,37 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
           //let value = UIInterfaceOrientation.LandscapeRight.rawValue
          // UIDevice.currentDevice().setValue(value, forKey: "orientation")
         imagePicker.delegate = self
+        
         grabMainImage() // Sets the initial values imageray based on any saved results.
+        grabLogoImage()
+        
         //Set up 4 button images (4 were saved as defaults) (currently hard coded, but will likely be dynamically set from a back end maybe at some point.
-        setBtn1FromDirectory(grabButtonImageName(1))
-        setBtn2FromDirectory(grabButtonImageName(2))
-        setBtn3FromDirectory(grabButtonImageName(3))
-        setBtn4FromDirectory(grabButtonImageName(4))
+        setImageView(grabButtonImageName(1), imageview: Button1)
+        setImageView(grabButtonImageName(2), imageview: Button2)
+        setImageView(grabButtonImageName(3), imageview: Button3)
+        setImageView(grabButtonImageName(4), imageview: Button4)
+       
         
         button1Tap.addTarget(self, action: "btnDesign1")
         button2Tap.addTarget(self, action: "btnDesign2")
         button3Tap.addTarget(self, action: "btnDesign3")
         button4Tap.addTarget(self, action: "btnDesign4")
         appViewTap.addTarget(self, action: "btnAppImage")
+        imageLogoTap.addTarget(self, action: "btnImageLogo")
+        
         Button1.addGestureRecognizer(button1Tap)
         Button2.addGestureRecognizer(button2Tap)
         Button3.addGestureRecognizer(button3Tap)
         Button4.addGestureRecognizer(button4Tap)
         appImageView.addGestureRecognizer(appViewTap)
+        imageLogo.addGestureRecognizer(imageLogoTap)
 
         Button1.userInteractionEnabled = true
         Button2.userInteractionEnabled = true
         Button3.userInteractionEnabled = true
         Button4.userInteractionEnabled = true
         appImageView.userInteractionEnabled = true
-
+        imageLogo.userInteractionEnabled = true
         
     }
     

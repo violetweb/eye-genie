@@ -11,22 +11,32 @@ import GLKit
 
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
 
    
     
     let clampFilter = CIFilter(name: "CIAffineClamp")!
     let currentFilter = CIFilter(name: "CIGaussianBlur")!
     let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
+    
+    
     let imgPilots = UIImage(named: "cockpit-n")
     let imgPilotsVib = UIImage(named: "cockpit-v")
     let imgPilotsBlur = UIImage(named: "cockpit-b")
     let imgSail = UIImage(named: "sailing")
     let imgAutumn = UIImage(named: "autumn")
     var currentBackground = UIImage(named: "cockpit-v")
+    
+    var currentBackgroundImageName = "cockpit" // append an n = desaturated (for mainlayer), or v = vibrant image (for imageLayer)
     var currentAdd = UIImageView()
     var lensLayer = CALayer()
-    var blurShapeLayer = CAShapeLayer()
+    
+    
+    var leftBlurLayer = CAShapeLayer()
+    var rightBlurLayer = CAShapeLayer()
+    
+    var BlurShapelayer = CAShapeLayer()
+    
     var lensShapelayer = CAShapeLayer()
     var magnifyLayer = CAShapeLayer()
     var colorLayer = CAShapeLayer()
@@ -41,14 +51,19 @@ class ViewController: UIViewController {
     var hardcoatLayer = CAShapeLayer()
     var hydroLayer = CAShapeLayer()
     var photochromLayer = CAShapeLayer()
+    
     var blurRadius: Float = 0
     var context: CIContext!
     var addSlider: Float = 0
     var currentPath = "Conventional"
     var lastSavedLocation = CGPointZero
     var lastSavedImgLocation = CGPointZero
+    var lastSavedBlurLocation = CGPointZero
+    var lastSavedRightBlurLocation = CGPointZero
+    var lastMagnifyLocation = CGPointZero
     
-    var pilotsLayer: CALayer{
+    
+    var pilotsLayer: CALayer {
         return mainImageView.layer
     }
     
@@ -56,24 +71,55 @@ class ViewController: UIViewController {
     var timer = NSTimer()
     
  
+    
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
       //  let interval = Double(60) // four hours check it...
      //   timer = NSTimer.scheduledTimerWithTimeInterval(interval, target:self, selector: Selector("Logout"), userInfo: nil, repeats: true)
-        
+       
         self.lastSavedLocation = lensShapelayer.position  // Works with panGesture... track the last position.
         self.lastSavedImgLocation = imageLayer.mask!.position
-        
+     
+        if (sliderAddOutlet.value > 0.0){
+            self.lastSavedBlurLocation = leftBlurLayer.mask!.position
+            self.lastSavedRightBlurLocation = rightBlurLayer.mask!.position
+            self.lastMagnifyLocation = magnifyLayer.mask!.position
+        }else{
+            self.lastSavedBlurLocation = CGPointZero
+            self.lastSavedRightBlurLocation = CGPointZero
+            self.lastMagnifyLocation = CGPointZero
+        }
+
     }
 
+/*
+    @IBAction func swipeGesture(sender: UISwipeGestureRecognizer) {
+        
+        print(sender.direction)
+        if (sender.direction == .Left) {
+           
+            var photochromLayerPosition = CGPointMake(self.photochromLayer.frame.origin.x - 50.0, self.photochromLayer.frame.origin.y);
+            photochromLayer.frame = CGRectMake(photochromLayerPosition.x , photochromLayerPosition.y , self.photochromLayer.frame.size.width, self.photochromLayer.frame.size.height)
+        }
+        
+        
+        
+    }
+*/
     
     @IBAction func panGesture(sender: UIPanGestureRecognizer) {
      
         let newTranslation = sender.translationInView(mainImageView)
+        
+        
         lensShapelayer.position = CGPointMake(self.lastSavedLocation.x + newTranslation.x , self.lastSavedLocation.y + newTranslation.y)
         imageLayer.mask!.position = CGPointMake(self.lastSavedImgLocation.x + newTranslation.x , self.lastSavedImgLocation.y + newTranslation.y)
-
-        
+        if (sliderAddOutlet.value > 0.0){
+            leftBlurLayer.mask!.position = CGPointMake(self.lastSavedBlurLocation.x + newTranslation.x, self.lastSavedBlurLocation.y + newTranslation.y)
+            rightBlurLayer.mask!.position = CGPointMake(self.lastSavedRightBlurLocation.x + newTranslation.x, self.lastSavedRightBlurLocation.y + newTranslation.y)
+            magnifyLayer.mask!.position = CGPointMake(self.lastMagnifyLocation.x + newTranslation.x, self.lastMagnifyLocation.y + newTranslation.y)
+        }
     }
     
     @IBAction func pinchGesture(sender: UIPinchGestureRecognizer) {
@@ -85,12 +131,17 @@ class ViewController: UIViewController {
         lensShapelayer.transform = transform
         let newTranslation = sender.locationInView(mainImageView)
        
-        
         imageLayer.mask!.frame = lensShapelayer.frame // Match the same frame as the outer layer
         imageLayer.mask!.transform = transform
         
-        print("Anchor points mask:  \(imageLayer.mask!.anchorPoint) lens shape : \(lensShapelayer.anchorPoint)")
-        print("position for mask: \(imageLayer.mask!.position) lens position: \(lensShapelayer.position)")
+        leftBlurLayer.mask?.frame = lensShapelayer.frame
+        rightBlurLayer.mask?.frame = lensShapelayer.frame
+        leftBlurLayer.mask?.transform = transform
+        rightBlurLayer.mask?.transform = transform
+        
+        magnifyLayer.mask?.frame = lensShapelayer.frame
+        magnifyLayer.mask?.transform = transform
+        
         
     }
     
@@ -215,7 +266,7 @@ class ViewController: UIViewController {
             let img = UIImageView(image: UIImage(named: "TestScratches"))
             hardcoatLayer.addSublayer(img.layer)
             hardcoatLayer.opacity = 1.0
-            lensShapelayer.addSublayer(hardcoatLayer)
+           lensShapelayer.addSublayer(hardcoatLayer)
             self.switchHardCoat.setOn(false, animated: true)
             
             
@@ -239,28 +290,40 @@ class ViewController: UIViewController {
             self.switchPhotochrom.setOn(true, animated: true)
             
             //Change the background image to the Bright one.
-                pilotsLayer.contents = UIImage(named: "photochrom")
-                imageLayer.removeFromSuperlayer()
+            drawBackgroundLayer(blurRadius, imageName: "photochrom", savebg: false)
+            imageLayer.removeFromSuperlayer()
             
             //remove the other layers if they are on and deactivate their switches.
-                hardcoatLayer.removeFromSuperlayer()
-                hydroLayer.removeFromSuperlayer()
-                reflectionLayer.removeFromSuperlayer()
-                switchAntiReflection.setOn(false, animated: false)
-                switchHardCoat.setOn(false,animated: false)
-                switchHydrophop.setOn(false,animated: false)
+            hardcoatLayer.removeFromSuperlayer()
+            hydroLayer.removeFromSuperlayer()
+            reflectionLayer.removeFromSuperlayer()
+            switchAntiReflection.setOn(false, animated: false)
+            switchHardCoat.setOn(false,animated: false)
+            switchHydrophop.setOn(false,animated: false)
             
-                photochromLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
-                photochromLayer.fillColor = UIColor.brownColor().CGColor
+            //apply the photochrom layer
+            photochromLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
+            photochromLayer.fillColor = UIColor.blackColor().CGColor
             photochromLayer.fillRule = kCAFillRuleNonZero
             photochromLayer.zPosition = 9
-            photochromLayer.opacity = 0.5
+            photochromLayer.opacity = 0.3
             lensShapelayer.addSublayer(photochromLayer)
+            
+            
         }else{
             
-            drawMainLayer(blurRadius, imageName: currentBackground!) // Return to whatever the current was!
-            photochromLayer.removeFromSuperlayer()
-            self.switchPhotochrom.setOn(false, animated: true)
+          
+          drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
+          currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+          imageLayer.addSublayer(currentAdd.layer)
+          photochromLayer.removeFromSuperlayer()
+          self.switchPhotochrom.setOn(false, animated: true)
+          switchAntiReflection.setOn(true, animated: false)
+          switchHardCoat.setOn(true,animated: false)
+          switchHydrophop.setOn(true,animated: false)
+
+          pilotsLayer.addSublayer(imageLayer)
+
         }
         
         
@@ -294,17 +357,15 @@ class ViewController: UIViewController {
         leftMask.path = drawShapePath(2, reverse:false)
         rightMask.path = drawShapeMirrorPath(2, reverse:false)
 
-        let blurRadius = Float(sliderPowerOutlet.value)
-       // swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
-      
         Button1.fadeOut()
         Button3.fadeOut()
         Button4.fadeOut()
-          sender.fadeIn()
+        sender.fadeIn()
     }
     
     
     @IBAction func btnJenaW(sender: UIButton) {
+        
         
         leftLayer.removeFromSuperlayer()
         let newLeftLayer = CAShapeLayer()
@@ -320,20 +381,20 @@ class ViewController: UIViewController {
         
         rightLayer.removeFromSuperlayer()
         let newRightLayer = CAShapeLayer()
-        newLeftLayer.path = drawShapeMirrorPath(3,reverse: false)
+        newRightLayer.path = drawShapeMirrorPath(3, reverse:false)
         newRightLayer.zPosition = 6
         newRightLayer.strokeColor = UIColor.yellowColor().CGColor
-        newRightLayer.fillColor = UIColor.clearColor().CGColor;
+        newRightLayer.fillColor = UIColor.clearColor().CGColor
         newRightLayer.lineWidth = 8.0
         rightLayer = newRightLayer
         lensShapelayer.addSublayer(rightLayer)
         
         
-        leftMask.path = drawShapePath(3, reverse: false)
+        leftMask.path = drawShapePath(3, reverse:false)
         rightMask.path = drawShapeMirrorPath(3, reverse:false)
-
-        let blurRadius = Float(sliderPowerOutlet.value)
-       // swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
+        
+        currentPath = "JennaW"
+      
         Button1.fadeOut()
         Button2.fadeOut()
         Button4.fadeOut()
@@ -360,7 +421,7 @@ class ViewController: UIViewController {
         newRightLayer.path = drawShapeMirrorPath(4, reverse:false)
         newRightLayer.zPosition = 6
         newRightLayer.strokeColor = UIColor.yellowColor().CGColor
-        newRightLayer.fillColor = UIColor.clearColor().CGColor;
+        newRightLayer.fillColor = UIColor.clearColor().CGColor
         newRightLayer.lineWidth = 8.0
         rightLayer = newRightLayer
         lensShapelayer.addSublayer(rightLayer)
@@ -369,8 +430,7 @@ class ViewController: UIViewController {
         leftMask.path = drawShapePath(4, reverse:false)
         rightMask.path = drawShapeMirrorPath(4, reverse:false)
         currentPath = "Jenna4K"
-        let blurRadius = Float(sliderPowerOutlet.value)
-      //  swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
+      
         Button1.fadeOut()
         Button2.fadeOut()
         Button3.fadeOut()
@@ -382,19 +442,16 @@ class ViewController: UIViewController {
     
     
     @IBAction func sliderAdd(sender: UISlider) {
-        //Magnify layer : add this image to the magnify layer.
+      
         blurRadius = sender.value
-        swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
-       // drawMainLayer(blurRadius, imageName: currentBackground!)
-
+        swapLensImage(Float(blurRadius),swapToImage: currentBackgroundImageName)
 
     }
     
     @IBAction func sliderPower(sender: UISlider) {
-        blurRadius = sender.value
-        drawMainLayer(blurRadius, imageName: currentBackground!)
-       // swapLensImage(Float(blurRadius),swapToImage: currentBackground!)
-
+        let blurRadius = sender.value // don't save this blurradisu globally...
+        drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
+       
     }
  
     
@@ -402,34 +459,237 @@ class ViewController: UIViewController {
     @IBOutlet weak var sliderAddOutlet: UISlider!
     
     @IBOutlet weak var sliderPowerOutlet: UISlider!
+    /*
+    @IBAction func btnTakingPhoto(sender: UIBarButtonItem) {
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "takingphoto", savebg: true)
+        currentBackgroundImageName = "takingphoto"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+             photochromLayer.removeFromSuperlayer()
+        }
+
+        
+    }
+    @IBAction func btnPhone(sender: UIBarButtonItem) {
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "phone", savebg: true)
+        currentBackgroundImageName = "phone"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+             photochromLayer.removeFromSuperlayer()
+        }
+
+        
+    }
+    @IBAction func btnHotel(sender: UIBarButtonItem) {
+        
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "office", savebg: true)
+        currentBackgroundImageName = "office"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+             photochromLayer.removeFromSuperlayer()
+        }
+
+    }
+    
+    @IBAction func btnOffice(sender: UIBarButtonItem) {
+        
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "office3", savebg: true)
+        currentBackgroundImageName = "office3"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+            //Remove the photochrom layer
+            photochromLayer.removeFromSuperlayer()
+        }
+
+    }
+    */
+    
+    func btnTakingPhoto() {
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "takingphoto", savebg: true)
+        currentBackgroundImageName = "takingphoto"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+            photochromLayer.removeFromSuperlayer()
+        }
+        
+        
+    }
+
+    func btnPhone() {
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "phone", savebg: true)
+        currentBackgroundImageName = "phone"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+            photochromLayer.removeFromSuperlayer()
+        }
+        
+        
+    }
+
+    
+    func btnOffice() {
+        
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "office3", savebg: true)
+        currentBackgroundImageName = "office3"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+            //Remove the photochrom layer
+            photochromLayer.removeFromSuperlayer()
+        }
+        
+    }
+    func btnHotel() {
+        
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "office", savebg: true)
+        currentBackgroundImageName = "office"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+            photochromLayer.removeFromSuperlayer()
+        }
+        
+    }
+    func btnCockpit() {
+        
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "cockpit", savebg: true)
+        currentBackgroundImageName = "cockpit"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+            photochromLayer.removeFromSuperlayer()
+        }
+    }
+
+    func btnDesktop() {
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "office2", savebg: true)
+        currentBackgroundImageName = "office2"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+            photochromLayer.removeFromSuperlayer()
+        }
+        
+        
+    }
+    func btnAutumn() {
+    
+    
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "autumn", savebg: true)
+        currentBackgroundImageName = "autumn"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        ///imageLayer.addSublayer(currentAdd.layer)
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+    
+        }
+    }
+    
+    func btnSailing() {
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "sailing", savebg: true)
+        currentBackgroundImageName = "sailing"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        // imageLayer.addSublayer(currentAdd.layer)
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+            photochromLayer.removeFromSuperlayer()
+        }
+        
+        
+        
+    }
+
+
+  /*
+    @IBAction func btnDesktop(sender: UIBarButtonItem) {
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "office2", savebg: true)
+        currentBackgroundImageName = "office2"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+             photochromLayer.removeFromSuperlayer()
+        }
+
+        
+    }
+    
+    */
+    
+  
     
     @IBAction func btnCockpit(sender: UIBarButtonItem) {
         
-       
-        let blurRadius = Float(sliderPowerOutlet.value)
-        drawMainLayer(blurRadius, imageName: UIImage(named: "cockpit-n")!)
-        currentBackground = UIImage(named: "cockpit-v")
-        //swapLensImage(blurRadius, swapToImage: UIImage(named: "cockpit-v")!)
-        currentAdd.image = currentBackground!
-        imageLayer.addSublayer(currentAdd.layer)
+        
+              drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "cockpit", savebg: true)
+        currentBackgroundImageName = "cockpit"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+             photochromLayer.removeFromSuperlayer()
+        }
     }
     
     @IBAction func btnAutumn(sender: UIBarButtonItem) {
-        let blurRadius = Float(sliderPowerOutlet.value)
-        drawMainLayer(blurRadius, imageName: UIImage(named: "autumn-n")!)
-        currentBackground = UIImage(named: "autumn")
-        //swapLensImage(blurRadius, swapToImage: UIImage(named: "autumn")!)
-        currentAdd.image = currentBackground!
-        imageLayer.addSublayer(currentAdd.layer)
+        
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "autumn", savebg: true)
+        currentBackgroundImageName = "autumn"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        ///imageLayer.addSublayer(currentAdd.layer)
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+            
+        }
     }
     
     @IBAction func btnSailing(sender: UIBarButtonItem) {
-        let blurRadius = Float(sliderPowerOutlet.value)
-        drawMainLayer(blurRadius, imageName: UIImage(named: "sailing-n")!)
-        currentBackground = UIImage(named: "sailing")
-        //swapLensImage(blurRadius, swapToImage: UIImage(named: "sailing")!)
-        currentAdd.image = currentBackground!
-        imageLayer.addSublayer(currentAdd.layer)
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "sailing", savebg: true)
+        currentBackgroundImageName = "sailing"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+       // imageLayer.addSublayer(currentAdd.layer)
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+   
+        if switchPhotochrom.on {
+            switchPhotochrom.setOn(false, animated: false)
+             photochromLayer.removeFromSuperlayer()
+        }
+       
+
 
     }
     
@@ -460,60 +720,49 @@ class ViewController: UIViewController {
     }
 
     
-    func moveLensImageMask(){
-        //1.  Need to measure the current position
-        //2. Force imageLayer to stay put, at 0, 0 position
-        imageLayer.position = CGPoint(x: 0, y: 0)
+    
+    func swapMagnifyLayer(blurRadius:  Float){
+        
+        magnifyLayer.removeFromSuperlayer()
+        let img = magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName + "-v")!, bulgeX: mainImageView.frame.width/CGFloat(2.0), bulgeY: 80.0)
+        let image = UIImageView(image: img)
+        magnifyLayer.addSublayer(image.layer)
+        magnifyLayer.path = drawLensPath()
+        imageLayer.addSublayer(magnifyLayer)
+
     }
     
     
-    func swapLensImage(blurRadius: Float, swapToImage: UIImage){
-        //Magnify layer : add this image to the magnify layer.
+    func swapLensImage(blurRadius: Float, swapToImage: String){
+       
+        leftBlurLayer.removeFromSuperlayer()
+        rightBlurLayer.removeFromSuperlayer()
         
-        let img = magnifyImage(blurRadius,imageName: swapToImage)
-        let image = UIImageView(image: img)
-        magnifyLayer.addSublayer(image.layer) //
+        if (blurRadius>0){
+            
+            swapMagnifyLayer(blurRadius)
+           
+            //Use the magnify image and blur it per sender values.
+            let img = UIImageView(image: magnifyImage(blurRadius,imageName: UIImage(named: swapToImage+"-v")!, bulgeX: mainImageView.frame.width/2.0, bulgeY: 80.0))
+            let leftimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
+            let rightimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
+
         
+            leftBlurLayer.path = leftMask.path
+            leftBlurLayer.fillColor = UIColor.clearColor().CGColor
+            leftBlurLayer.addSublayer(leftimg.layer)
+            leftBlurLayer.mask = leftMask
         
-        let blurimg = UIImageView(image: blurImg(blurRadius, imageName: image.image!))
-        let leftimg = UIImageView(image: blurImg(blurRadius, imageName: image.image!))
-        
-        
-        let leftBlurLayer = CAShapeLayer()
-        leftBlurLayer.zPosition = 5
-        leftBlurLayer.path = leftLayer.path
-        leftBlurLayer.fillColor = UIColor.clearColor().CGColor
-        leftBlurLayer.addSublayer(leftimg.layer)
-        leftLayer.mask = leftMask
-        leftLayer.addSublayer(leftBlurLayer)
-        
-        let strokeLeft = drawStrokeLayer(leftMask.path!,strokeWidth: 8.0)
-        let strokelineLeft = CAShapeLayer()
-        strokelineLeft.strokeColor = UIColor.yellowColor().CGColor
-        strokelineLeft.path = strokeLeft
-        strokelineLeft.lineWidth = 8.0
-        strokelineLeft.zPosition = 9
-        leftLayer.addSublayer(strokelineLeft)
-        
-        
-        let rightBlurLayer = CAShapeLayer()
-        rightBlurLayer.zPosition = 5
-        rightBlurLayer.path = rightLayer.path
-        rightBlurLayer.fillColor = UIColor.clearColor().CGColor
-        rightBlurLayer.addSublayer(blurimg.layer)
-        rightLayer.mask = rightMask
-        rightLayer.addSublayer(rightBlurLayer)
-        
-        let strokeRight = drawStrokeLayer(rightMask.path!,strokeWidth: 8.0)
-        let strokelineRight = CAShapeLayer()
-        strokelineRight.strokeColor = UIColor.yellowColor().CGColor
-        strokelineRight.lineWidth = 8.0
-        strokelineRight.path = strokeRight
-        strokelineRight.zPosition = 9.0
-        rightLayer.addSublayer(strokelineRight)
-        
-        lensShapelayer.addSublayer(magnifyLayer)
-        
+            rightBlurLayer.path = rightMask.path
+            rightBlurLayer.fillColor = UIColor.clearColor().CGColor
+            rightBlurLayer.addSublayer(rightimg.layer)
+            rightBlurLayer.mask = rightMask
+            
+            imageLayer.addSublayer(leftBlurLayer)
+            imageLayer.addSublayer(rightBlurLayer)
+            
+        }
+
     }
 
     
@@ -533,6 +782,7 @@ class ViewController: UIViewController {
             ]
         )
         
+        
         let beginImage = CIImage(image: imageName)
         let transform = CGAffineTransformIdentity
         
@@ -547,7 +797,7 @@ class ViewController: UIViewController {
         
     }
     
-    func magnifyImage(blurRadius: Float,imageName: UIImage)->UIImage {
+    func magnifyImage(blurRadius: Float,imageName: UIImage, bulgeX: CGFloat, bulgeY: CGFloat)->UIImage {
         
         let glContext = EAGLContext(API: .OpenGLES2)
         context = CIContext(EAGLContext: glContext,
@@ -567,7 +817,7 @@ class ViewController: UIViewController {
         
         bulgeFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
         bulgeFilter.setValue(30*blurRadius, forKey: "inputRadius")
-        bulgeFilter.setValue(CIVector(x: 840/2, y: 140), forKey: kCIInputCenterKey)
+        bulgeFilter.setValue(CIVector(x: bulgeX, y: bulgeY), forKey: kCIInputCenterKey)
         bulgeFilter.setValue(1, forKey: "inputScale")
         
         let cgimg = context.createCGImage(bulgeFilter.outputImage!, fromRect: beginImage!.extent)
@@ -840,10 +1090,12 @@ class ViewController: UIViewController {
             CGPathAddLineToPoint(lensPath, nil, p.x, p.y)
         }
         CGPathCloseSubpath(lensPath)
-    
         return lensPath
 
     }
+    
+    @IBOutlet weak var carousel: iCarousel!
+    
     
     func drawMaskLayer(color:CGColor) -> CAShapeLayer{
         let shape = CAShapeLayer()
@@ -929,7 +1181,8 @@ class ViewController: UIViewController {
     //Sets all the LensShape layers DEFAULTS / CHANGE THE NAME OF THIS FUNCTION TO DEFAULT LAYERS
     func setDefaultLayers(imageName: UIImage){
         
-        
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+
         
         //Mask:  Apply Lens Shape
         let maskLayerForImage = drawMaskLayer(UIColor.whiteColor().CGColor)  // replace testing with this when you're ready.
@@ -937,19 +1190,45 @@ class ViewController: UIViewController {
         //Background Image has its own layer now.
         let img = UIImageView(image: imageName) //The vibrant version of the image name will be sent over.
         currentAdd = img
-        //currentAdd.layer.zPosition = 2
-        //currentAdd.layer.mask = maskLayer
-      
+  
+        
         imageLayer.frame = pilotsLayer.bounds
         imageLayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
         imageLayer.contentsGravity = kCAGravityCenter
-        imageLayer.fillColor = nil
+        imageLayer.fillRule = kCAFillRuleEvenOdd;
         imageLayer.zPosition = 2
         imageLayer.mask = maskLayerForImage
         imageLayer.addSublayer(currentAdd.layer) // let's try not adding an image to the mask, just cut it out!!!
-        pilotsLayer.addSublayer(imageLayer)
+   
+        
+        
 
-       
+        
+        
+        leftBlurLayer.frame = pilotsLayer.bounds
+        leftBlurLayer.path = leftMask.path
+        leftBlurLayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
+        leftBlurLayer.fillRule = kCAFillRuleEvenOdd;
+        leftBlurLayer.zPosition = 4
+        
+        rightBlurLayer.frame = pilotsLayer.bounds
+        rightBlurLayer.path = rightMask.path
+        rightBlurLayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
+        rightBlurLayer.fillRule = kCAFillRuleEvenOdd;
+        rightBlurLayer.zPosition = 4
+
+        imageLayer.addSublayer(leftBlurLayer)
+        imageLayer.addSublayer(rightBlurLayer)
+        
+        
+
+    
+        //Main layers :     Pilots layer or bottom background layer
+        //                  BlurShape Layer holds the left and right blurs
+        //                  imageLayer holds the image that moves...
+        
+        pilotsLayer.addSublayer(imageLayer)
+        
         
         //Stroke the outside of the LensShape.
         let strokeLensShapeLayer = drawStrokeLayer(drawLensPath(), strokeWidth:2.0)
@@ -962,9 +1241,16 @@ class ViewController: UIViewController {
         lensShapelayer.fillColor = UIColor.clearColor().CGColor;
         lensShapelayer.mask = maskLayer
         lensShapelayer.path = strokeLensShapeLayer
-        //lensShapelayer.addSublayer(currentAdd.layer) //add pilots image (vib version) to this layer
-        //lensShapelayer.addSublayer(imageLayer)
-     
+        
+
+        
+        magnifyLayer.frame = lensShapelayer.frame
+        magnifyLayer.contentsGravity = kCAGravityCenter
+        magnifyLayer.zPosition = 3
+        magnifyLayer.mask = drawMaskLayer(UIColor.clearColor().CGColor)
+        imageLayer.addSublayer(magnifyLayer)
+
+        
         
         
         //Add a non colored color layer (can be replaced using buttons : color).
@@ -989,12 +1275,9 @@ class ViewController: UIViewController {
         
         
         //MagnifyLayer: initially empty, will be set when user moves the sliderAdd.
-        magnifyLayer.contentsGravity = kCAGravityCenter
-        magnifyLayer.zPosition = 4
-        lensShapelayer.addSublayer(magnifyLayer)
         
         
-        //Left Shape (stroke layer)
+        //Left stroke (stroke layer)
         leftLayer.contentsGravity = kCAGravityCenter
         leftLayer.path = drawShapePath(1,reverse: false)
         leftLayer.strokeColor = UIColor.yellowColor().CGColor
@@ -1031,17 +1314,52 @@ class ViewController: UIViewController {
         leftMask.path = drawShapePath(1, reverse: false)
         rightMask.path = drawShapeMirrorPath(1, reverse: true)
         currentBackground = UIImage(named: "cockpit-v")
+        currentBackgroundImageName = "cockpit"
          
         pilotsLayer.addSublayer(lensShapelayer)  // append the new layer to the pilotslayer
         lensShapelayer.zPosition = 3
         
         
-        
     }
 
+    func drawBackgroundLayer(blurRadius: Float, imageName: String, savebg: Bool){
+        
+        let glContext = EAGLContext(API: .OpenGLES2)
+        context = CIContext(EAGLContext: glContext,
+            options: [
+                kCIContextWorkingColorSpace: NSNull()
+            ]
+        )
+        
+        //Set this to current background.
+        var beginImage = CIImage()
+        if savebg {
+            beginImage = CIImage(image: UIImage(named: imageName + "-n")!)! // append normal
+            currentBackgroundImageName = imageName // Save the name!!!! so we can switch, we dont want to switch for photochrom hence, flag!
+        }else{
+            beginImage = CIImage(image: UIImage(named: imageName)!)!
+        }
+        let transform = CGAffineTransformIdentity
+        clampFilter.setValue(beginImage, forKey: "inputImage")
+        clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
+        currentFilter.setValue(clampFilter.outputImage, forKey: "inputImage")
+        currentFilter.setValue(blurRadius, forKey: "inputRadius")
+        
+        let cgimg = context.createCGImage(currentFilter.outputImage!, fromRect: beginImage.extent)
+        let processedImage = UIImage(CGImage: cgimg).CGImage //has to have the CGImage piece on the end!!!!!
+        
+        pilotsLayer.zPosition = 1
+        pilotsLayer.backgroundColor = UIColor.whiteColor().CGColor
+        pilotsLayer.contentsGravity = kCAGravityBottomLeft
+        pilotsLayer.masksToBounds = true  //Important: tell this layer to be the boundary which cuts other layers (rect)
+        pilotsLayer.contents = processedImage
+
+        
+        
+    }
     
     //Function takes "blurRadius" and renders a gaussian blur to the background image.
-    func drawMainLayer(blurRadius: Float, imageName: UIImage){
+    func drawMainLayer(blurRadius: Float, imageName: UIImage, savebg: Bool){
         
         let glContext = EAGLContext(API: .OpenGLES2)
         context = CIContext(EAGLContext: glContext,
@@ -1052,7 +1370,9 @@ class ViewController: UIViewController {
        
         //Set this to current background.
         let beginImage = CIImage(image: imageName)
-        currentBackground = imageName
+        if savebg {
+            currentBackground = imageName
+        }
         
         let transform = CGAffineTransformIdentity
         clampFilter.setValue(beginImage!, forKey: "inputImage")
@@ -1142,27 +1462,113 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(animated: Bool)
     {
-        drawMainLayer(0.0,imageName: imgPilots!)
+        //drawMainLayer(0.0,imageName: imgPilots!, savebg: true)
+        self.view.setButtons("icon-cockpit")
+        drawBackgroundLayer(0.0, imageName: "cockpit", savebg: true)
         setDefaultLayers(imgPilotsVib!)
-        
+        switchPhotochrom.setOn(false,animated:true)
+        switchHydrophop.setOn(true, animated: true)
+        switchHardCoat.setOn(true,animated: true)
+        switchAntiReflection.setOn(true,animated: true)
         setBtn1FromDirectory(grabButtonImageName(1))
         setBtn2FromDirectory(grabButtonImageName(2))
         setBtn3FromDirectory(grabButtonImageName(3))
         setBtn4FromDirectory(grabButtonImageName(4))
-       // Color()
+        
+        
         
         
     }
-
-
-    override func viewDidLoad() {
+//btnAutum, btnCockpit, btnPhone, btnOffice, btnDesk, btnTakingPhoto, btnSailing
+    
+    var carouselImages = NSMutableArray(array: ["autumn-v","cockpit-v","office-v","phone-v","office2-v","office3-v","takingphoto-v","sailing-v"])
+    
+    override func viewDidLoad(){
+        
+        Carasel.type = .CoverFlow
+        Carasel.center = mainImageView.center
+        Carasel.dataSource = self
+        Carasel.reloadData()
+        Carasel.centerItemWhenSelected = false
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+       
+        
+        
+
+    }
+    
+  
+    @IBOutlet weak var Carasel: iCarousel!
+    
+    func numberOfItemsInCarousel(carousel: iCarousel) -> Int {
+        return carouselImages.count
+    }
+    
+    func numberOfVisibleItemsInCarousel(carousel: iCarousel) -> Int {
+        return 7
+    }
+    
+    
+    func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, reusingView view: UIView?) -> UIView {
+       // "autumn-v","cockpit-v","office-v","phone-v","office2-v","office3-v","takingphoto-v","sailing-v"
+        var newButton = UIButton(type: UIButtonType.Custom)
+        if (view == nil)  {
+            let buttonImage = UIImage(named: "\(carouselImages.objectAtIndex(index))")
+            newButton.exclusiveTouch = true
+            newButton.setImage(buttonImage, forState: .Normal)
+            newButton.frame = CGRectMake(0.0, 0.0, 140, 80)
+            newButton.setBackgroundImage(buttonImage, forState: .Normal )
+            newButton.backgroundColor = UIColor.clearColor()
+            newButton.layer.borderWidth = 0.8
+            newButton.layer.borderColor = (UIColor( red: 255, green:255, blue:255, alpha: 1.0 )).CGColor
+            if (index == 0){
+                newButton.addTarget(self, action: "btnAutumn", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Autumn Scene", forState: .Normal)
+
+            } else if (index == 1){
+                newButton.addTarget(self, action: "btnCockpit", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Cockpit", forState: .Normal)
+            } else if (index == 2){
+                newButton.addTarget(self, action: "btnHotel", forControlEvents: .TouchUpInside)
+                newButton.setTitle("City View", forState: .Normal)
+            } else if (index == 3){
+                newButton.addTarget(self, action: "btnPhone", forControlEvents: .TouchUpInside)
+                 newButton.setTitle("Phone View", forState: .Normal)
+            } else if (index == 4){
+                newButton.addTarget(self, action: "btnOffice", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Office", forState: .Normal)
+            } else if (index == 5){
+                newButton.addTarget(self, action: "btnDesktop", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Meeting", forState: .Normal)
+            } else if (index == 6){
+                newButton.addTarget(self, action: "btnTakingPhoto", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Snapshot", forState: .Normal)
+            } else if (index == 7) {
+                newButton.addTarget(self, action: "btnSailing", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Sailing", forState: .Normal)
+            }
+            
+
+        }
+              return newButton
+    }
+    
+    
+    func buttonTapped(sender: UIButton) {
+        //get item index for button
+       
+        let index = carousel.indexOfItemViewOrSubview(sender)
+        print(index)
     }
 
-    override func didReceiveMemoryWarning() {
+  
+    var selectedIndex:Int = 0
+    
+       override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
+        
     }
 
 

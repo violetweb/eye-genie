@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F43078421C29CB02001AB98D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F43078411C29CB02001AB98D /* Assets.xcassets */; };
+		F43078461C2A097C001AB98D /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43078451C2A097C001AB98D /* UIColor.swift */; };
+		F430784B1C2AFDEC001AB98D /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F430784A1C2AFDEC001AB98D /* Carousel.m */; };
 		F454B7F21C0DFC73005427A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F454B7F11C0DFC73005427A8 /* AppDelegate.swift */; };
 		F454B7F41C0DFC73005427A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F454B7F31C0DFC73005427A8 /* ViewController.swift */; };
 		F454B7F71C0DFC73005427A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F454B7F51C0DFC73005427A8 /* Main.storyboard */; };
-		F454B7F91C0DFC73005427A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F454B7F81C0DFC73005427A8 /* Assets.xcassets */; };
 		F454B7FC1C0DFC73005427A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F454B7FA1C0DFC73005427A8 /* LaunchScreen.storyboard */; };
 		F454B8171C0DFD16005427A8 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F454B8161C0DFD16005427A8 /* libsqlite3.tbd */; };
 		F454B8241C0DFFAA005427A8 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = F454B81A1C0DFFAA005427A8 /* FMDatabase.m */; };
@@ -32,11 +34,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F43078411C29CB02001AB98D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
+		F43078451C2A097C001AB98D /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		F43078491C2AFDBC001AB98D /* Carousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Carousel.h; path = ../Carousel.h; sourceTree = "<group>"; };
+		F430784A1C2AFDEC001AB98D /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Carousel.m; path = ../Carousel.m; sourceTree = "<group>"; };
 		F454B7EE1C0DFC73005427A8 /* Eye-Genie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eye-Genie.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F454B7F11C0DFC73005427A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F454B7F31C0DFC73005427A8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F454B7F61C0DFC73005427A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		F454B7F81C0DFC73005427A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F454B7FB1C0DFC73005427A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F454B7FD1C0DFC73005427A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F454B8161C0DFD16005427A8 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -97,6 +102,10 @@
 		F454B7F01C0DFC73005427A8 /* Eye-Genie */ = {
 			isa = PBXGroup;
 			children = (
+				F43078491C2AFDBC001AB98D /* Carousel.h */,
+				F430784A1C2AFDEC001AB98D /* Carousel.m */,
+				F43078411C29CB02001AB98D /* Assets.xcassets */,
+				F454B82A1C0E057D005427A8 /* appdefaults */,
 				F468EFAE1C175ACC00C9F237 /* Model */,
 				F454B8181C0DFFAA005427A8 /* fmdb */,
 				F454B7F11C0DFC73005427A8 /* AppDelegate.swift */,
@@ -110,8 +119,7 @@
 				F454B7F31C0DFC73005427A8 /* ViewController.swift */,
 				F460A9771C15F20300C63D91 /* FileHelper.swift */,
 				F460A9791C16117800C63D91 /* AnimationHelper.swift */,
-				F454B82A1C0E057D005427A8 /* appdefaults */,
-				F454B7F81C0DFC73005427A8 /* Assets.xcassets */,
+				F43078451C2A097C001AB98D /* UIColor.swift */,
 				F454B8301C0E0E6A005427A8 /* bg-home.jpg */,
 				F454B7FA1C0DFC73005427A8 /* LaunchScreen.storyboard */,
 				F454B7FD1C0DFC73005427A8 /* Info.plist */,
@@ -207,8 +215,8 @@
 				F454B82B1C0E057D005427A8 /* appdefaults in Resources */,
 				F454B7FC1C0DFC73005427A8 /* LaunchScreen.storyboard in Resources */,
 				F454B8311C0E0E6A005427A8 /* bg-home.jpg in Resources */,
-				F454B7F91C0DFC73005427A8 /* Assets.xcassets in Resources */,
 				F454B7F71C0DFC73005427A8 /* Main.storyboard in Resources */,
+				F43078421C29CB02001AB98D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +233,7 @@
 				F468EFB81C1792A400C9F237 /* DesignsController.swift in Sources */,
 				F454B7F41C0DFC73005427A8 /* ViewController.swift in Sources */,
 				F454B8351C0F8E0A005427A8 /* AppImageController.swift in Sources */,
+				F43078461C2A097C001AB98D /* UIColor.swift in Sources */,
 				F460A9781C15F20300C63D91 /* FileHelper.swift in Sources */,
 				F454B8281C0DFFAA005427A8 /* FMResultSet.m in Sources */,
 				F468EFB41C17670B00C9F237 /* MenuItem.swift in Sources */,
@@ -235,6 +244,7 @@
 				F454B7F21C0DFC73005427A8 /* AppDelegate.swift in Sources */,
 				F454B8251C0DFFAA005427A8 /* FMDatabaseAdditions.m in Sources */,
 				F454B8271C0DFFAA005427A8 /* FMDatabaseQueue.m in Sources */,
+				F430784B1C2AFDEC001AB98D /* Carousel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
