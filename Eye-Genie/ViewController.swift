@@ -62,21 +62,23 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     var lastSavedRightBlurLocation = CGPointZero
     var lastMagnifyLocation = CGPointZero
     
+    var timer = NSTimer()
     
     var pilotsLayer: CALayer {
         return mainImageView.layer
     }
     
     
-    var timer = NSTimer()
     
- 
-    
+    func LogoutTimed(){
+        performSegueWithIdentifier("LogoutSegue", sender: timer)
+    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-      //  let interval = Double(60) // four hours check it...
-     //   timer = NSTimer.scheduledTimerWithTimeInterval(interval, target:self, selector: Selector("Logout"), userInfo: nil, repeats: true)
+        
+        let interval = Double(28800) // eightss hours check it...
+        timer = NSTimer.scheduledTimerWithTimeInterval(interval, target:self, selector: Selector("LogoutTimed"), userInfo: nil, repeats: true)
        
         self.lastSavedLocation = lensShapelayer.position  // Works with panGesture... track the last position.
         self.lastSavedImgLocation = imageLayer.mask!.position
@@ -188,7 +190,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         sender.fadeIn()
     }
     
-    
+   
     @IBOutlet weak var switchAntiReflection: UISwitch!
     @IBOutlet weak var switchHydrophop: UISwitch!
     @IBOutlet weak var switchHardCoat: UISwitch!
@@ -1478,9 +1480,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         Carasel.type = .Linear
         Carasel.dataSource = self
         Carasel.centerItemWhenSelected = false
-        Carasel.contentView.frame = CGRectMake(0, 0, 800, 80)
-        Carasel.contentOffset = CGSize(width: -480,height: 0)
+        Carasel.contentOffset = CGSize(width: -450,height: 0) // offset the "center" so to speak.
         Carasel.reloadData()
+        
         super.viewDidLoad()
         
         
@@ -1495,16 +1497,13 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
   
     @IBOutlet weak var Carasel: iCarousel!
     
+    
+    
     func numberOfItemsInCarousel(carousel: iCarousel) -> Int {
         return carouselImages.count
     }
     
-    func numberOfVisibleItemsInCarousel(carousel: iCarousel) -> Int {
-        return 4
-    }
-    
-    
-    func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, reusingView view: UIView?) -> UIView {
+     func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, reusingView view: UIView?) -> UIView {
        // "autumn-v","cockpit-v","office-v","phone-v","office2-v","office3-v","takingphoto-v","sailing-v"
         let newButton = UIButton(type: UIButtonType.Custom)
         if (view == nil)  {

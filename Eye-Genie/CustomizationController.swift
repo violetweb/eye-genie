@@ -393,9 +393,9 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
             saveImage(pickedImage, path: path, filename: "bg-home-user")
         }else if chosenButton == "Logo" {
             imageLogo.image = pickedImage
-            saveLogoImage("yourlogohere")
+            saveLogoImage("yourlogohere-user")
             let path = getSupportPath("images")
-            saveImage(pickedImage, path: path, filename: "yourlogohere")
+            saveImage(pickedImage, path: path, filename: "yourlogohere-user")
         }
         dismissViewControllerAnimated(true, completion: nil)
         
@@ -499,7 +499,7 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
         imagePicker.delegate = self
         
         grabMainImage() // Sets the initial values imageray based on any saved results.
-        grabLogoImage()
+        grabLogoImage() // Sets logo image
         
         //Set up 4 button images (4 were saved as defaults) (currently hard coded, but will likely be dynamically set from a back end maybe at some point.
         setImageView(grabButtonImageName(1), imageview: Button1)

@@ -31,6 +31,7 @@
 		F468EFB61C1770BF00C9F237 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F468EFB51C1770BF00C9F237 /* MenuCell.swift */; };
 		F468EFB81C1792A400C9F237 /* DesignsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F468EFB71C1792A400C9F237 /* DesignsController.swift */; };
 		F468EFBA1C18A0A800C9F237 /* CustomizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F468EFB91C18A0A800C9F237 /* CustomizationController.swift */; };
+		F4FBFF531C332BE100EC6FC2 /* SwipeView in Resources */ = {isa = PBXBuildFile; fileRef = F4FBFF521C332BE100EC6FC2 /* SwipeView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,7 +57,7 @@
 		F454B8211C0DFFAA005427A8 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
 		F454B8221C0DFFAA005427A8 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		F454B8231C0DFFAA005427A8 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		F454B8291C0DFFC7005427A8 /* Eye-Genie-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Eye-Genie-Bridging-Header.h"; sourceTree = "<group>"; };
+		F454B8291C0DFFC7005427A8 /* Eye-Genie-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Eye-Genie-Bridging-Header.h"; path = "fmdb/Eye-Genie-Bridging-Header.h"; sourceTree = "<group>"; };
 		F454B82A1C0E057D005427A8 /* appdefaults */ = {isa = PBXFileReference; lastKnownFileType = folder; path = appdefaults; sourceTree = "<group>"; };
 		F454B82E1C0E07E9005427A8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F454B8301C0E0E6A005427A8 /* bg-home.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "bg-home.jpg"; path = "appdefaults/bg-home.jpg"; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 		F468EFB51C1770BF00C9F237 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		F468EFB71C1792A400C9F237 /* DesignsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignsController.swift; sourceTree = "<group>"; };
 		F468EFB91C18A0A800C9F237 /* CustomizationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizationController.swift; sourceTree = "<group>"; };
+		F4FBFF521C332BE100EC6FC2 /* SwipeView */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SwipeView; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,8 @@
 		F454B7F01C0DFC73005427A8 /* Eye-Genie */ = {
 			isa = PBXGroup;
 			children = (
+				F454B8291C0DFFC7005427A8 /* Eye-Genie-Bridging-Header.h */,
+				F4FBFF521C332BE100EC6FC2 /* SwipeView */,
 				F43078491C2AFDBC001AB98D /* Carousel.h */,
 				F430784A1C2AFDEC001AB98D /* Carousel.m */,
 				F43078411C29CB02001AB98D /* Assets.xcassets */,
@@ -141,7 +145,6 @@
 				F454B8211C0DFFAA005427A8 /* FMDB.h */,
 				F454B8221C0DFFAA005427A8 /* FMResultSet.h */,
 				F454B8231C0DFFAA005427A8 /* FMResultSet.m */,
-				F454B8291C0DFFC7005427A8 /* Eye-Genie-Bridging-Header.h */,
 			);
 			path = fmdb;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 			files = (
 				F454B82B1C0E057D005427A8 /* appdefaults in Resources */,
 				F454B7FC1C0DFC73005427A8 /* LaunchScreen.storyboard in Resources */,
+				F4FBFF531C332BE100EC6FC2 /* SwipeView in Resources */,
 				F454B8311C0E0E6A005427A8 /* bg-home.jpg in Resources */,
 				F454B7F71C0DFC73005427A8 /* Main.storyboard in Resources */,
 				F43078421C29CB02001AB98D /* Assets.xcassets in Resources */,

@@ -270,7 +270,7 @@ class LoginViewController: UIViewController {
         let genieDB = FMDatabase(path: databasePath)
         
         if genieDB.open() {
-            let querySQL = "SELECT HOMEIMAGE, ACTIVE FROM GENERAL WHERE id=1"
+            let querySQL = "SELECT HOMEIMAGE, LOGOIMAGE, ACTIVE FROM GENERAL WHERE id=1"
             
             let results:FMResultSet? = genieDB.executeQuery(querySQL,
                 withArgumentsInArray: nil)
@@ -278,8 +278,12 @@ class LoginViewController: UIViewController {
             if results?.next() == true {
                 let homeimage = results?.stringForColumn("HOMEIMAGE")!
                 setImageFromDirectory(homeimage!)
+                let logoimage = results?.stringForColumn("LOGOIMAGE")!
+                setImageView(logoimage!, imageview: imageLogo)
             } else {
                 setImageFromDirectory("bg-home")
+                setImageView("yourlogohere", imageview: imageLogo)
+
             }
             genieDB.close()
         } else {
@@ -287,6 +291,22 @@ class LoginViewController: UIViewController {
         }
     }
     
+    
+    func setImageView(findimage: String, imageview: UIImageView){
+        
+        let fm = NSFileManager.defaultManager()
+        let path = getSupportPath("images")  // applicationSupportdirectory + images
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix(findimage) {
+                let itemImage = path + "/" + item
+                imageview.image = UIImage.init(contentsOfFile: itemImage)
+                
+            }
+        }
+        
+    }
+
     
     
     var databasePath = String()

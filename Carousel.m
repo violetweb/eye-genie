@@ -1739,6 +1739,7 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
         _decelerating = YES;
         [self startAnimation];
     }
+   
 }
 
 - (CGFloat)easeInOut:(CGFloat)time
@@ -1774,6 +1775,7 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
         CGFloat acceleration = -_startVelocity/_scrollDuration;
         CGFloat distance = _startVelocity * time + 0.5 * acceleration * pow(time, 2.0);
         _scrollOffset = _startOffset + distance;
+       // NSLog(@"%f", _scrollOffset);
         [self didScroll];
         if (fabs(time - _scrollDuration) < FLOAT_ERROR_MARGIN)
         {
@@ -1788,10 +1790,12 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
                     //call scroll to trigger events for legacy support reasons
                     //even though technically we don't need to scroll at all
                     [self scrollToItemAtIndex:self.currentItemIndex duration:0.01];
+                  
                 }
                 else
                 {
                     [self scrollToItemAtIndex:self.currentItemIndex animated:YES];
+                 
                 }
             }
             else
