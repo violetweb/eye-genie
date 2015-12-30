@@ -191,7 +191,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let genieDB = FMDatabase(path: String(databasePath))
         if genieDB.open() {
             
-            let insertSQL = "INSERT INTO GENERAL (HOMEIMAGE, LOGOIMAGE, COMPANYNAME, COMPANYPHONE, ACTIVE) VALUES ('bg-home', 'yourlogohere', 'OPTIK KANDR', '416-915-1550', 1)"
+            let insertSQL = "INSERT INTO GENERAL (HOMEIMAGE, LOGOIMAGE, ARCOATINGIMAGE, HYDROIMAGE, HARDCOATIMAGE, COMPANYNAME, COMPANYPHONE, ACTIVE) VALUES ('bg-home', 'yourlogohere', 'ar-coating-1','hydro-1', 'hardcoat-1', 'OPTIK KANDR', '416-915-1550', 1)"
             let result = genieDB.executeUpdate(insertSQL,
                 withArgumentsInArray: nil)
             
@@ -293,7 +293,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if genieDB.open() {
                 print("opened the database successfully")
-                let sql_stmt1 = "CREATE TABLE IF NOT EXISTS GENERAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, HOMEIMAGE TEXT, LOGOIMAGE TEXT, COMPANYNAME TEXT, COMPANYPHONE TEXT, ACTIVE INTEGER)"
+                let sql_stmt1 = "CREATE TABLE IF NOT EXISTS GENERAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, HOMEIMAGE TEXT, LOGOIMAGE TEXT, ARCOATINGIMAGE TEXT, HYDROIMAGE TEXT, HARDCOATIMAGE TEXT, COMPANYNAME TEXT, COMPANYPHONE TEXT, ACTIVE INTEGER)"
                 if !genieDB.executeStatements(sql_stmt1) {
                     print("Error: \(genieDB.lastErrorMessage())")
                 }else{
@@ -317,7 +317,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }else{
                     print("table created for material")
                 }
-                
+              
                 
                 genieDB.close()
                 print("Database initialized; skipped as already exists")

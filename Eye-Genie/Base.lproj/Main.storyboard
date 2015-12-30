@@ -8,7 +8,7 @@
         <!--Coatings Controller-->
         <scene sceneID="a9w-BH-9JY">
             <objects>
-                <viewController storyboardIdentifier="CoatingsController" title="Coatings Controller" id="e46-YE-NKD" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CoatingsController" title="Coatings Controller" id="e46-YE-NKD" customClass="CoatingsController" customModule="Eye_Genie" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iDH-Oc-MK1"/>
                         <viewControllerLayoutGuide type="bottom" id="LGh-qv-sjF"/>
@@ -17,21 +17,137 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Coatings : Coming soon." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEa-no-kr2">
-                                <rect key="frame" x="41" y="61" width="188" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Anti-Reflection" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUN-uE-RaV">
+                                <rect key="frame" x="13" y="28" width="115" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ar-coating-1" translatesAutoresizingMaskIntoConstraints="NO" id="BsB-nI-DLA">
+                                <rect key="frame" x="13" y="67" width="200" height="118"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ar-coating-2" translatesAutoresizingMaskIntoConstraints="NO" id="LvR-0E-Flb">
+                                <rect key="frame" x="13" y="226" width="200" height="118"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ar-coating-3" translatesAutoresizingMaskIntoConstraints="NO" id="Rtm-bh-9dp">
+                                <rect key="frame" x="13" y="373" width="200" height="118"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CHR-PI-1k7">
+                                <rect key="frame" x="221" y="395" width="64" height="64"/>
+                                <state key="normal" title="Button" image="btn-checkmark-off"/>
+                                <connections>
+                                    <action selector="btnAR3:" destination="e46-YE-NKD" eventType="touchUpInside" id="ARY-9I-0xs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fj2-Xq-zhL">
+                                <rect key="frame" x="221" y="94" width="64" height="64"/>
+                                <state key="normal" title="Button" image="btn-checkmark-on"/>
+                                <connections>
+                                    <action selector="btnAR1:" destination="e46-YE-NKD" eventType="touchUpInside" id="Z2T-bS-Zm0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K2f-rC-q6Q">
+                                <rect key="frame" x="216" y="247" width="64" height="64"/>
+                                <state key="normal" title="Button" image="btn-checkmark-off"/>
+                                <connections>
+                                    <action selector="btnAR2:" destination="e46-YE-NKD" eventType="touchUpInside" id="LcX-XM-P9f"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hydrophop" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVr-1W-Gb4">
+                                <rect key="frame" x="340" y="28" width="86" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hard Coat" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8og-rJ-C2D">
+                                <rect key="frame" x="663" y="28" width="78" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hydro-1" translatesAutoresizingMaskIntoConstraints="NO" id="tWb-b5-wfz">
+                                <rect key="frame" x="340" y="67" width="200" height="118"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hydro-2" translatesAutoresizingMaskIntoConstraints="NO" id="WXj-dU-gX0">
+                                <rect key="frame" x="340" y="226" width="200" height="118"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hydro-3" translatesAutoresizingMaskIntoConstraints="NO" id="Mig-Qh-zi7">
+                                <rect key="frame" x="340" y="373" width="200" height="118"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N7r-E7-OqI">
+                                <rect key="frame" x="556" y="94" width="64" height="64"/>
+                                <state key="normal" title="Button" image="btn-checkmark-on"/>
+                                <connections>
+                                    <action selector="btnHydro1:" destination="e46-YE-NKD" eventType="touchUpInside" id="rvl-yA-1eI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fjv-PU-Gq9">
+                                <rect key="frame" x="556" y="247" width="64" height="64"/>
+                                <state key="normal" title="Button" image="btn-checkmark-off"/>
+                                <connections>
+                                    <action selector="btnHydro2:" destination="e46-YE-NKD" eventType="touchUpInside" id="1eJ-j2-hbt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Myr-W9-srF">
+                                <rect key="frame" x="871" y="395" width="64" height="64"/>
+                                <state key="normal" title="Button" image="btn-checkmark-off"/>
+                                <connections>
+                                    <action selector="btnHardcoat3:" destination="e46-YE-NKD" eventType="touchUpInside" id="Z1j-us-Z1S"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wjy-nK-o4U">
+                                <rect key="frame" x="871" y="247" width="64" height="64"/>
+                                <state key="normal" title="Button" image="btn-checkmark-off"/>
+                                <connections>
+                                    <action selector="btnHardcoat2:" destination="e46-YE-NKD" eventType="touchUpInside" id="BEi-cE-qMm"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hardcoat-1" translatesAutoresizingMaskIntoConstraints="NO" id="BzW-j1-lXd">
+                                <rect key="frame" x="663" y="67" width="200" height="118"/>
+                                <color key="backgroundColor" red="0.40000000000000002" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hardcoat-3" translatesAutoresizingMaskIntoConstraints="NO" id="DnM-fd-SDa">
+                                <rect key="frame" x="663" y="373" width="200" height="118"/>
+                                <color key="backgroundColor" red="0.40000000000000002" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZWh-Al-rcG">
+                                <rect key="frame" x="866" y="94" width="64" height="64"/>
+                                <state key="normal" title="Button" image="btn-checkmark-on"/>
+                                <connections>
+                                    <action selector="btnHardcoat1:" destination="e46-YE-NKD" eventType="touchUpInside" id="DNW-dw-kUi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="skf-Iz-GZB">
+                                <rect key="frame" x="556" y="395" width="64" height="64"/>
+                                <state key="normal" title="Button" image="btn-checkmark-off"/>
+                                <connections>
+                                    <action selector="btnHydro3:" destination="e46-YE-NKD" eventType="touchUpInside" id="De3-C3-Dmq"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hardcoat-2" translatesAutoresizingMaskIntoConstraints="NO" id="0sv-NB-88l">
+                                <rect key="frame" x="663" y="220" width="200" height="118"/>
+                                <color key="backgroundColor" red="0.40000000000000002" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+                    <connections>
+                        <outlet property="btnAR1View" destination="Fj2-Xq-zhL" id="54R-lv-5iO"/>
+                        <outlet property="btnAR2View" destination="K2f-rC-q6Q" id="a4q-Of-jT9"/>
+                        <outlet property="btnAR3View" destination="CHR-PI-1k7" id="pvw-PG-pUx"/>
+                        <outlet property="btnHardcoat1View" destination="ZWh-Al-rcG" id="ccY-Nu-Ett"/>
+                        <outlet property="btnHardcoat2View" destination="wjy-nK-o4U" id="RX8-6C-aHQ"/>
+                        <outlet property="btnHardcoat3View" destination="Myr-W9-srF" id="Vpu-T5-SRA"/>
+                        <outlet property="btnHydro1View" destination="N7r-E7-OqI" id="2NJ-jE-Gbv"/>
+                        <outlet property="btnHydro2View" destination="Fjv-PU-Gq9" id="dX1-jL-ZUk"/>
+                        <outlet property="btnHydro3View" destination="skf-Iz-GZB" id="MII-FD-lWA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lNG-4E-9U4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1459" y="-923"/>
+            <point key="canvasLocation" x="-1675" y="-1039"/>
         </scene>
         <!--CustomizationController-->
         <scene sceneID="x4o-rh-qfH">
@@ -60,13 +176,13 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap an image to change your background image, button images or logo as it appears on the application cover." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyz-nu-dXP">
                                         <rect key="frame" x="161" y="23" width="707" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Quick Customization" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtm-gq-s6W">
                                         <rect key="frame" x="161" y="6" width="251" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W8V-Vv-ocd">
@@ -170,7 +286,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Designs Data Controller:  Coming soon." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UU8-1f-xlx">
                                 <rect key="frame" x="45" y="92" width="301" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -395,7 +511,7 @@
                             </view>
                             <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yvd-ry-CZr" customClass="iCarousel">
                                 <rect key="frame" x="0.0" y="693" width="1024" height="75"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -569,14 +685,25 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ar-coating-1" width="1000" height="667"/>
+        <image name="ar-coating-2" width="800" height="640"/>
+        <image name="ar-coating-3" width="800" height="600"/>
         <image name="bg-home.jpg" width="1024" height="768"/>
+        <image name="btn-checkmark-off" width="64" height="64"/>
+        <image name="btn-checkmark-on" width="64" height="64"/>
         <image name="btn-conventional" width="175" height="75"/>
         <image name="btn-jenna" width="175" height="75"/>
         <image name="btn-jenna-4k" width="175" height="75"/>
         <image name="btn-jenna-wide" width="175" height="75"/>
+        <image name="hardcoat-1" width="1200" height="1200"/>
+        <image name="hardcoat-2" width="800" height="640"/>
+        <image name="hardcoat-3" width="800" height="640"/>
+        <image name="hydro-1" width="1600" height="1067"/>
+        <image name="hydro-2" width="1113" height="757"/>
+        <image name="hydro-3" width="800" height="800"/>
         <image name="yourlogohere" width="528" height="333"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mLC-4b-ATL"/>
+        <segue reference="ki3-nD-jqZ"/>
     </inferredMetricsTieBreakers>
 </document>

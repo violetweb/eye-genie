@@ -2,7 +2,7 @@
 //  CustomizationController.swift
 //  Eye-Genie
 //
-//  Created by Ryan Maxwell on 2015-12-09.
+//  Written by Valerie Trotter on 2015-12-09.
 //  Copyright © 2015 Bceen Ventures. All rights reserved.
 //
 

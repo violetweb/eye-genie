@@ -196,6 +196,59 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     @IBOutlet weak var switchHardCoat: UISwitch!
     
     
+    func getARCoating()->String {
+        let databasePath = getSupportPath("genie.db") // grab the database.
+        let genieDB = FMDatabase(path: String(databasePath))
+        var imagename = "ar-coating-1" // name for default image (always return something)
+        if genieDB.open() {
+            let querySQL = "SELECT ARCOATINGIMAGE FROM GENERAL WHERE id=1"
+            let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
+            if results?.next() == true {
+                imagename = (results?.stringForColumn("ARCOATINGIMAGE")!)!
+            } else {
+                print("Records not found in database for 'General Settings'.")
+            }
+            genieDB.close()
+        }
+        return imagename
+    }
+
+    func getHydro()->String {
+        let databasePath = getSupportPath("genie.db") // grab the database.
+        let genieDB = FMDatabase(path: String(databasePath))
+        var imagename = "hydro-1" // name for default image (always return something)
+        if genieDB.open() {
+            let querySQL = "SELECT HYDROIMAGE FROM GENERAL WHERE id=1"
+            let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
+            if results?.next() == true {
+                imagename = (results?.stringForColumn("HYDROIMAGE")!)!
+            } else {
+                print("Records not found in database for 'General Settings'.")
+            }
+            genieDB.close()
+        }
+        return imagename
+    }
+    
+    func getHardcoat()->String {
+        let databasePath = getSupportPath("genie.db") // grab the database.
+        let genieDB = FMDatabase(path: String(databasePath))
+        var imagename = "hardcoat-1" // name for default image (always return something)
+        if genieDB.open() {
+            let querySQL = "SELECT HARDCOATIMAGE FROM GENERAL WHERE id=1"
+            let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
+            if results?.next() == true {
+                imagename = (results?.stringForColumn("HARDCOATIMAGE")!)!
+            } else {
+                print("Records not found in database for 'General Settings'.")
+            }
+            genieDB.close()
+        }
+        return imagename
+    }
+
+
+    
     @IBAction func btnAntiReflectionCoating(sender: UISwitch) {
        
         if self.switchAntiReflection.on {
@@ -204,13 +257,16 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
             reflectionLayer.removeFromSuperlayer()
 
         } else {
-            reflectionLayer.mask = drawMaskLayer(UIColor.blackColor().CGColor)
-            reflectionLayer.fillColor = UIColor.blackColor().CGColor
+            reflectionLayer.mask = drawMaskLayer(UIColor.whiteColor().CGColor)
+            reflectionLayer.fillColor = UIColor.whiteColor().CGColor
             reflectionLayer.fillRule = kCAFillRuleNonZero
             reflectionLayer.zPosition = 9
-            
+            reflectionLayer.backgroundColor = UIColor.whiteColor().CGColor
             //Background Image has its own layer now.
-            let img = UIImageView(image: UIImage(named: "TestFlare-1"))
+            
+            //Lookup AR coating image to use.
+            
+            let img = UIImageView(image: UIImage(named: getARCoating()))
             reflectionLayer.addSublayer(img.layer)
             reflectionLayer.opacity = 0.5
             lensShapelayer.addSublayer(reflectionLayer)
@@ -231,13 +287,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
             
             
         } else {
-            hydroLayer.mask = drawMaskLayer(UIColor.blackColor().CGColor)
-            hydroLayer.fillColor = UIColor.blackColor().CGColor
+            hydroLayer.mask = drawMaskLayer(UIColor.brownColor().CGColor)
+            hydroLayer.fillColor = UIColor.clearColor().CGColor
             hydroLayer.fillRule = kCAFillRuleNonZero
             hydroLayer.zPosition = 9
             
             //Background Image has its own layer now.
-            let img = UIImageView(image: UIImage(named: "TestWater"))
+            let imagename = getHydro()
+            let img = UIImageView(image: UIImage(named: imagename))
             hydroLayer.addSublayer(img.layer)
             hydroLayer.opacity = 1.0
             lensShapelayer.addSublayer(hydroLayer)
@@ -265,10 +322,11 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
             hardcoatLayer.zPosition = 9
             
             //Background Image has its own layer now.
-            let img = UIImageView(image: UIImage(named: "TestScratches"))
+            let imagename = getHardcoat()
+            let img = UIImageView(image: UIImage(named: imagename))
             hardcoatLayer.addSublayer(img.layer)
             hardcoatLayer.opacity = 1.0
-           lensShapelayer.addSublayer(hardcoatLayer)
+            lensShapelayer.addSublayer(hardcoatLayer)
             self.switchHardCoat.setOn(false, animated: true)
             
             
@@ -301,14 +359,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
             reflectionLayer.removeFromSuperlayer()
             switchAntiReflection.setOn(false, animated: false)
             switchHardCoat.setOn(false,animated: false)
-            switchHydrophop.setOn(false,animated: false)
+            switchHydrophop.setOn(false,animated: false) //51, 25, 0
             
             //apply the photochrom layer
             photochromLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
-            photochromLayer.fillColor = UIColor.blackColor().CGColor
+            photochromLayer.fillColor = UIColor.brownColor().CGColor
             photochromLayer.fillRule = kCAFillRuleNonZero
             photochromLayer.zPosition = 9
-            photochromLayer.opacity = 0.3
+            photochromLayer.opacity = 0.6
             lensShapelayer.addSublayer(photochromLayer)
             
             

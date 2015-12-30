@@ -31,6 +31,8 @@
 		F468EFB61C1770BF00C9F237 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F468EFB51C1770BF00C9F237 /* MenuCell.swift */; };
 		F468EFB81C1792A400C9F237 /* DesignsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F468EFB71C1792A400C9F237 /* DesignsController.swift */; };
 		F468EFBA1C18A0A800C9F237 /* CustomizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F468EFB91C18A0A800C9F237 /* CustomizationController.swift */; };
+		F4BFA4921C343E9700661C73 /* ReflectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BFA4911C343E9700661C73 /* ReflectionView.m */; };
+		F4BFA4951C34453700661C73 /* CoatingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BFA4941C34453700661C73 /* CoatingsController.swift */; };
 		F4FBFF531C332BE100EC6FC2 /* SwipeView in Resources */ = {isa = PBXBuildFile; fileRef = F4FBFF521C332BE100EC6FC2 /* SwipeView */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +71,9 @@
 		F468EFB51C1770BF00C9F237 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		F468EFB71C1792A400C9F237 /* DesignsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignsController.swift; sourceTree = "<group>"; };
 		F468EFB91C18A0A800C9F237 /* CustomizationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizationController.swift; sourceTree = "<group>"; };
+		F4BFA4911C343E9700661C73 /* ReflectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReflectionView.m; path = SwipeView/ReflectionView.m; sourceTree = "<group>"; };
+		F4BFA4931C343EA100661C73 /* ReflectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ReflectionView.h; path = SwipeView/ReflectionView.h; sourceTree = "<group>"; };
+		F4BFA4941C34453700661C73 /* CoatingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoatingsController.swift; sourceTree = "<group>"; };
 		F4FBFF521C332BE100EC6FC2 /* SwipeView */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SwipeView; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,6 +112,8 @@
 				F454B8291C0DFFC7005427A8 /* Eye-Genie-Bridging-Header.h */,
 				F4FBFF521C332BE100EC6FC2 /* SwipeView */,
 				F43078491C2AFDBC001AB98D /* Carousel.h */,
+				F4BFA4911C343E9700661C73 /* ReflectionView.m */,
+				F4BFA4931C343EA100661C73 /* ReflectionView.h */,
 				F430784A1C2AFDEC001AB98D /* Carousel.m */,
 				F43078411C29CB02001AB98D /* Assets.xcassets */,
 				F454B82A1C0E057D005427A8 /* appdefaults */,
@@ -115,6 +122,7 @@
 				F454B7F11C0DFC73005427A8 /* AppDelegate.swift */,
 				F454B7F51C0DFC73005427A8 /* Main.storyboard */,
 				F468EFB91C18A0A800C9F237 /* CustomizationController.swift */,
+				F4BFA4941C34453700661C73 /* CoatingsController.swift */,
 				F468EFB51C1770BF00C9F237 /* MenuCell.swift */,
 				F454B82E1C0E07E9005427A8 /* LoginViewController.swift */,
 				F468EFB71C1792A400C9F237 /* DesignsController.swift */,
@@ -234,6 +242,7 @@
 				F454B8331C0E1D36005427A8 /* SettingsController.swift in Sources */,
 				F468EFBA1C18A0A800C9F237 /* CustomizationController.swift in Sources */,
 				F454B8241C0DFFAA005427A8 /* FMDatabase.m in Sources */,
+				F4BFA4921C343E9700661C73 /* ReflectionView.m in Sources */,
 				F468EFB81C1792A400C9F237 /* DesignsController.swift in Sources */,
 				F454B7F41C0DFC73005427A8 /* ViewController.swift in Sources */,
 				F454B8351C0F8E0A005427A8 /* AppImageController.swift in Sources */,
@@ -245,6 +254,7 @@
 				F454B82F1C0E07E9005427A8 /* LoginViewController.swift in Sources */,
 				F460A97A1C16117800C63D91 /* AnimationHelper.swift in Sources */,
 				F468EFB61C1770BF00C9F237 /* MenuCell.swift in Sources */,
+				F4BFA4951C34453700661C73 /* CoatingsController.swift in Sources */,
 				F454B7F21C0DFC73005427A8 /* AppDelegate.swift in Sources */,
 				F454B8251C0DFFAA005427A8 /* FMDatabaseAdditions.m in Sources */,
 				F454B8271C0DFFAA005427A8 /* FMDatabaseQueue.m in Sources */,
