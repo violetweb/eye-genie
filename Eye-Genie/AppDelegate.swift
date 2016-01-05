@@ -293,7 +293,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if genieDB.open() {
                 print("opened the database successfully")
-                let sql_stmt1 = "CREATE TABLE IF NOT EXISTS GENERAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, HOMEIMAGE TEXT, LOGOIMAGE TEXT, ARCOATINGIMAGE TEXT, HYDROIMAGE TEXT, HARDCOATIMAGE TEXT, COMPANYNAME TEXT, COMPANYPHONE TEXT, ACTIVE INTEGER)"
+                let sql_stmt1 = "CREATE TABLE IF NOT EXISTS GENERAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, HOMEIMAGE TEXT, LOGOIMAGE TEXT, ARCOATINGIMAGE TEXT, HYDROIMAGE TEXT, HARDCOATIMAGE TEXT, LOGINIDENTIFIER TEXT, COMPANYNAME TEXT, COMPANYPHONE TEXT, ACTIVE INTEGER)"
                 if !genieDB.executeStatements(sql_stmt1) {
                     print("Error: \(genieDB.lastErrorMessage())")
                 }else{

@@ -184,7 +184,7 @@ class SettingsController: UIViewController, UIImagePickerControllerDelegate, UIN
           SettingsContainer.addSubview(activeViewController!.view)
           
         } else if (sender.selectedSegmentIndex==1) {
-            activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("DesignsController"))! as UIViewController
+            activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("CredentialController"))! as UIViewController
             SettingsContainer.addSubview(activeViewController!.view)
           
         }else if (sender.selectedSegmentIndex==2){
@@ -194,8 +194,8 @@ class SettingsController: UIViewController, UIImagePickerControllerDelegate, UIN
             activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("CoatingsController"))! as UIViewController
             SettingsContainer.addSubview(activeViewController!.view)
         }else if (sender.selectedSegmentIndex == 4){
-           // activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("ColorsController"))! as UIViewController
-           // SettingsContainer.addSubview(activeViewController!.view)
+            activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("OrderController"))! as UIViewController
+            SettingsContainer.addSubview(activeViewController!.view)
             
         }
         

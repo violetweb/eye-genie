@@ -10,6 +10,9 @@
 		F43078421C29CB02001AB98D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F43078411C29CB02001AB98D /* Assets.xcassets */; };
 		F43078461C2A097C001AB98D /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43078451C2A097C001AB98D /* UIColor.swift */; };
 		F430784B1C2AFDEC001AB98D /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F430784A1C2AFDEC001AB98D /* Carousel.m */; };
+		F44341B31C357ED1005E2887 /* bg-home.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F44341B21C357ED1005E2887 /* bg-home.jpg */; };
+		F44341B51C359250005E2887 /* OrderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44341B41C359250005E2887 /* OrderController.swift */; };
+		F44341B71C3598DA005E2887 /* CredentialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44341B61C3598DA005E2887 /* CredentialController.swift */; };
 		F454B7F21C0DFC73005427A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F454B7F11C0DFC73005427A8 /* AppDelegate.swift */; };
 		F454B7F41C0DFC73005427A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F454B7F31C0DFC73005427A8 /* ViewController.swift */; };
 		F454B7F71C0DFC73005427A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F454B7F51C0DFC73005427A8 /* Main.storyboard */; };
@@ -41,6 +44,9 @@
 		F43078451C2A097C001AB98D /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		F43078491C2AFDBC001AB98D /* Carousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Carousel.h; path = ../Carousel.h; sourceTree = "<group>"; };
 		F430784A1C2AFDEC001AB98D /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Carousel.m; path = ../Carousel.m; sourceTree = "<group>"; };
+		F44341B21C357ED1005E2887 /* bg-home.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "bg-home.jpg"; path = "appdefaults/bg-home.jpg"; sourceTree = "<group>"; };
+		F44341B41C359250005E2887 /* OrderController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderController.swift; sourceTree = "<group>"; };
+		F44341B61C3598DA005E2887 /* CredentialController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialController.swift; sourceTree = "<group>"; };
 		F454B7EE1C0DFC73005427A8 /* Eye-Genie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eye-Genie.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F454B7F11C0DFC73005427A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F454B7F31C0DFC73005427A8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -116,13 +122,16 @@
 				F4BFA4931C343EA100661C73 /* ReflectionView.h */,
 				F430784A1C2AFDEC001AB98D /* Carousel.m */,
 				F43078411C29CB02001AB98D /* Assets.xcassets */,
+				F44341B21C357ED1005E2887 /* bg-home.jpg */,
 				F454B82A1C0E057D005427A8 /* appdefaults */,
 				F468EFAE1C175ACC00C9F237 /* Model */,
 				F454B8181C0DFFAA005427A8 /* fmdb */,
 				F454B7F11C0DFC73005427A8 /* AppDelegate.swift */,
 				F454B7F51C0DFC73005427A8 /* Main.storyboard */,
+				F44341B61C3598DA005E2887 /* CredentialController.swift */,
 				F468EFB91C18A0A800C9F237 /* CustomizationController.swift */,
 				F4BFA4941C34453700661C73 /* CoatingsController.swift */,
+				F44341B41C359250005E2887 /* OrderController.swift */,
 				F468EFB51C1770BF00C9F237 /* MenuCell.swift */,
 				F454B82E1C0E07E9005427A8 /* LoginViewController.swift */,
 				F468EFB71C1792A400C9F237 /* DesignsController.swift */,
@@ -223,6 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44341B31C357ED1005E2887 /* bg-home.jpg in Resources */,
 				F454B82B1C0E057D005427A8 /* appdefaults in Resources */,
 				F454B7FC1C0DFC73005427A8 /* LaunchScreen.storyboard in Resources */,
 				F4FBFF531C332BE100EC6FC2 /* SwipeView in Resources */,
@@ -239,12 +249,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44341B71C3598DA005E2887 /* CredentialController.swift in Sources */,
 				F454B8331C0E1D36005427A8 /* SettingsController.swift in Sources */,
 				F468EFBA1C18A0A800C9F237 /* CustomizationController.swift in Sources */,
 				F454B8241C0DFFAA005427A8 /* FMDatabase.m in Sources */,
 				F4BFA4921C343E9700661C73 /* ReflectionView.m in Sources */,
 				F468EFB81C1792A400C9F237 /* DesignsController.swift in Sources */,
 				F454B7F41C0DFC73005427A8 /* ViewController.swift in Sources */,
+				F44341B51C359250005E2887 /* OrderController.swift in Sources */,
 				F454B8351C0F8E0A005427A8 /* AppImageController.swift in Sources */,
 				F43078461C2A097C001AB98D /* UIColor.swift in Sources */,
 				F460A9781C15F20300C63D91 /* FileHelper.swift in Sources */,

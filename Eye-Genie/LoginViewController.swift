@@ -2,7 +2,7 @@
 //  LoginViewController.swift
 //  Eye-Genie
 //
-//  Created by Ryan Maxwell on 2015-12-01.
+//  Created by Valerie Trotter on 2015-12-01.
 //  Copyright © 2015 Bceen Ventures. All rights reserved.
 //
 
@@ -14,25 +14,40 @@ class LoginViewController: UIViewController {
     
     
     
+    @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var lblWelcome: UILabel!
     @IBOutlet weak var lblInstruction: UILabel!
     @IBOutlet weak var Username: UITextField!
     @IBOutlet weak var Password: UITextField!
     @IBOutlet weak var appImageView: UIImageView!
     @IBOutlet weak var imageLogo: UIImageView!
-    
+ 
     
     let defaults = NSUserDefaults.standardUserDefaults()
-    var spinner: UIActivityIndicatorView = UIActivityIndicatorView()
     var timer = NSTimer()
     var UserLoggedIn = false
-
+    var spinnerIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    func saveLoginIdentifier(loginIdentifier: String)->Bool {
         
-        // let interval = Double(60) // four hours check it...
-        // timer = NSTimer.scheduledTimerWithTimeInterval(interval, target:self, selector: Selector("logoutUser"), userInfo: nil, repeats: true)
-        
+        let databasePath = getSupportPath("genie.db") // grab the database.
+        let genieDB = FMDatabase(path: String(databasePath))
+        var loginSuccess = false
+        if genieDB.open() {
+            
+            let insertSQL = "UPDATE GENERAL SET LOGINIDENTIFIER='\(loginIdentifier)' where id=1"
+            let result = genieDB.executeStatements(insertSQL)
+            if !result {
+                print("Error: \(genieDB.lastErrorMessage())")
+            }else{
+                loginSuccess = true
+            }
+            genieDB.close()
+            
+        } else {
+            print("Error: \(genieDB.lastErrorMessage())")
+        }
+        return loginSuccess
     }
     
     
@@ -43,11 +58,66 @@ class LoginViewController: UIViewController {
         defaults.synchronize()
     }
     
+    
+    var container: UIView = UIView()
+    var loadingView: UIView = UIView()
+    
+    
+    func startSpinner(){
+        
+        container.frame = appImageView.frame
+        container.center = appImageView.center
+        container.backgroundColor = UIColorFromHex(0x333333, alpha: 0.7)
+        container.layer.zPosition = 2
+        
+        loadingView.frame = CGRectMake(0, 0, 80, 80)
+        loadingView.center = appImageView.center
+        loadingView.backgroundColor = UIColorFromHex(0x000000, alpha: 0.5)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        loadingView.layer.zPosition = 3
+        
+        spinnerIndicator.center = appImageView.center
+        spinnerIndicator.color = UIColorFromHex(0xffffff, alpha: 1.0)
+        spinnerIndicator.frame = CGRectMake(0,0,80,80)
+        spinnerIndicator.hidden = false
+        spinnerIndicator.startAnimating()
+
+        container.addSubview(loadingView)
+        loadingView.addSubview(spinnerIndicator)
+        mainView.addSubview(container)
+
+       
+        
+
+    }
+    
+    func stopSpinner(alertTitle: String, alertMessage: String){
+       
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+            {
+                //dispatch back to the main (UI) thread to stop the activity indicator
+                dispatch_async(dispatch_get_main_queue(),
+                    {
+                        if (alertTitle != "" && alertMessage != ""){
+                            self.displayAlert(alertTitle, message: alertMessage)
+                            //if there is an alert to display, pass to alert, and it will cancel animation.
+                        }else{
+                            self.spinnerIndicator.stopAnimating()
+                            self.container.removeFromSuperview()
+                        }
+                        
+                });
+        });
+
+        
+    }
+    
+    
     @IBAction func btnLogin(sender: UIButton) {
         
-        
-        sender.buttonBounce()
-        
+      startSpinner()
         // resign the keyboard for text fields
         // by asking if its the first responder, we're saying it has a touch event + ties directly to the touch features...
         if self.Username.isFirstResponder() {
@@ -58,54 +128,37 @@ class LoginViewController: UIViewController {
             self.Password.resignFirstResponder()
         }
         
-        //Activate the spinner (don't allow any interaction until results are returned.
-        spinner = UIActivityIndicatorView(frame: CGRectMake(0,0,50,50))
-        spinner.center = self.view.center
-        spinner.hidesWhenStopped = true
-        spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        view.addSubview(spinner)
-        spinner.startAnimating()
+        
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        
-        
         
         if (Username.text!.characters.count>0 && Password.text!.characters.count>4) {
             
-            
             processLogin(){
                 jsonString in
-                for (IsAllowed) in jsonString {
-                    
-                    if (IsAllowed.value as! NSString == "1"){
-                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                        self.UserLoggedIn = true
-                        self.performSegueWithIdentifier("LoginSegue", sender: self)
+                    for (IsAllowed) in jsonString {
+                        if (IsAllowed.value as! NSString != "0"){
+                             UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                             self.saveLoginIdentifier(IsAllowed.value as! String)
+                             self.UserLoggedIn = true
+                             self.performSegueWithIdentifier("LoginSegue", sender: self)
+                         }else{
+                            self.stopSpinner("Login Result",alertMessage: "We are unable to find an account with the username and password provided.  If you are having trouble logging in, please contact your client service representative.")
                         
-                    }else{
-                        //  print(IsAllowed.value)
-                        
-                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                        self.displayAlert("Login Result", message: "We are unable to find an account with the username and password provided.  If you are having trouble logging in, please contact your client service representative.")
-                        
-                        
+                        }
                     }
+                
                 }
-                
-                
-            }
         }else{
-            
-            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-            self.displayAlert("Login Result", message: "We are unable to find an account with the username and password provided.  If you are having trouble logging in, please contact your client service representative.")
-            
+            stopSpinner("Login Result", alertMessage: "We are unable to find an account with the username and password provided.  If you are having trouble loggin in, please contact your client service representative.")
             
         }
-        
-
     }
     
     
     func processLogin(completion: (NSDictionary) -> ()){
+       
+        
+        
         
         //Make sure username and password values are valid enough to pass through the Rest API
         let customAllowedSet =  NSCharacterSet(charactersInString:"=\"#%/<>?@\\^`{|}&").invertedSet
@@ -125,23 +178,30 @@ class LoginViewController: UIViewController {
         //Send the information in a POST and using JSON!!!! formatting.
         let jsonData = try! NSJSONSerialization.dataWithJSONObject(params, options: NSJSONWritingOptions(rawValue:0))
         request.HTTPBody = jsonData
-        
+      
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: {   (data, response, error)-> Void in
             //NSJSONReadingOptions.MutableContainers
             
-            do {
+            
+           do {
                 let data = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                 completion(data)
+            
             } catch let myJSONError {
+               
                 //Add popup to let user know that it was unsuccessful.
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
                 self.displayAlert("Login Result", message: "We are unable to login at this time; please try again in a few minutes.")
+                
+                
+
             }
             
         })
         task.resume()
         
+
         
     }
     
@@ -168,13 +228,18 @@ class LoginViewController: UIViewController {
     
     func displayAlert(title: String, message: String) {
         
-        
-        self.spinner.stopAnimating()
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
         
-    }
+        //The action Handler
+        let callActionHandler = { (action:UIAlertAction!) -> Void in
+            self.spinnerIndicator.stopAnimating()
+            self.container.removeFromSuperview()
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: callActionHandler))
+            
+        self.presentViewController(alert, animated: true, completion:nil)
+     
+   }
     
     //Calls this function when the tap is recognized.
     func DismissKeyboard(){
@@ -186,14 +251,14 @@ class LoginViewController: UIViewController {
     override func viewDidAppear(animated: Bool){
         
         
+        
         lblWelcome.center.x = view.bounds.width
         lblInstruction.center.y = view.bounds.height-view.bounds.height
         lblInstruction.center.x = view.bounds.width/2
         Username.center.x = view.bounds.width
         Password.center.x = view.bounds.width
+        imageLogo.center.y = view.bounds.height-(view.bounds.height+100)
         
-        
-      
         
         UIView.animateWithDuration(0.5, animations: {
             self.lblWelcome.center.x -= self.view.bounds.width/2
@@ -260,6 +325,17 @@ class LoginViewController: UIViewController {
         
     }
     
+    /*** TO USE :  UIColorFromHex(0x444444, alpha: 0.7)  ***/
+    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
+    }
+    
+
+    
+ 
     
     
     
@@ -367,13 +443,9 @@ class LoginViewController: UIViewController {
     
     
     override func viewDidLoad() {
+       
         super.viewDidLoad()
-        getSavedImages()
-        // Do any additional setup after loading the view.
-        
-        //  let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
-        //  view.addGestureRecognizer(tap)
-        
+       // getSavedImages()
         
         
     }
@@ -384,16 +456,7 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-
+ 
     
     
     
