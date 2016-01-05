@@ -15,6 +15,11 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
 
    
     
+    @IBOutlet weak var lblCoating: UILabel!
+    @IBOutlet weak var lblHydro: UILabel!
+    @IBOutlet weak var lblHardCoat: UILabel!
+    @IBOutlet weak var lblPhotochrom: UILabel!
+    
     let clampFilter = CIFilter(name: "CIAffineClamp")!
     let currentFilter = CIFilter(name: "CIGaussianBlur")!
     let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
@@ -1530,6 +1535,13 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         switchHydrophop.setOn(true, animated: true)
         switchHardCoat.setOn(true,animated: true)
         switchAntiReflection.setOn(true,animated: true)
+        
+        
+        lblCoating.textColor = UIColor.blackColor()
+        lblHydro.textColor = UIColor.blackColor()
+        lblHardCoat.textColor = UIColor.blackColor()
+        lblPhotochrom.textColor = UIColor.blackColor()
+        
         setBtn1FromDirectory(grabButtonImageName(1))
         setBtn2FromDirectory(grabButtonImageName(2))
         setBtn3FromDirectory(grabButtonImageName(3))

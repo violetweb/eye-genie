@@ -411,12 +411,6 @@
                                             <action selector="sliderPower:" destination="BYZ-38-t0r" eventType="valueChanged" id="d4m-WU-rGb"/>
                                         </connections>
                                     </slider>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A/R Coating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKr-QR-fmm">
-                                        <rect key="frame" x="3" y="424" width="92" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xym-eX-s8x">
                                         <rect key="frame" x="129" y="504" width="51" height="31"/>
                                         <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -438,19 +432,19 @@
                                             <action selector="btnAntiReflectionCoating:" destination="BYZ-38-t0r" eventType="valueChanged" id="kwG-VY-A5t"/>
                                         </connections>
                                     </switch>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hard Coat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mlc-ny-UOf">
+                                    <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hard Coat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mlc-ny-UOf">
                                         <rect key="frame" x="8" y="504" width="66" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hydrophop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZw-7P-ClM">
+                                    <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hydrophop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZw-7P-ClM">
                                         <rect key="frame" x="8" y="463" width="86" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Photochrom" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1b-ve-d7p">
+                                    <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Photochrom" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1b-ve-d7p">
                                         <rect key="frame" x="8" y="564" width="79" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -465,13 +459,19 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Power" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1j-1V-9io">
                                         <rect key="frame" x="9" y="365" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bH1-uv-JMC">
                                         <rect key="frame" x="3" y="323" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A/R Coating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKr-QR-fmm">
+                                        <rect key="frame" x="3" y="424" width="92" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -525,6 +525,10 @@
                         <outlet property="Button3" destination="odI-Nj-Ehh" id="kER-FH-VSa"/>
                         <outlet property="Button4" destination="EPR-jq-1B8" id="DP9-a7-Wyp"/>
                         <outlet property="Carasel" destination="Yvd-ry-CZr" id="kfH-Cg-gWr"/>
+                        <outlet property="lblCoating" destination="LKr-QR-fmm" id="lAA-XJ-IwE"/>
+                        <outlet property="lblHardCoat" destination="mlc-ny-UOf" id="4hc-gl-52r"/>
+                        <outlet property="lblHydro" destination="HZw-7P-ClM" id="Ge1-dJ-LeG"/>
+                        <outlet property="lblPhotochrom" destination="L1b-ve-d7p" id="FRG-CF-iJP"/>
                         <outlet property="mainImageView" destination="Hez-pH-2cQ" id="HKN-9t-Ibk"/>
                         <outlet property="sliderAddOutlet" destination="DbY-vW-uBv" id="3om-er-YGD"/>
                         <outlet property="sliderPowerOutlet" destination="4Ri-ec-uKk" id="UPC-1X-P04"/>
@@ -687,7 +691,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qEX-zZ-Oac" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1124" y="-389"/>
+            <point key="canvasLocation" x="1492" y="-873"/>
         </scene>
         <!--Credential Controller-->
         <scene sceneID="fVm-7g-7Su">
@@ -713,39 +717,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="If you have forgotten your username and/or password, click this link and it will be sent to the email address associated" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVN-5c-2CK">
-                                <rect key="frame" x="70" y="255" width="899" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="with this account." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRS-EN-wxk">
-                                <rect key="frame" x="70" y="278" width="136" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Forgotten your login details?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afj-Tx-tyH">
-                                <rect key="frame" x="70" y="225" width="230" height="22"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BgM-GM-VXj">
                                 <rect key="frame" x="269" y="263" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hfx-gq-5Xf">
-                                <rect key="frame" x="70" y="321" width="153" height="30"/>
-                                <color key="backgroundColor" red="0.40000000000000002" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="SEND MY LOGIN"/>
-                                <connections>
-                                    <action selector="btnSendLogin:" destination="Vb9-y1-DC0" eventType="touchUpInside" id="1hb-ac-ypy"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -794,6 +771,6 @@
         <image name="yourlogohere" width="528" height="333"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mLC-4b-ATL"/>
+        <segue reference="ki3-nD-jqZ"/>
     </inferredMetricsTieBreakers>
 </document>

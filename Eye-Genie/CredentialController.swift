@@ -63,6 +63,7 @@ class CredentialController: UIViewController {
         
     }
     
+    /*
     @IBAction func btnSendLogin(sender: UIButton) {
         
         
@@ -98,6 +99,8 @@ class CredentialController: UIViewController {
     
     
     }
+
+*/
     func processEmail(completion: (NSDictionary) -> ()) {
         
         
