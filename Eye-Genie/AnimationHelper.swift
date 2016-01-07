@@ -45,7 +45,7 @@ extension UIView {
     }
     
     
-      
+    /*
     
     func setButtons(imagename: String){
         
@@ -65,7 +65,7 @@ extension UIView {
 
         UIBarButtonItem.appearance().setBackgroundImage(UIImage(named: imagename), forState: .Selected, style: .Plain, barMetrics: .Default)
     }
-    
+    */
     //Takes the desired blur value and the imagename of image to apply the blur.
     func blurImage(blurRadius: Float, imageName: UIImage)->UIImage{
         

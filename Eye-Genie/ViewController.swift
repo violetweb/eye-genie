@@ -10,19 +10,17 @@ import UIKit
 import GLKit
 
 
-
 class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
 
    
     
+    @IBOutlet weak var lblPower: UILabel!
+    @IBOutlet weak var lblAdd: UILabel!
     @IBOutlet weak var lblCoating: UILabel!
     @IBOutlet weak var lblHydro: UILabel!
     @IBOutlet weak var lblHardCoat: UILabel!
     @IBOutlet weak var lblPhotochrom: UILabel!
     
-    let clampFilter = CIFilter(name: "CIAffineClamp")!
-    let currentFilter = CIFilter(name: "CIGaussianBlur")!
-    let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
     
     
     let imgPilots = UIImage(named: "cockpit-n")
@@ -88,6 +86,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         self.lastSavedLocation = lensShapelayer.position  // Works with panGesture... track the last position.
         self.lastSavedImgLocation = imageLayer.mask!.position
      
+  
         if (sliderAddOutlet.value > 0.0){
             self.lastSavedBlurLocation = leftBlurLayer.mask!.position
             self.lastSavedRightBlurLocation = rightBlurLayer.mask!.position
@@ -96,6 +95,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
             self.lastSavedBlurLocation = CGPointZero
             self.lastSavedRightBlurLocation = CGPointZero
             self.lastMagnifyLocation = CGPointZero
+            
         }
 
     }
@@ -114,6 +114,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
     }
 */
+  
+    //As workaround, could not allow pan if sliderAddOutvalue is greater than zero, or 
+    // Reset to zero on touchesBegan??
     
     @IBAction func panGesture(sender: UIPanGestureRecognizer) {
      
@@ -122,18 +125,28 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
         lensShapelayer.position = CGPointMake(self.lastSavedLocation.x + newTranslation.x , self.lastSavedLocation.y + newTranslation.y)
         imageLayer.mask!.position = CGPointMake(self.lastSavedImgLocation.x + newTranslation.x , self.lastSavedImgLocation.y + newTranslation.y)
+        
+        
+        
         if (sliderAddOutlet.value > 0.0){
+            
+            //On Pan, update the Magnifier layer, just DONT position it.
+            
             leftBlurLayer.mask!.position = CGPointMake(self.lastSavedBlurLocation.x + newTranslation.x, self.lastSavedBlurLocation.y + newTranslation.y)
             rightBlurLayer.mask!.position = CGPointMake(self.lastSavedRightBlurLocation.x + newTranslation.x, self.lastSavedRightBlurLocation.y + newTranslation.y)
             magnifyLayer.mask!.position = CGPointMake(self.lastMagnifyLocation.x + newTranslation.x, self.lastMagnifyLocation.y + newTranslation.y)
         }
     }
     
+    
+    
     @IBAction func pinchGesture(sender: UIPinchGestureRecognizer) {
         
         let translate = CATransform3DMakeTranslation(0, 0, 0);
         let scale = CATransform3DMakeScale(sender.scale, sender.scale, 1);
         let transform = CATransform3DConcat(translate, scale);
+        
+        magScale = Float(sender.scale)
         
         lensShapelayer.transform = transform
         let newTranslation = sender.locationInView(mainImageView)
@@ -145,11 +158,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         rightBlurLayer.mask?.frame = lensShapelayer.frame
         leftBlurLayer.mask?.transform = transform
         rightBlurLayer.mask?.transform = transform
-        
+                   
         magnifyLayer.mask?.frame = lensShapelayer.frame
         magnifyLayer.mask?.transform = transform
-        
-        
     }
     
     
@@ -368,10 +379,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
             
             //apply the photochrom layer
             photochromLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
-            photochromLayer.fillColor = UIColor.brownColor().CGColor
+            photochromLayer.fillColor = UIColor(hexString: "#3c2f2fff")!.CGColor
             photochromLayer.fillRule = kCAFillRuleNonZero
             photochromLayer.zPosition = 9
-            photochromLayer.opacity = 0.6
+            photochromLayer.opacity = 0.5
             lensShapelayer.addSublayer(photochromLayer)
             
             
@@ -784,17 +795,23 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         return imageName
     }
 
+    //Need to track the magSize and ScaleSize.
     
+    var magSize = Float(30)
+    var magScale = Float(1.0)
     
     func swapMagnifyLayer(blurRadius:  Float){
         
+        let bulgx = lensShapelayer.position.x
+        let bulgy = lensShapelayer.position.y - (lensShapelayer.frame.height/4)
+        
+        
         magnifyLayer.removeFromSuperlayer()
-        let img = magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName + "-v")!, bulgeX: mainImageView.frame.width/CGFloat(2.0), bulgeY: 80.0)
+        let img = magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName + "-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize*magScale,magScale: magScale)
         let image = UIImageView(image: img)
         magnifyLayer.addSublayer(image.layer)
         magnifyLayer.path = drawLensPath()
         imageLayer.addSublayer(magnifyLayer)
-
     }
     
     
@@ -806,13 +823,19 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         if (blurRadius>0){
             
             swapMagnifyLayer(blurRadius)
-           
+     
+            let bulgx = lensShapelayer.position.x
+            let bulgy = lensShapelayer.position.y - (lensShapelayer.frame.height/4)
+            
+            
+            
             //Use the magnify image and blur it per sender values.
-            let img = UIImageView(image: magnifyImage(blurRadius,imageName: UIImage(named: swapToImage+"-v")!, bulgeX: mainImageView.frame.width/2.0, bulgeY: 80.0))
+            let img = UIImageView(image: magnifyImage(blurRadius,imageName: UIImage(named: swapToImage+"-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize*magScale, magScale:magScale))
             let leftimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
             let rightimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
 
         
+            
             leftBlurLayer.path = leftMask.path
             leftBlurLayer.fillColor = UIColor.clearColor().CGColor
             leftBlurLayer.addSublayer(leftimg.layer)
@@ -851,6 +874,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         let beginImage = CIImage(image: imageName)
         let transform = CGAffineTransformIdentity
         
+        let clampFilter = CIFilter(name: "CIAffineClamp")!
+        let currentFilter = CIFilter(name: "CIGaussianBlur")!
+        
         clampFilter.setValue(beginImage!, forKey: "inputImage")
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         
@@ -862,9 +888,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
     }
     
-    func magnifyImage(blurRadius: Float,imageName: UIImage, bulgeX: CGFloat, bulgeY: CGFloat)->UIImage {
+    func magnifyImage(blurRadius: Float,imageName: UIImage, bulgeX: CGFloat, bulgeY: CGFloat, magSize: Float, magScale: Float)->UIImage {
         
-        let glContext = EAGLContext(API: .OpenGLES2)
+        
         context = CIContext(EAGLContext: glContext,
             options: [
                 kCIContextWorkingColorSpace: NSNull()
@@ -874,6 +900,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         let beginImage = CIImage(image: imageName)
         let transform = CGAffineTransformIdentity
         
+        let clampFilter = CIFilter(name: "CIAffineClamp")!
+        let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
+        
+        
         clampFilter.setValue(beginImage!, forKey: "inputImage")
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         
@@ -881,15 +911,51 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         //   currentFilter.setValue(blurRadius, forKey: "inputRadius")
         
         bulgeFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
-        bulgeFilter.setValue(30*blurRadius, forKey: "inputRadius")
+        bulgeFilter.setValue(magSize*blurRadius, forKey: "inputRadius")
         bulgeFilter.setValue(CIVector(x: bulgeX, y: bulgeY), forKey: kCIInputCenterKey)
-        bulgeFilter.setValue(1, forKey: "inputScale")
+        bulgeFilter.setValue(magScale, forKey: "inputScale")
         
         let cgimg = context.createCGImage(bulgeFilter.outputImage!, fromRect: beginImage!.extent)
+       
         return UIImage(CGImage: cgimg) //has to have the CGImage piece on the end!!!!!
         
         
     }
+    
+    let glContext = EAGLContext(API: .OpenGLES2)
+    
+    func magnifyImageAlt(blurRadius: Float,imageName: UIImage, bulgeX: CGFloat, bulgeY: CGFloat, magSize: Float, magScale: Float)->CGImageRef {
+        
+        
+        context = CIContext(EAGLContext: glContext,
+            options: [
+                kCIContextWorkingColorSpace: NSNull()
+            ]
+        )
+        
+        let beginImage = CIImage(image: imageName)
+        let transform = CGAffineTransformIdentity
+        
+        let clampFilter = CIFilter(name: "CIAffineClamp")!
+        let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
+        
+        
+        clampFilter.setValue(beginImage!, forKey: "inputImage")
+        clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
+        
+        //  currentFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
+        //   currentFilter.setValue(blurRadius, forKey: "inputRadius")
+        
+        bulgeFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
+        bulgeFilter.setValue(magSize*blurRadius, forKey: "inputRadius")
+        bulgeFilter.setValue(CIVector(x: bulgeX, y: bulgeY), forKey: kCIInputCenterKey)
+        bulgeFilter.setValue(magScale, forKey: "inputScale")
+        
+        return context.createCGImage(bulgeFilter.outputImage!, fromRect: beginImage!.extent)
+        
+    }
+
+    
     
     //TODO:  WRITE THIS TO SWING BOTH WAYS.
     func drawShapePath(designId: Int, reverse: Bool)->CGPathRef{
@@ -1170,7 +1236,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
     }
         
-        func lensPoints()->[CGPoint]{
+    func lensPoints()->[CGPoint]{
             
             var points = [CGPoint]()
             var lenspoints = [770,400,777,374,784,346,788,318,789,288,785,260,774,233,756,211,733,192,707,177,680,165,653,156,627,148,602,142,578,136,555,132,532,129,511,126,490,124,469,122,449,121,429,120,410,120,390,120,371,121,351,121,331,122,310,124,289,125,267,127,244,130,220,133,195,138,169,143,141,150,114,160,87,173,62,189,40,209,24,233,14,259,11,288,12,317,17,346,23,374,30,400,38,425,48,450,58,473,68,495,80,516,93,537,107,556,123,573,139,590,156,605,174,618,193,630,212,641,231,650,251,658,271,664,291,670,311,673,331,677,351,679,371,680,390,680,410,680,429,678,449,676,468,673,487,669,507,664,526,658,545,650,563,642,582,632,600,622,617,610,634,597,651,582,667,567,683,550,697,532,712,513,725,493,737,472,749,449,760,425]
@@ -1183,7 +1249,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
                 }
             }
             return points
-        }
+    }
         
 
     
@@ -1389,12 +1455,18 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
 
     func drawBackgroundLayer(blurRadius: Float, imageName: String, savebg: Bool){
         
-        let glContext = EAGLContext(API: .OpenGLES2)
+       // let glContext = EAGLContext(API: .OpenGLES2)
         context = CIContext(EAGLContext: glContext,
             options: [
                 kCIContextWorkingColorSpace: NSNull()
             ]
         )
+        
+        let clampFilter = CIFilter(name: "CIAffineClamp")!
+        let currentFilter = CIFilter(name: "CIGaussianBlur")!
+        let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
+        
+
         
         //Set this to current background.
         var beginImage = CIImage()
@@ -1426,7 +1498,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     //Function takes "blurRadius" and renders a gaussian blur to the background image.
     func drawMainLayer(blurRadius: Float, imageName: UIImage, savebg: Bool){
         
-        let glContext = EAGLContext(API: .OpenGLES2)
+     //   let glContext = EAGLContext(API: .OpenGLES2)
         context = CIContext(EAGLContext: glContext,
             options: [
                 kCIContextWorkingColorSpace: NSNull()
@@ -1440,6 +1512,12 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         }
         
         let transform = CGAffineTransformIdentity
+        let clampFilter = CIFilter(name: "CIAffineClamp")!
+        let currentFilter = CIFilter(name: "CIGaussianBlur")!
+        let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
+        
+
+        
         clampFilter.setValue(beginImage!, forKey: "inputImage")
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         currentFilter.setValue(clampFilter.outputImage, forKey: "inputImage")
@@ -1528,9 +1606,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     override func viewDidAppear(animated: Bool)
     {
         
-        self.view.setButtons("icon-cockpit")
+       // self.view.setButtons("icon-cockpit")
         drawBackgroundLayer(0.0, imageName: "cockpit", savebg: true)
         setDefaultLayers(imgPilotsVib!)
+        
         switchPhotochrom.setOn(false,animated:true)
         switchHydrophop.setOn(true, animated: true)
         switchHardCoat.setOn(true,animated: true)
@@ -1541,6 +1620,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         lblHydro.textColor = UIColor.blackColor()
         lblHardCoat.textColor = UIColor.blackColor()
         lblPhotochrom.textColor = UIColor.blackColor()
+        lblAdd.textColor = UIColor.blackColor()
+        lblPower.textColor = UIColor.blackColor()
+        
         
         setBtn1FromDirectory(grabButtonImageName(1))
         setBtn2FromDirectory(grabButtonImageName(2))

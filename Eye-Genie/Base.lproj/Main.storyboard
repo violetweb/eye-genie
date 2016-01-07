@@ -411,6 +411,12 @@
                                             <action selector="sliderPower:" destination="BYZ-38-t0r" eventType="valueChanged" id="d4m-WU-rGb"/>
                                         </connections>
                                     </slider>
+                                    <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A/R Coating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKr-QR-fmm">
+                                        <rect key="frame" x="3" y="424" width="92" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xym-eX-s8x">
                                         <rect key="frame" x="129" y="504" width="51" height="31"/>
                                         <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -463,15 +469,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bH1-uv-JMC">
-                                        <rect key="frame" x="3" y="323" width="42" height="21"/>
+                                        <rect key="frame" x="8" y="323" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A/R Coating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKr-QR-fmm">
-                                        <rect key="frame" x="3" y="424" width="92" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -525,10 +525,12 @@
                         <outlet property="Button3" destination="odI-Nj-Ehh" id="kER-FH-VSa"/>
                         <outlet property="Button4" destination="EPR-jq-1B8" id="DP9-a7-Wyp"/>
                         <outlet property="Carasel" destination="Yvd-ry-CZr" id="kfH-Cg-gWr"/>
+                        <outlet property="lblAdd" destination="bH1-uv-JMC" id="XiW-Uj-GY7"/>
                         <outlet property="lblCoating" destination="LKr-QR-fmm" id="lAA-XJ-IwE"/>
                         <outlet property="lblHardCoat" destination="mlc-ny-UOf" id="4hc-gl-52r"/>
                         <outlet property="lblHydro" destination="HZw-7P-ClM" id="Ge1-dJ-LeG"/>
                         <outlet property="lblPhotochrom" destination="L1b-ve-d7p" id="FRG-CF-iJP"/>
+                        <outlet property="lblPower" destination="X1j-1V-9io" id="fcz-Qb-0X7"/>
                         <outlet property="mainImageView" destination="Hez-pH-2cQ" id="HKN-9t-Ibk"/>
                         <outlet property="sliderAddOutlet" destination="DbY-vW-uBv" id="3om-er-YGD"/>
                         <outlet property="sliderPowerOutlet" destination="4Ri-ec-uKk" id="UPC-1X-P04"/>
@@ -570,12 +572,12 @@
                                     <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg-home.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="9nv-on-VjF">
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="703"/>
                                     </imageView>
-                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wie-3V-mhl">
+                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="demo" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wie-3V-mhl">
                                         <rect key="frame" x="360" y="161" width="305" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                     </textField>
-                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GWB-Ns-rVR">
+                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="12345" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GWB-Ns-rVR">
                                         <rect key="frame" x="360" y="209" width="305" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
@@ -771,6 +773,6 @@
         <image name="yourlogohere" width="528" height="333"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ki3-nD-jqZ"/>
+        <segue reference="mLC-4b-ATL"/>
     </inferredMetricsTieBreakers>
 </document>
