@@ -500,18 +500,18 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yvd-ry-CZr" customClass="iCarousel">
+                                <rect key="frame" x="0.0" y="693" width="1024" height="75"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hez-pH-2cQ">
-                                <rect key="frame" x="0.0" y="72" width="800" height="620"/>
+                                <rect key="frame" x="-8" y="72" width="800" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="Oat-9n-wVy" appends="YES" id="hYk-un-x7r"/>
                                     <outletCollection property="gestureRecognizers" destination="SVR-fg-geF" appends="YES" id="f4o-Ok-Tnu"/>
                                 </connections>
-                            </view>
-                            <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yvd-ry-CZr" customClass="iCarousel">
-                                <rect key="frame" x="0.0" y="693" width="1024" height="75"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

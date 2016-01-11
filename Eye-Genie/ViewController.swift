@@ -80,62 +80,83 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         
-        let interval = Double(28800) // eightss hours check it...
+        let interval = Double(28800) // eight hours check it...
         timer = NSTimer.scheduledTimerWithTimeInterval(interval, target:self, selector: Selector("LogoutTimed"), userInfo: nil, repeats: true)
        
+      
         self.lastSavedLocation = lensShapelayer.position  // Works with panGesture... track the last position.
         self.lastSavedImgLocation = imageLayer.mask!.position
-     
-  
+        
+        
         if (sliderAddOutlet.value > 0.0){
             self.lastSavedBlurLocation = leftBlurLayer.mask!.position
             self.lastSavedRightBlurLocation = rightBlurLayer.mask!.position
             self.lastMagnifyLocation = magnifyLayer.mask!.position
         }else{
-            self.lastSavedBlurLocation = CGPointZero
-            self.lastSavedRightBlurLocation = CGPointZero
-            self.lastMagnifyLocation = CGPointZero
-            
+           // self.lastSavedBlurLocation = CGPointZero
+          //  self.lastSavedRightBlurLocation = CGPointZero
+            //self.lastMagnifyLocation = CGPointZero
         }
 
-    }
-
-/*
-    @IBAction func swipeGesture(sender: UISwipeGestureRecognizer) {
-        
-        print(sender.direction)
-        if (sender.direction == .Left) {
-           
-            var photochromLayerPosition = CGPointMake(self.photochromLayer.frame.origin.x - 50.0, self.photochromLayer.frame.origin.y);
-            photochromLayer.frame = CGRectMake(photochromLayerPosition.x , photochromLayerPosition.y , self.photochromLayer.frame.size.width, self.photochromLayer.frame.size.height)
-        }
-        
-        
+    
         
     }
-*/
   
-    //As workaround, could not allow pan if sliderAddOutvalue is greater than zero, or 
+    
+    //As workaround, could not allow pan if sliderAddOutvalue is greater than zero, or
     // Reset to zero on touchesBegan??
+    
     
     @IBAction func panGesture(sender: UIPanGestureRecognizer) {
      
+      
+        
         let newTranslation = sender.translationInView(mainImageView)
         
         
-        lensShapelayer.position = CGPointMake(self.lastSavedLocation.x + newTranslation.x , self.lastSavedLocation.y + newTranslation.y)
-        imageLayer.mask!.position = CGPointMake(self.lastSavedImgLocation.x + newTranslation.x , self.lastSavedImgLocation.y + newTranslation.y)
-        
-        
-        
-        if (sliderAddOutlet.value > 0.0){
+        if (sender.state == UIGestureRecognizerState.Changed){
+          
             
-            //On Pan, update the Magnifier layer, just DONT position it.
+            lensShapelayer.position = CGPointMake(self.lastSavedLocation.x + newTranslation.x , self.lastSavedLocation.y + newTranslation.y)
+            imageLayer.mask!.position = CGPointMake(self.lastSavedImgLocation.x + newTranslation.x , self.lastSavedImgLocation.y + newTranslation.y)
+        
+        
+            if (sliderAddOutlet.value > 0.0){
             
-            leftBlurLayer.mask!.position = CGPointMake(self.lastSavedBlurLocation.x + newTranslation.x, self.lastSavedBlurLocation.y + newTranslation.y)
-            rightBlurLayer.mask!.position = CGPointMake(self.lastSavedRightBlurLocation.x + newTranslation.x, self.lastSavedRightBlurLocation.y + newTranslation.y)
-            magnifyLayer.mask!.position = CGPointMake(self.lastMagnifyLocation.x + newTranslation.x, self.lastMagnifyLocation.y + newTranslation.y)
-        }
+            
+                leftBlurLayer.mask!.position = CGPointMake(self.lastSavedBlurLocation.x + newTranslation.x, self.lastSavedBlurLocation.y + newTranslation.y)
+                rightBlurLayer.mask!.position = CGPointMake(self.lastSavedRightBlurLocation.x + newTranslation.x, self.lastSavedRightBlurLocation.y + newTranslation.y)
+                magnifyLayer.mask!.position = CGPointMake(self.lastMagnifyLocation.x + newTranslation.x, self.lastMagnifyLocation.y + newTranslation.y)
+                
+            }
+
+        
+        } else if (sender.state == UIGestureRecognizerState.Ended){
+            
+            
+            self.magnifyLayer.removeFromSuperlayer()
+            self.leftBlurLayer.removeFromSuperlayer()
+            self.rightBlurLayer.removeFromSuperlayer()
+            
+            
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                
+                
+                self.swapLensImage(self.blurRadius, swapToImage: self.currentBackgroundImageName)
+                
+                dispatch_async(dispatch_get_main_queue(), { // 2
+                   
+                    
+                    self.swapLensImage(self.blurRadius, swapToImage: self.currentBackgroundImageName)
+                    
+
+
+                });
+            });
+
+                    }
+        
     }
     
     
@@ -797,45 +818,62 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
 
     //Need to track the magSize and ScaleSize.
     
-    var magSize = Float(30)
+    var magSize = Float(20)
     var magScale = Float(1.0)
     
     func swapMagnifyLayer(blurRadius:  Float){
         
         let bulgx = lensShapelayer.position.x
-        let bulgy = lensShapelayer.position.y - (lensShapelayer.frame.height/4)
-        
+        let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/4))
         
         magnifyLayer.removeFromSuperlayer()
-        let img = magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName + "-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize*magScale,magScale: magScale)
+        let img = magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName + "-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale: magScale)
         let image = UIImageView(image: img)
         magnifyLayer.addSublayer(image.layer)
         magnifyLayer.path = drawLensPath()
         imageLayer.addSublayer(magnifyLayer)
     }
     
+    func swapMagnifyLayerALT(blurRadius:  Float){
+        
+           
+        let bulgx = lensShapelayer.position.x
+        let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/4))
+        
+        magnifyLayer.removeFromSuperlayer()
+        let img = magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName + "-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale: magScale)
+        let image = UIImageView(image: img)
+        magnifyLayer.addSublayer(image.layer)
+        magnifyLayer.path = drawLensPath()
+        imageLayer.addSublayer(magnifyLayer)
+    }
+
+    
+    
     
     func swapLensImage(blurRadius: Float, swapToImage: String){
-       
-        leftBlurLayer.removeFromSuperlayer()
-        rightBlurLayer.removeFromSuperlayer()
+      
         
         if (blurRadius>0){
+            
+            
+            
+            leftBlurLayer.removeFromSuperlayer()
+            rightBlurLayer.removeFromSuperlayer()
+            
             
             swapMagnifyLayer(blurRadius)
      
             let bulgx = lensShapelayer.position.x
-            let bulgy = lensShapelayer.position.y - (lensShapelayer.frame.height/4)
-            
-            
+            let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/4))
+     
+         //   print("\(bulgx) : \(bulgy)")
             
             //Use the magnify image and blur it per sender values.
-            let img = UIImageView(image: magnifyImage(blurRadius,imageName: UIImage(named: swapToImage+"-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize*magScale, magScale:magScale))
+            let img = UIImageView(image: magnifyImage(blurRadius,imageName: UIImage(named: swapToImage+"-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale:magScale))
             let leftimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
             let rightimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
-
-        
-            
+      
             leftBlurLayer.path = leftMask.path
             leftBlurLayer.fillColor = UIColor.clearColor().CGColor
             leftBlurLayer.addSublayer(leftimg.layer)
@@ -888,73 +926,34 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
     }
     
-    func magnifyImage(blurRadius: Float,imageName: UIImage, bulgeX: CGFloat, bulgeY: CGFloat, magSize: Float, magScale: Float)->UIImage {
+    
+    let glContext = EAGLContext(API: .OpenGLES2)
+    let transform = CGAffineTransformIdentity
+    let clampFilter = CIFilter(name: "CIAffineClamp")!
+    let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
+
+    
+    func magnifyImage(blurRadius: Float,imageName: UIImage, bulgeX: CGFloat, bulgeY: CGFloat, magSize: Float, magScale: Float) ->UIImage{
         
         
-        context = CIContext(EAGLContext: glContext,
-            options: [
-                kCIContextWorkingColorSpace: NSNull()
-            ]
-        )
         
         let beginImage = CIImage(image: imageName)
-        let transform = CGAffineTransformIdentity
-        
-        let clampFilter = CIFilter(name: "CIAffineClamp")!
-        let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
-        
         
         clampFilter.setValue(beginImage!, forKey: "inputImage")
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         
-        //  currentFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
-        //   currentFilter.setValue(blurRadius, forKey: "inputRadius")
-        
         bulgeFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
-        bulgeFilter.setValue(magSize*blurRadius, forKey: "inputRadius")
+        bulgeFilter.setValue((magSize*blurRadius)*magScale, forKey: "inputRadius")
         bulgeFilter.setValue(CIVector(x: bulgeX, y: bulgeY), forKey: kCIInputCenterKey)
         bulgeFilter.setValue(magScale, forKey: "inputScale")
         
         let cgimg = context.createCGImage(bulgeFilter.outputImage!, fromRect: beginImage!.extent)
-       
         return UIImage(CGImage: cgimg) //has to have the CGImage piece on the end!!!!!
-        
-        
-    }
-    
-    let glContext = EAGLContext(API: .OpenGLES2)
-    
-    func magnifyImageAlt(blurRadius: Float,imageName: UIImage, bulgeX: CGFloat, bulgeY: CGFloat, magSize: Float, magScale: Float)->CGImageRef {
-        
-        
-        context = CIContext(EAGLContext: glContext,
-            options: [
-                kCIContextWorkingColorSpace: NSNull()
-            ]
-        )
-        
-        let beginImage = CIImage(image: imageName)
-        let transform = CGAffineTransformIdentity
-        
-        let clampFilter = CIFilter(name: "CIAffineClamp")!
-        let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
-        
-        
-        clampFilter.setValue(beginImage!, forKey: "inputImage")
-        clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
-        
-        //  currentFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
-        //   currentFilter.setValue(blurRadius, forKey: "inputRadius")
-        
-        bulgeFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
-        bulgeFilter.setValue(magSize*blurRadius, forKey: "inputRadius")
-        bulgeFilter.setValue(CIVector(x: bulgeX, y: bulgeY), forKey: kCIInputCenterKey)
-        bulgeFilter.setValue(magScale, forKey: "inputScale")
-        
-        return context.createCGImage(bulgeFilter.outputImage!, fromRect: beginImage!.extent)
-        
-    }
 
+    
+    }
+    
+ 
     
     
     //TODO:  WRITE THIS TO SWING BOTH WAYS.
@@ -1644,6 +1643,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     
     
     override func viewDidLoad(){
+        
+        context = CIContext(EAGLContext: glContext,
+            options: [
+                kCIContextWorkingColorSpace: NSNull()
+            ]
+        )
+
+       
     }
     
   
