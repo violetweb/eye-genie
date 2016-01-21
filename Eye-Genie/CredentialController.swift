@@ -18,7 +18,7 @@ class CredentialController: UIViewController {
    
     
     func showActivityIndicator(uiView: UIView) {
-        var actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+        let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
         actInd.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
         actInd.center = uiView.center
         actInd.hidesWhenStopped = true
@@ -145,5 +145,14 @@ class CredentialController: UIViewController {
         
     }
     
+    
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft,UIInterfaceOrientationMask.LandscapeRight]
+    }
+
     
 }

@@ -28,7 +28,7 @@ extension UIView {
    
     //Works for UIButtons
     func buttonBounce(){
-        var bounds = self.bounds
+        let bounds = self.bounds
         UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 10, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.bounds = CGRect(x: bounds.origin.x - 20, y: bounds.origin.y, width: bounds.size.width + 60, height: bounds.size.height)
                        }, completion: nil)

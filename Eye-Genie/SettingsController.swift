@@ -184,7 +184,7 @@ class SettingsController: UIViewController, UIImagePickerControllerDelegate, UIN
           SettingsContainer.addSubview(activeViewController!.view)
           
         } else if (sender.selectedSegmentIndex==1) {
-            activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("CredentialController"))! as UIViewController
+            activeViewController = (storyboard?.instantiateViewControllerWithIdentifier("CoatingsController"))! as UIViewController
             SettingsContainer.addSubview(activeViewController!.view)
           
         }else if (sender.selectedSegmentIndex==2){
@@ -222,6 +222,13 @@ class SettingsController: UIViewController, UIImagePickerControllerDelegate, UIN
         
    }
 
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft,UIInterfaceOrientationMask.LandscapeRight]
+    }
 
     
     

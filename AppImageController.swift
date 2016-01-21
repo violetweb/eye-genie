@@ -34,7 +34,7 @@ UINavigationControllerDelegate {
         //let path = NSBundle.mainBundle().resourcePath!
         let path = getSupportPath("Genie")
         print(path)
-        let items = try! fm.contentsOfDirectoryAtPath(path)
+       // let items = try! fm.contentsOfDirectoryAtPath(path)
         
         /*
         
@@ -178,7 +178,14 @@ UINavigationControllerDelegate {
         imagePicker.delegate = self
     }
     
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
     
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft,UIInterfaceOrientationMask.LandscapeRight]
+    }
+
     
     
 }

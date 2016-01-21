@@ -298,9 +298,20 @@ class CoatingsController: UIViewController {
     
     override func viewDidAppear(animated: Bool){
         
-       let arCoatingName = getARCoating()
+       let CoatingName = getARCoating()
        getHydro()
        getHardcoat()
         
     }
+    
+    
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft,UIInterfaceOrientationMask.LandscapeRight]
+    }
+
+    
 }

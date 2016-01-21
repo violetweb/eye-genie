@@ -137,8 +137,8 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
         for item in items {
             if item.hasPrefix(findimage) {
                 let itemImage = path + "/" + item
+                print("SET MAIN IMAGE FROM DIRECTORY : \(itemImage)")
                 appImageView.image = UIImage.init(contentsOfFile: itemImage)
-                
             }
         }
         
@@ -156,6 +156,7 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
             if item.hasPrefix(findimage) {
                 let itemImage = path + "/" + item
                 imageview.image = UIImage.init(contentsOfFile: itemImage)
+                imageview.setNeedsDisplay()
                 
             }
         }
@@ -225,7 +226,7 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
         //let pngImageData = UIImagePNGRepresentation(image)
         let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
         let result = jpgImageData!.writeToFile(path + "/" + filename, atomically: true)
-        return result
+            return result
         
     }
     
@@ -263,6 +264,7 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
     func getSupportPath(fileName: String) -> String {
         let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
         let fileURL = documentsURL.URLByAppendingPathComponent(fileName)
+        print(fileURL.path!)
         return fileURL.path!
     }
     
@@ -281,7 +283,6 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
             if !result {
                 print("Error: \(genieDB.lastErrorMessage())")
             }else{
-                
             }
             genieDB.close()
             
@@ -307,7 +308,7 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
             
             let insertSQL = "UPDATE GENERAL SET HOMEIMAGE='\(homeimage)' where id=1"
             let result = genieDB.executeStatements(insertSQL)
-            
+            print("updating the main image name to : \(insertSQL)")
             if !result {
                 print("Error: \(genieDB.lastErrorMessage())")
             }else{
@@ -427,7 +428,6 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
             let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
             if results?.next() == true {
                 setImageView((results?.stringForColumn("LOGOIMAGE")!)!,imageview: imageLogo)
-                print(results?.stringForColumn("LOGOIMAGE"))
             } else {
                 print("Records not found in database for 'General Settings'.")
             }
@@ -447,24 +447,20 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
         saveDesignButton(2, designImage: "btn-jenna")
         saveDesignButton(3, designImage: "btn-jenna-wide")
         saveDesignButton(4, designImage: "btn-jenna-4k")
+        
         setImageView("btn-conventional", imageview: Button1)
         setImageView("btn-jenna", imageview: Button2)
         setImageView("btn-jenna-wide", imageview: Button3)
         setImageView("btn-jenna-4k", imageview: Button4)
         
         
-        //setBtn2FromDirectory("btn-jenna")
-       // setBtn3FromDirectory("btn-jenna-wide")
-       // setBtn4FromDirectory("btn-jenna-4k")
-        
         //Main Image.
         saveMainImage("bg-home")
-        //setMainImageFromDirectory("bg-home")
-        setImageView("bg-home", imageview: appImageView)
+        grabMainImage()
+       
         
         saveLogoImage("yourlogohere")
-        setImageView("yourlogohere", imageview: imageLogo)
-        
+        grabLogoImage()
         //Reset values to their defaults.
         chosenButton = "5"
 
@@ -479,7 +475,6 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
             let results:FMResultSet? = genieDB.executeQuery(querySQL, withArgumentsInArray: nil)
             if results?.next() == true {
                 imageName = (results?.stringForColumn("IMAGENAME"))!
-                print(results?.stringForColumn("IMAGENAME")!)
             } else {
                 print("Records not found in database for 'General Settings'.")
             }
@@ -530,5 +525,14 @@ class CustomizationController:  UIViewController, UIImagePickerControllerDelegat
         imageLogo.userInteractionEnabled = true
         
     }
+    
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft,UIInterfaceOrientationMask.LandscapeRight]
+    }
+
     
 }

@@ -22,6 +22,11 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     @IBOutlet weak var lblPhotochrom: UILabel!
     
     
+    @IBAction func btnSwitch(sender: UIButton) {
+        //Switch to Thickness // will change this layout to a pageviewcontroller later.
+        self.performSegueWithIdentifier("ThicknessSegue", sender: self)
+
+    }
     
     let imgPilots = UIImage(named: "cockpit-n")
     let imgPilotsVib = UIImage(named: "cockpit-v")
@@ -133,24 +138,16 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
         } else if (sender.state == UIGestureRecognizerState.Ended){
             
-            
-            self.magnifyLayer.removeFromSuperlayer()
-            self.leftBlurLayer.removeFromSuperlayer()
-            self.rightBlurLayer.removeFromSuperlayer()
-            
-            
+        
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                 
-                
-                self.swapLensImage(self.blurRadius, swapToImage: self.currentBackgroundImageName)
+
+               self.swapLensImage(self.blurRadius, swapToImage: self.currentBackgroundImageName)
                 
                 dispatch_async(dispatch_get_main_queue(), { // 2
-                   
-                    
                     self.swapLensImage(self.blurRadius, swapToImage: self.currentBackgroundImageName)
                     
-
 
                 });
             });
@@ -170,7 +167,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         magScale = Float(sender.scale)
         
         lensShapelayer.transform = transform
-        let newTranslation = sender.locationInView(mainImageView)
+        
        
         imageLayer.mask!.frame = lensShapelayer.frame // Match the same frame as the outer layer
         imageLayer.mask!.transform = transform
@@ -219,7 +216,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         leftMask.path = drawShapePath(1, reverse: false)
         rightMask.path = drawShapeMirrorPath(1, reverse:false)
         
-        let blurRadius = Float(sliderPowerOutlet.value)
+        //let blurRadius = Float(sliderPowerOutlet.value)
      //  (Float(blurRadius),swapToImage: currentBackground!)
         Button2.fadeOut()
         Button3.fadeOut()
@@ -849,13 +846,24 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     }
 
     
+    func processAdd(){
+        
+      
+        
+        
+    }
+    
+    func updateAfterAdd(){
+        
+        
+    }
+    
     
     
     func swapLensImage(blurRadius: Float, swapToImage: String){
       
         
-        if (blurRadius>0){
-            
+        
             
             
             leftBlurLayer.removeFromSuperlayer()
@@ -887,8 +895,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
             imageLayer.addSublayer(leftBlurLayer)
             imageLayer.addSublayer(rightBlurLayer)
             
-        }
-
+      
     }
 
     
@@ -1429,11 +1436,19 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
         
         //LEFT & RIGHT DOTS (laser marks)
-        let leftDot = drawPolygonLayer((lensShapelayer.bounds.size.width/2)/2, y: (lensShapelayer.bounds.size.height/2), radius:10, sides: 360, color: UIColor.yellowColor())
+        let leftDot = drawPolygonLayer((lensShapelayer.bounds.size.width/2)/2-40, y: (lensShapelayer.bounds.size.height/2)+40, radius:12, sides: 360, color: UIColor.whiteColor())
+        leftDot.fillColor = UIColor.clearColor().CGColor
+        leftDot.lineWidth = 2.0
+        leftDot.contentsGravity = kCAGravityCenter
+        leftDot.strokeColor = UIColor.yellowColor().CGColor
         leftDot.zPosition = 9
         lensShapelayer.addSublayer(leftDot)
-        let rightDot = drawPolygonLayer(lensShapelayer.bounds.size.width-(lensShapelayer.bounds.size.width/2)/2, y: (lensShapelayer.bounds.size.height/2), radius:10, sides: 360, color: UIColor.yellowColor())
+        let rightDot = drawPolygonLayer(lensShapelayer.bounds.size.width-(lensShapelayer.bounds.size.width/2)/2+40, y: (lensShapelayer.bounds.size.height/2)+40, radius:12, sides: 360, color: UIColor.whiteColor())
+        rightDot.strokeColor = UIColor.yellowColor().CGColor
+        rightDot.fillColor = UIColor.clearColor().CGColor
+        rightDot.lineWidth = 2.0
         rightDot.zPosition = 9
+        rightDot.contentsGravity = kCAGravityCenter
         lensShapelayer.addSublayer(rightDot)
         
         
@@ -1463,7 +1478,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
         let clampFilter = CIFilter(name: "CIAffineClamp")!
         let currentFilter = CIFilter(name: "CIGaussianBlur")!
-        let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
+       // let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
         
 
         
@@ -1513,7 +1528,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         let transform = CGAffineTransformIdentity
         let clampFilter = CIFilter(name: "CIAffineClamp")!
         let currentFilter = CIFilter(name: "CIGaussianBlur")!
-        let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
+      //  let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
         
 
         
@@ -1713,6 +1728,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         // Dispose of any resources that can be recreated.
         
         
+    }
+    
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft,UIInterfaceOrientationMask.LandscapeRight]
     }
 
 

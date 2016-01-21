@@ -225,7 +225,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         
-        let copytopath = getSupportPath("images") //documents/images
+        let copytopath = getSupportPath("images") //ApplicationSupport/images
         let fm = NSFileManager.defaultManager()
         let copyfrompath = NSBundle.mainBundle().resourcePath! + "/appdefaults" // I-Care-New.app directory.
         
@@ -235,7 +235,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let copyitem = copyfrompath + "/" + image
             let copytoitem = copytopath + "/" + image
             do {
-                try fm.removeItemAtPath(copytoitem) // If exists already, first remove it.
+                //try fm.removeItemAtPath(copytoitem) // If exists already, first remove it.
                 try fm.copyItemAtPath(copyitem,toPath: copytoitem)
                 print("Copied files from appdefaults to application support directory.")
             }catch let error as NSError {
