@@ -1654,7 +1654,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
     }
     
-    var carouselImages = NSMutableArray(array: ["autumn-v","cockpit-v","office-v","phone-v","office2-v","office3-v","takingphoto-v","sailing-v"])
+    var carouselImages = NSMutableArray(array: ["autumn-v","cockpit-v","office-v","office2-v","office3-v","sailing-v"])
     
     
     override func viewDidLoad(){
@@ -1678,7 +1678,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     }
     
      func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, reusingView view: UIView?) -> UIView {
-       // "autumn-v","cockpit-v","office-v","phone-v","office2-v","office3-v","takingphoto-v","sailing-v"
+       // "autumn-v","cockpit-v","office-v","office2-v","office3-v","sailing-v"
         let newButton = UIButton(type: UIButtonType.Custom)
         if (view == nil)  {
             let buttonImage = UIImage(named: "\(carouselImages.objectAtIndex(index))")
@@ -1700,18 +1700,12 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
                 newButton.addTarget(self, action: "btnHotel", forControlEvents: .TouchUpInside)
                 newButton.setTitle("City View", forState: .Normal)
             } else if (index == 3){
-                newButton.addTarget(self, action: "btnPhone", forControlEvents: .TouchUpInside)
-                 newButton.setTitle("Phone View", forState: .Normal)
+                newButton.addTarget(self, action: "btnDesktop", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Office", forState: .Normal)
             } else if (index == 4){
                 newButton.addTarget(self, action: "btnOffice", forControlEvents: .TouchUpInside)
-                newButton.setTitle("Office", forState: .Normal)
-            } else if (index == 5){
-                newButton.addTarget(self, action: "btnDesktop", forControlEvents: .TouchUpInside)
                 newButton.setTitle("Meeting", forState: .Normal)
-            } else if (index == 6){
-                newButton.addTarget(self, action: "btnTakingPhoto", forControlEvents: .TouchUpInside)
-                newButton.setTitle("Snapshot", forState: .Normal)
-            } else if (index == 7) {
+            } else if (index == 5) {
                 newButton.addTarget(self, action: "btnSailing", forControlEvents: .TouchUpInside)
                 newButton.setTitle("Sailing", forState: .Normal)
             }
