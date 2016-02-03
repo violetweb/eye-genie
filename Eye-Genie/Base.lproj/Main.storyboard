@@ -446,7 +446,7 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="DbY-vW-uBv">
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="DbY-vW-uBv">
                                         <rect key="frame" x="62" y="342" width="118" height="31"/>
                                         <connections>
                                             <action selector="sliderAdd:" destination="BYZ-38-t0r" eventType="valueChanged" id="1yf-gM-Esy"/>

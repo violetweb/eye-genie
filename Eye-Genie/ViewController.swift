@@ -8,9 +8,10 @@
 
 import UIKit
 import GLKit
+import AVFoundation
 
 
-class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
+class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate {
 
    
     
@@ -23,10 +24,13 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     
     
     @IBAction func btnSwitch(sender: UIButton) {
+        
         //Switch to Thickness // will change this layout to a pageviewcontroller later.
         self.performSegueWithIdentifier("ThicknessSegue", sender: self)
 
     }
+    
+    var cameraActive = false
     
     let imgPilots = UIImage(named: "cockpit-n")
     let imgPilotsVib = UIImage(named: "cockpit-v")
@@ -40,6 +44,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     var lensLayer = CALayer()
     
     
+    var imageLayer = CAShapeLayer()
     var leftBlurLayer = CAShapeLayer()
     var rightBlurLayer = CAShapeLayer()
     
@@ -54,7 +59,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     var leftMask =  CAShapeLayer()
     var rightMask = CAShapeLayer()
     var existingMask = CAShapeLayer().mask
-    var imageLayer = CAShapeLayer()
+  
     var reflectionLayer = CAShapeLayer()
     var hardcoatLayer = CAShapeLayer()
     var hydroLayer = CAShapeLayer()
@@ -196,7 +201,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         newLeftLayer.zPosition = 6
         newLeftLayer.strokeColor = UIColor.yellowColor().CGColor
         newLeftLayer.fillColor = UIColor.clearColor().CGColor;
-        newLeftLayer.lineWidth = 8.0
+        newLeftLayer.lineWidth = 5.0
         leftLayer = newLeftLayer
         lensShapelayer.addSublayer(leftLayer)
         
@@ -208,7 +213,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         newRightLayer.zPosition = 6
         newRightLayer.strokeColor = UIColor.yellowColor().CGColor
         newRightLayer.fillColor = UIColor.clearColor().CGColor;
-        newRightLayer.lineWidth = 8.0
+        newRightLayer.lineWidth = 5.0
         rightLayer = newRightLayer
         lensShapelayer.addSublayer(rightLayer)
         
@@ -431,7 +436,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         newLeftLayer.zPosition = 6
         newLeftLayer.strokeColor = UIColor.yellowColor().CGColor
         newLeftLayer.fillColor = UIColor.clearColor().CGColor;
-        newLeftLayer.lineWidth = 8.0
+        newLeftLayer.lineWidth = 5.0
         leftLayer = newLeftLayer
         lensShapelayer.addSublayer(leftLayer)
         
@@ -443,7 +448,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         newRightLayer.zPosition = 6
         newRightLayer.strokeColor = UIColor.yellowColor().CGColor
         newRightLayer.fillColor = UIColor.clearColor().CGColor;
-        newRightLayer.lineWidth = 8.0
+        newRightLayer.lineWidth = 5.0
         rightLayer = newRightLayer
         lensShapelayer.addSublayer(rightLayer)
         
@@ -467,7 +472,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         newLeftLayer.zPosition = 6
         newLeftLayer.strokeColor = UIColor.yellowColor().CGColor
         newLeftLayer.fillColor = UIColor.clearColor().CGColor;
-        newLeftLayer.lineWidth = 8.0
+        newLeftLayer.lineWidth = 5.0
         leftLayer = newLeftLayer
         lensShapelayer.addSublayer(leftLayer)
         
@@ -479,7 +484,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         newRightLayer.zPosition = 6
         newRightLayer.strokeColor = UIColor.yellowColor().CGColor
         newRightLayer.fillColor = UIColor.clearColor().CGColor
-        newRightLayer.lineWidth = 8.0
+        newRightLayer.lineWidth = 5.0
         rightLayer = newRightLayer
         lensShapelayer.addSublayer(rightLayer)
         
@@ -504,7 +509,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         newLeftLayer.zPosition = 6
         newLeftLayer.strokeColor = UIColor.yellowColor().CGColor
         newLeftLayer.fillColor = UIColor.clearColor().CGColor;
-        newLeftLayer.lineWidth = 8.0
+        newLeftLayer.lineWidth = 5.0
         leftLayer = newLeftLayer
         lensShapelayer.addSublayer(leftLayer)
         
@@ -516,7 +521,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         newRightLayer.zPosition = 6
         newRightLayer.strokeColor = UIColor.yellowColor().CGColor
         newRightLayer.fillColor = UIColor.clearColor().CGColor
-        newRightLayer.lineWidth = 8.0
+        newRightLayer.lineWidth = 5.0
         rightLayer = newRightLayer
         lensShapelayer.addSublayer(rightLayer)
         
@@ -538,14 +543,33 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     @IBAction func sliderAdd(sender: UISlider) {
       
         blurRadius = sender.value
-        swapLensImage(Float(blurRadius),swapToImage: currentBackgroundImageName)
-
+        if (cameraActive){
+            
+        }else{
+            swapLensImage(Float(blurRadius),swapToImage: currentBackgroundImageName)
+        }
+        
     }
     
     @IBAction func sliderPower(sender: UISlider) {
+        
         let blurRadius = sender.value // don't save this blurradisu globally...
-        drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
-       
+        
+        if (cameraActive){
+            
+            let blur = CAShapeLayer()
+            blur.frame = pilotsLayer.bounds
+            blur.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
+            blur.opacity = 1.0
+            blur.zPosition = 17
+            blur.fillColor = UIColor.blackColor().CGColor
+            pilotsLayer.addSublayer(blur)
+            
+            
+        }else{
+            drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
+        }
+        
     }
  
     
@@ -708,6 +732,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     
     func btnSailing() {
         
+        cameraActive = false
         drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "sailing", savebg: true)
         currentBackgroundImageName = "sailing"
         currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
@@ -723,10 +748,115 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
     }
 
+    
+    
+    
+    //Camera Capture requiered properties
+    var videoDataOutput: AVCaptureVideoDataOutput!;
+    var videoDataOutputQueue : dispatch_queue_t!;
+    var previewLayer:AVCaptureVideoPreviewLayer!;
+    var captureDevice : AVCaptureDevice!
+    let session = AVCaptureSession()
+    // Loop through all the capture devices on this phone
+    var orientation = AVCaptureVideoOrientation.LandscapeLeft
+   
+    
+    func btnVideo() {
+        //Empty the Layers from mainImageview
+        cameraActive = true
+        imageLayer.removeFromSuperlayer()
+        magnifyLayer.removeFromSuperlayer()
+        setupAVCapture();
+    }
 
+    
+    func setupAVCapture(){
+    
+        session.sessionPreset = AVCaptureSessionPreset1920x1080
+        let devices = AVCaptureDevice.devices();
+        for device in devices {
+                // Make sure this particular device supports video, set it to the back camera
+            if (device.hasMediaType(AVMediaTypeVideo)) {
+                if(device.position == AVCaptureDevicePosition.Back) {
+                    captureDevice = device as? AVCaptureDevice;
+                    if captureDevice != nil {
+                        beginSession();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    func beginSession(){
+        var err : NSError? = nil
+        var deviceInput:AVCaptureDeviceInput?
+        do {
+            deviceInput = try AVCaptureDeviceInput(device: captureDevice)
+        } catch let error as NSError {
+            err = error
+            deviceInput = nil
+        };
+        if err != nil {
+            print("error: \(err?.localizedDescription)");
+        }
+        if self.session.canAddInput(deviceInput){
+            self.session.addInput(deviceInput);
+        }
+        
+        
+        self.videoDataOutput = AVCaptureVideoDataOutput();
+
+        self.videoDataOutput.alwaysDiscardsLateVideoFrames=true;
+        self.videoDataOutputQueue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL);
+       // self.videoDataOutput.setSampleBufferDelegate(self, queue:self.videoDataOutputQueue);
+        if session.canAddOutput(self.videoDataOutput){
+            session.addOutput(self.videoDataOutput);
+        }
+        self.videoDataOutput.connectionWithMediaType(AVMediaTypeVideo).enabled = true
+        
+        self.previewLayer = AVCaptureVideoPreviewLayer(session: self.session);
+        self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        
+        if UIDeviceOrientationIsLandscape(UIDeviceOrientation.LandscapeLeft) {
+            orientation = AVCaptureVideoOrientation.LandscapeRight
+             self.previewLayer.transform = CATransform3DMakeRotation(CGFloat(-M_PI)/CGFloat(2), 0, 0, 1)
+        }else if UIDeviceOrientationIsLandscape(UIDeviceOrientation.LandscapeRight){
+            self.previewLayer.transform = CATransform3DMakeRotation(CGFloat(M_PI)/CGFloat(2), 0, 0, 1)
+        }
+        if self.videoDataOutput.connectionWithMediaType(AVMediaTypeVideo).supportsVideoOrientation == true {
+            self.videoDataOutput.connectionWithMediaType(AVMediaTypeVideo).videoOrientation = orientation
+            
+        }
+
+        self.previewLayer.frame = mainImageView.bounds;
+        self.previewLayer.zPosition = 2
+        imageLayer.zPosition = 1 // Hide this image.
+        pilotsLayer.addSublayer(self.previewLayer);
+       
+        session.startRunning();
+        
+    }
+    
+    func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
+        // do stuff here
+    }
+    
+    // clean up AVCapture
+    func stopCamera(){
+        session.stopRunning()
+    }
+    
+    
+    
+    
+    
   /*
     @IBAction func btnDesktop(sender: UIBarButtonItem) {
-        
+    
         drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "office2", savebg: true)
         currentBackgroundImageName = "office2"
         currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
@@ -771,11 +901,12 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
     }
     
     @IBAction func btnSailing(sender: UIBarButtonItem) {
-        
+       
+        previewLayer.zPosition = 0
+        imageLayer.zPosition = 2
         drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "sailing", savebg: true)
         currentBackgroundImageName = "sailing"
         currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
-       // imageLayer.addSublayer(currentAdd.layer)
         swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
    
         if switchPhotochrom.on {
@@ -873,9 +1004,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
             swapMagnifyLayer(blurRadius)
      
             let bulgx = lensShapelayer.position.x
-            let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/4))
+            let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/3))
      
-         //   print("\(bulgx) : \(bulgy)")
+            print("\(bulgx) : \(bulgy)")
             
             //Use the magnify image and blur it per sender values.
             let img = UIImageView(image: magnifyImage(blurRadius,imageName: UIImage(named: swapToImage+"-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale:magScale))
@@ -950,20 +1081,28 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         
         bulgeFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
-        bulgeFilter.setValue((magSize*blurRadius)*magScale, forKey: "inputRadius")
+     //   bulgeFilter.setValue((magSize*blurRadius)*magScale, forKey: "inputRadius")
+        if (sliderAddOutlet.value>0) {
+            bulgeFilter.setValue((40*(sliderAddOutlet.value+4))/magScale, forKey: "inputRadius")
+        }else{
+            bulgeFilter.setValue(0, forKey: "inputRadius")
+        }
         bulgeFilter.setValue(CIVector(x: bulgeX, y: bulgeY), forKey: kCIInputCenterKey)
-        bulgeFilter.setValue(magScale, forKey: "inputScale")
+       // print("Mag:\(magScale)")
+        //bulgeFilter.setValue(magScale, forKey: "inputScale")
         
         let cgimg = context.createCGImage(bulgeFilter.outputImage!, fromRect: beginImage!.extent)
         return UIImage(CGImage: cgimg) //has to have the CGImage piece on the end!!!!!
 
-    
+
     }
     
  
     
     
     //TODO:  WRITE THIS TO SWING BOTH WAYS.
+    /*      GRABS THE DATA POINTS FOR THE LENS SHAPE VARIATIONS
+     *      */
     func drawShapePath(designId: Int, reverse: Bool)->CGPathRef{
         
         
@@ -977,16 +1116,11 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
                 //Grabe the values.
                 
                 let sql_stmt = "SELECT P1X, P1Y, C1X, C1Y, P2X, P2Y, C2X,C2Y,C3X,C3Y,P3X, P3Y, C4X, C4Y,C5X,C5Y, P4X,P4Y,C6X,C6Y from DESIGNPOINTS WHERE DESIGNID=\(designId)"
-                print(sql_stmt)
                 let results:FMResultSet? = genieDB.executeQuery(sql_stmt, withArgumentsInArray: nil)
-               
                 if ((results?.next()) != nil) {
-                    print("pre-results next")
                     
-                
-                        
                         let shapes = results?.resultDictionary()
-                        print(shapes)
+                
                         //TODO:  CHANGE TO ARRAY.
                         var p1x = shapes!["P1X"] as! CGFloat
                         var p1y = shapes!["P1Y"] as! CGFloat
@@ -996,8 +1130,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
                         var p3y = shapes!["P3Y"] as! CGFloat
                         var p4x = shapes!["P4X"] as! CGFloat
                         var p4y = shapes!["P4Y"] as! CGFloat
-                        
-                        
+                    
                         
                         var c1x = shapes!["C1X"] as! CGFloat
                         var c1y = shapes!["C1Y"] as! CGFloat
@@ -1013,27 +1146,27 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
                         var c6y = shapes!["C6Y"] as! CGFloat
                         
                         
-                        p1x = (p1x+40)*10
+                        p1x = ((p1x+40)*10)-80
                         p1y = (-p1y+40)*10
-                        p2x = (p2x+40)*10
+                        p2x = ((p2x+40)*10)-80
                         p2y = (-p2y+40)*10
-                        p3x = (p3x+40)*10
+                        p3x = ((p3x+40)*10)-80
                         p3y = (-p3y+40)*10
-                        p4x = (p4x+40)*10
+                        p4x = ((p4x+40)*10)-80
                         p4y = (-p4y+40)*10
                         
                         
-                        c1x = (c1x+40)*10
+                        c1x = (c1x+40)*10-80
                         c1y = (-c1y+40)*10
-                        c2x = (c2x+40)*10
+                        c2x = (c2x+40)*10-80
                         c2y = (-c2y+40)*10
-                        c3x = (c3x+40)*10
+                        c3x = (c3x+40)*10-80
                         c3y = (-c3y+40)*10
-                        c4x = (c4x+40)*10
+                        c4x = (c4x+40)*10-80
                         c4y = (-c4y+40)*10
-                        c5x = (c5x+40)*10
+                        c5x = (c5x+40)*10-80
                         c5y = (-c5y+40)*10
-                        c6x = (c6x+40)*10
+                        c6x = (c6x+40)*10-80
                         c6y = (-c6y+40)*10
                         
                         CGPathMoveToPoint(shape, nil, p1x, p1y)
@@ -1115,27 +1248,27 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
                     // to mirror:  800 - (point value + 80) + gives us the mirror point
                     //  + 400 moves over by 400
                     
-                    p1x = 800-((p1x+80)*10)+400
+                    p1x = 800-((p1x+80)*10)+400+80
                     p1y = (-p1y+40)*10
-                    p2x = 800-((p2x+80)*10)+400
+                    p2x = 800-((p2x+80)*10)+400+80
                     p2y = (-p2y+40)*10
-                    p3x = 800-((p3x+80)*10)+400
+                    p3x = 800-((p3x+80)*10)+400+80
                     p3y = (-p3y+40)*10
-                    p4x = 800-((p4x+80)*10)+400
+                    p4x = 800-((p4x+80)*10)+400+80
                     p4y = (-p4y+40)*10
                     
                     
-                    c1x = 800-((c1x+80)*10)+400
+                    c1x = 800-((c1x+80)*10)+400+80
                     c1y = (-c1y+40)*10
-                    c2x = 800-((c2x+80)*10)+400
+                    c2x = 800-((c2x+80)*10)+400+80
                     c2y = (-c2y+40)*10
-                    c3x = 800-((c3x+80)*10)+400
+                    c3x = 800-((c3x+80)*10)+400+80
                     c3y = (-c3y+40)*10
-                    c4x = 800-((c4x+80)*10)+400
+                    c4x = 800-((c4x+80)*10)+400+80
                     c4y = (-c4y+40)*10
-                    c5x = 800-((c5x+80)*10)+400
+                    c5x = 800-((c5x+80)*10)+400+80
                     c5y = (-c5y+40)*10
-                    c6x = 800-((c6x+80)*10)+400
+                    c6x = 800-((c6x+80)*10)+400+80
                     c6y = (-c6y+40)*10
                     
                     CGPathMoveToPoint(shape, nil, p1x, p1y)
@@ -1329,6 +1462,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         currentAdd = img
   
         
+        //change : 02/03/2016 the imageLayer to CALayer from ShapeLayer
         imageLayer.frame = pilotsLayer.bounds
         imageLayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
         imageLayer.contentsGravity = kCAGravityCenter
@@ -1337,10 +1471,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         imageLayer.mask = maskLayerForImage
         imageLayer.addSublayer(currentAdd.layer) // let's try not adding an image to the mask, just cut it out!!!
    
-        
-        
-
-        
         
         leftBlurLayer.frame = pilotsLayer.bounds
         leftBlurLayer.path = leftMask.path
@@ -1419,7 +1549,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         leftLayer.path = drawShapePath(1,reverse: false)
         leftLayer.strokeColor = UIColor.yellowColor().CGColor
         leftLayer.fillColor = UIColor.clearColor().CGColor;
-        leftLayer.lineWidth = 8.0
+        leftLayer.lineWidth = 5.0
         leftLayer.zPosition = 6
         lensShapelayer.addSublayer(leftLayer)
         
@@ -1430,7 +1560,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         rightLayer.path = drawShapeMirrorPath(1,reverse:false)
         rightLayer.strokeColor = UIColor.yellowColor().CGColor
         rightLayer.fillColor = UIColor.clearColor().CGColor
-        rightLayer.lineWidth = 8.0
+        rightLayer.lineWidth = 5.0
         rightLayer.zPosition = 6
         lensShapelayer.addSublayer(rightLayer)
         
@@ -1654,7 +1784,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
         
     }
     
-    var carouselImages = NSMutableArray(array: ["autumn-v","cockpit-v","office-v","office2-v","office3-v","sailing-v"])
+    var carouselImages = NSMutableArray(array: ["autumn-v","cockpit-v","office-v","office2-v","office3-v","sailing-v", "office2-v"])
     
     
     override func viewDidLoad(){
@@ -1665,7 +1795,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
             ]
         )
 
-       
     }
     
   
@@ -1708,6 +1837,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate{
             } else if (index == 5) {
                 newButton.addTarget(self, action: "btnSailing", forControlEvents: .TouchUpInside)
                 newButton.setTitle("Sailing", forState: .Normal)
+            } else if (index == 6) {
+                newButton.addTarget(self, action: "btnVideo", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Snapshot", forState: .Normal)
             }
             
 

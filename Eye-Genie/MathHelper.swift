@@ -11,4 +11,14 @@ import Metal
 
 class MathHelper {
     
+    
+    func degreesToRadians(x: Int)->Double{
+        return Double(x)/Double(180.0) * M_PI
+    }
+    
+    func radiansToDegrees(x: Int)->Double{
+        return Double(x)/M_PI*Double(180.0)
+    }
+    
+    
  }

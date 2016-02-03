@@ -132,7 +132,7 @@ class LoginViewController: UIViewController {
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
         if (Username.text!.characters.count>0 && Password.text!.characters.count>4) {
-            
+            /*
             processLogin(){
                 jsonString in
                     for (IsAllowed) in jsonString {
@@ -148,6 +148,12 @@ class LoginViewController: UIViewController {
                     }
                 
                 }
+            */
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+            
+                self.UserLoggedIn = true
+                self.performSegueWithIdentifier("LoginSegue", sender: self)
+        
         }else{
             stopSpinner("Login Result", alertMessage: "We are unable to find an account with the username and password provided.  If you are having trouble loggin in, please contact your client service representative.")
             
