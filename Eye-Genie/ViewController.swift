@@ -41,10 +41,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     
     var currentBackgroundImageName = "cockpit" // append an n = desaturated (for mainlayer), or v = vibrant image (for imageLayer)
     var currentAdd = UIImageView()
-    var lensLayer = CALayer()
+    var lensLayer = CALayer()        //pilotslayer 2
+    var backgroundLayer = CALayer()  //pilotslayer 1
     
-    
-    var imageLayer = CAShapeLayer()
+    var imageLayer = CALayer()
     var leftBlurLayer = CAShapeLayer()
     var rightBlurLayer = CAShapeLayer()
     
@@ -557,15 +557,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         if (cameraActive){
             
-            let blur = CAShapeLayer()
-            blur.frame = pilotsLayer.bounds
-            blur.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
-            blur.opacity = 1.0
-            blur.zPosition = 17
-            blur.fillColor = UIColor.blackColor().CGColor
-            pilotsLayer.addSublayer(blur)
+            let lensshape = LensShapeBlur(drawIn: pilotsLayer) // Preview Layer is the background layer in VideoMode.
+            lensshape.draw(blurRadius/100)
             
-            
+            //drawBackgroundLayer(blurRadius, imageName: blurImageName, savebg: true)
         }else{
             drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
         }
@@ -573,66 +568,11 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     }
  
     
+    
  
     @IBOutlet weak var sliderAddOutlet: UISlider!
     
     @IBOutlet weak var sliderPowerOutlet: UISlider!
-    /*
-    @IBAction func btnTakingPhoto(sender: UIBarButtonItem) {
-        
-        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "takingphoto", savebg: true)
-        currentBackgroundImageName = "takingphoto"
-        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
-        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
-        if switchPhotochrom.on {
-            switchPhotochrom.setOn(false, animated: false)
-             photochromLayer.removeFromSuperlayer()
-        }
-
-        
-    }
-    @IBAction func btnPhone(sender: UIBarButtonItem) {
-        
-        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "phone", savebg: true)
-        currentBackgroundImageName = "phone"
-        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
-        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
-        if switchPhotochrom.on {
-            switchPhotochrom.setOn(false, animated: false)
-             photochromLayer.removeFromSuperlayer()
-        }
-
-        
-    }
-    @IBAction func btnHotel(sender: UIBarButtonItem) {
-        
-        
-        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "office", savebg: true)
-        currentBackgroundImageName = "office"
-        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
-        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
-        if switchPhotochrom.on {
-            switchPhotochrom.setOn(false, animated: false)
-             photochromLayer.removeFromSuperlayer()
-        }
-
-    }
-    
-    @IBAction func btnOffice(sender: UIBarButtonItem) {
-        
-        
-        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "office3", savebg: true)
-        currentBackgroundImageName = "office3"
-        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
-        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
-        if switchPhotochrom.on {
-            switchPhotochrom.setOn(false, animated: false)
-            //Remove the photochrom layer
-            photochromLayer.removeFromSuperlayer()
-        }
-
-    }
-    */
     
     func btnTakingPhoto() {
         
@@ -755,6 +695,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     var videoDataOutput: AVCaptureVideoDataOutput!;
     var videoDataOutputQueue : dispatch_queue_t!;
     var previewLayer:AVCaptureVideoPreviewLayer!;
+    var lensPreviewLayer:AVCaptureVideoPreviewLayer!;
     var captureDevice : AVCaptureDevice!
     let session = AVCaptureSession()
     // Loop through all the capture devices on this phone
@@ -764,8 +705,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     func btnVideo() {
         //Empty the Layers from mainImageview
         cameraActive = true
-        imageLayer.removeFromSuperlayer()
         magnifyLayer.removeFromSuperlayer()
+        imageLayer.removeFromSuperlayer()
         setupAVCapture();
     }
 
@@ -787,9 +728,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             }
         }
     }
-    
-    
-    
     
     func beginSession(){
         var err : NSError? = nil
@@ -818,32 +756,62 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         }
         self.videoDataOutput.connectionWithMediaType(AVMediaTypeVideo).enabled = true
         
+     
+        
         self.previewLayer = AVCaptureVideoPreviewLayer(session: self.session);
         self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         
+      //  self.lensPreviewLayer = AVCaptureVideoPreviewLayer(session: self.session);
+      //  self.lensPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        
+
+        
         if UIDeviceOrientationIsLandscape(UIDeviceOrientation.LandscapeLeft) {
             orientation = AVCaptureVideoOrientation.LandscapeRight
-             self.previewLayer.transform = CATransform3DMakeRotation(CGFloat(-M_PI)/CGFloat(2), 0, 0, 1)
+            self.previewLayer.transform = CATransform3DMakeRotation(CGFloat(-M_PI)/CGFloat(2), 0, 0, 1)
+           /// self.lensPreviewLayer.transform = CATransform3DMakeRotation(CGFloat(-M_PI)/CGFloat(2), 0, 0, 1)
+
         }else if UIDeviceOrientationIsLandscape(UIDeviceOrientation.LandscapeRight){
             self.previewLayer.transform = CATransform3DMakeRotation(CGFloat(M_PI)/CGFloat(2), 0, 0, 1)
+           // self.lensPreviewLayer.transform = CATransform3DMakeRotation(CGFloat(M_PI)/CGFloat(2), 0, 0, 1)
+
         }
         if self.videoDataOutput.connectionWithMediaType(AVMediaTypeVideo).supportsVideoOrientation == true {
             self.videoDataOutput.connectionWithMediaType(AVMediaTypeVideo).videoOrientation = orientation
             
         }
 
-        self.previewLayer.frame = mainImageView.bounds;
-        self.previewLayer.zPosition = 2
-        imageLayer.zPosition = 1 // Hide this image.
-        pilotsLayer.addSublayer(self.previewLayer);
-       
-        session.startRunning();
+        //Swap out the image for the Live Video FEED.
+        previewLayer.frame = mainImageView.bounds;
+        previewLayer.zPosition = 1
+     
+        pilotsLayer.addSublayer(previewLayer);
         
+        
+        
+        
+         dispatch_async(dispatch_get_main_queue(), {
+            self.session.startRunning();
+        })
     }
     
-    func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
-        // do stuff here
+    func captureOutput(captureOutput: AVCaptureStillImageOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) -> UIImage{
+    
+        var image = UIImage()
+        if let connection = captureOutput!.connectionWithMediaType(AVMediaTypeVideo) {
+            captureOutput?.captureStillImageAsynchronouslyFromConnection(connection, completionHandler: {(sampleBuffer, error) in
+                if (sampleBuffer != nil) {
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
+                    let dataProvider = CGDataProviderCreateWithCFData(imageData)
+                    let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
+                    image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
+                }
+            })
+        }
+        return image
     }
+
+    
     
     // clean up AVCapture
     func stopCamera(){
@@ -902,8 +870,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     
     @IBAction func btnSailing(sender: UIBarButtonItem) {
        
-        previewLayer.zPosition = 0
-        imageLayer.zPosition = 2
+        
         drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "sailing", savebg: true)
         currentBackgroundImageName = "sailing"
         currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
@@ -1006,8 +973,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             let bulgx = lensShapelayer.position.x
             let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/3))
      
-            print("\(bulgx) : \(bulgy)")
-            
+        
             //Use the magnify image and blur it per sender values.
             let img = UIImageView(image: magnifyImage(blurRadius,imageName: UIImage(named: swapToImage+"-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale:magScale))
             let leftimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
@@ -1463,13 +1429,15 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
   
         
         //change : 02/03/2016 the imageLayer to CALayer from ShapeLayer
+        //          Image layer holds the vibrant version of the background image
+        //          It is then clipped / masked to the shape of the Lens.
         imageLayer.frame = pilotsLayer.bounds
         imageLayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
         imageLayer.contentsGravity = kCAGravityCenter
-        imageLayer.fillRule = kCAFillRuleEvenOdd;
+   //     imageLayer.fillRule = kCAFillRuleEvenOdd;
         imageLayer.zPosition = 2
         imageLayer.mask = maskLayerForImage
-        imageLayer.addSublayer(currentAdd.layer) // let's try not adding an image to the mask, just cut it out!!!
+        imageLayer.addSublayer(currentAdd.layer)
    
         
         leftBlurLayer.frame = pilotsLayer.bounds
@@ -1493,6 +1461,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         //Main layers :     Pilots layer or bottom background layer
         //                  BlurShape Layer holds the left and right blurs
         //                  imageLayer holds the image that moves...
+        //                  magnifyLayer holds the blured images.
+        //                  colorLayers (not currently implemented).
         
         pilotsLayer.addSublayer(imageLayer)
         
@@ -1608,11 +1578,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         let clampFilter = CIFilter(name: "CIAffineClamp")!
         let currentFilter = CIFilter(name: "CIGaussianBlur")!
-       // let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
-        
-
-        
-        //Set this to current background.
+   
         var beginImage = CIImage()
         if savebg {
             beginImage = CIImage(image: UIImage(named: imageName + "-n")!)! // append normal
@@ -1620,6 +1586,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         }else{
             beginImage = CIImage(image: UIImage(named: imageName)!)!
         }
+        
         let transform = CGAffineTransformIdentity
         clampFilter.setValue(beginImage, forKey: "inputImage")
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
@@ -1629,12 +1596,18 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         let cgimg = context.createCGImage(currentFilter.outputImage!, fromRect: beginImage.extent)
         let processedImage = UIImage(CGImage: cgimg).CGImage //has to have the CGImage piece on the end!!!!!
         
-        pilotsLayer.zPosition = 1
+       // pilotsLayer.zPosition = 1
         pilotsLayer.backgroundColor = UIColor.whiteColor().CGColor
         pilotsLayer.contentsGravity = kCAGravityBottomLeft
         pilotsLayer.masksToBounds = true  //Important: tell this layer to be the boundary which cuts other layers (rect)
-        pilotsLayer.contents = processedImage
-
+       // pilotsLayer.contents = processedImage (replaced with its own background Layer see not from 2/4/2016 below.
+        
+        //try adding background image to its own layer 2/4/2016.
+        backgroundLayer.frame = mainImageView.bounds
+        backgroundLayer.contentsGravity = kCAGravityBottomLeft
+        backgroundLayer.contents = processedImage
+        backgroundLayer.zPosition = 1
+        pilotsLayer.addSublayer(backgroundLayer) // Our first layer on the pilots layer. #1
         
         
     }
