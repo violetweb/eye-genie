@@ -87,10 +87,10 @@ class LensShapeBlur {
         }
         
         //Now move to outer edge and draw.
-        CGPathMoveToPoint(lensPath, nil, 0, 0)
-        CGPathAddLineToPoint(lensPath,nil,0,800)
-        CGPathAddLineToPoint(lensPath,nil,800,800)
-        CGPathAddLineToPoint(lensPath,nil,800,0)
+        //CGPathMoveToPoint(lensPath, nil, 0, 0)
+        //CGPathAddLineToPoint(lensPath,nil,0,800)
+        //CGPathAddLineToPoint(lensPath,nil,800,800)
+        //CGPathAddLineToPoint(lensPath,nil,800,0)
         
         CGPathCloseSubpath(lensPath)
         
@@ -117,12 +117,8 @@ class LensShapeBlur {
             rad = min(size.height, size.width)
         }
         
-     
-        
         fillLayer.path = lensShape
         fillLayer.fillRule = kCAFillRuleEvenOdd
-        fillLayer.fillColor = self.fillColor.CGColor
-        fillLayer.opacity = opacity
         fillLayer.zPosition = 2
         
         self.target!.addSublayer(fillLayer)

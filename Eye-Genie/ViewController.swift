@@ -670,15 +670,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         }
     }
     
-    func btnSailing() {
+    func btnReading() {
         
+        session.stopRunning()
         cameraActive = false
-        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "sailing", savebg: true)
-        currentBackgroundImageName = "sailing"
+        currentBackgroundImageName = "reading"
         currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
-        // imageLayer.addSublayer(currentAdd.layer)
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "reading", savebg: true)
         swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
-        
         if switchPhotochrom.on {
             switchPhotochrom.setOn(false, animated: false)
             photochromLayer.removeFromSuperlayer()
@@ -705,8 +704,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     func btnVideo() {
         //Empty the Layers from mainImageview
         cameraActive = true
-        magnifyLayer.removeFromSuperlayer()
-        imageLayer.removeFromSuperlayer()
+     
         setupAVCapture();
     }
 
@@ -761,8 +759,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         self.previewLayer = AVCaptureVideoPreviewLayer(session: self.session);
         self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         
-      //  self.lensPreviewLayer = AVCaptureVideoPreviewLayer(session: self.session);
-      //  self.lensPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        //self.lensPreviewLayer = AVCaptureVideoPreviewLayer(session: self.session);
+        //self.lensPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         
 
         
@@ -783,10 +781,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
 
         //Swap out the image for the Live Video FEED.
         previewLayer.frame = mainImageView.bounds;
-        previewLayer.zPosition = 1
-     
-        pilotsLayer.addSublayer(previewLayer);
-        
+        backgroundLayer.removeFromSuperlayer()
+        backgroundLayer = self.previewLayer
+        pilotsLayer.addSublayer(backgroundLayer)
         
         
         
@@ -815,7 +812,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     
     // clean up AVCapture
     func stopCamera(){
-        session.stopRunning()
+        
+            session.stopRunning()
+        
     }
     
     
@@ -867,25 +866,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             
         }
     }
-    
-    @IBAction func btnSailing(sender: UIBarButtonItem) {
-       
-        
-        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "sailing", savebg: true)
-        currentBackgroundImageName = "sailing"
-        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
-        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
-   
-        if switchPhotochrom.on {
-            switchPhotochrom.setOn(false, animated: false)
-             photochromLayer.removeFromSuperlayer()
-        }
-       
-
-
-    }
-    
-    
     
     func getSupportPath(fileName: String) -> String {
         let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
@@ -943,27 +923,12 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         imageLayer.addSublayer(magnifyLayer)
     }
 
-    
-    func processAdd(){
-        
       
-        
-        
-    }
-    
-    func updateAfterAdd(){
-        
-        
-    }
-    
     
     
     func swapLensImage(blurRadius: Float, swapToImage: String){
       
         
-        
-            
-            
             leftBlurLayer.removeFromSuperlayer()
             rightBlurLayer.removeFromSuperlayer()
             
@@ -1023,7 +988,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         
         currentFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
-        currentFilter.setValue(blurRadius, forKey: "inputRadius")
+        currentFilter.setValue(blurRadius*2, forKey: "inputRadius")
         
         let cgimg = context.createCGImage(currentFilter.outputImage!, fromRect: beginImage!.extent)
         return UIImage(CGImage: cgimg) //has to have the CGImage piece on the end!!!!!
@@ -1047,7 +1012,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         
         bulgeFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
-     //   bulgeFilter.setValue((magSize*blurRadius)*magScale, forKey: "inputRadius")
+        //bulgeFilter.setValue((magSize*blurRadius)*magScale, forKey: "inputRadius")
         if (sliderAddOutlet.value>0) {
             bulgeFilter.setValue((40*(sliderAddOutlet.value+4))/magScale, forKey: "inputRadius")
         }else{
@@ -1569,6 +1534,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
 
     func drawBackgroundLayer(blurRadius: Float, imageName: String, savebg: Bool){
         
+        backgroundLayer.removeFromSuperlayer() // remove first.
        // let glContext = EAGLContext(API: .OpenGLES2)
         context = CIContext(EAGLContext: glContext,
             options: [
@@ -1757,7 +1723,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
     }
     
-    var carouselImages = NSMutableArray(array: ["autumn-v","cockpit-v","office-v","office2-v","office3-v","sailing-v", "office2-v"])
+    var carouselImages = NSMutableArray(array: ["autumn-v","cockpit-v","office-v","office2-v","office3-v","reading-v"])
     
     
     override func viewDidLoad(){
@@ -1808,13 +1774,15 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                 newButton.addTarget(self, action: "btnOffice", forControlEvents: .TouchUpInside)
                 newButton.setTitle("Meeting", forState: .Normal)
             } else if (index == 5) {
-                newButton.addTarget(self, action: "btnSailing", forControlEvents: .TouchUpInside)
-                newButton.setTitle("Sailing", forState: .Normal)
-            } else if (index == 6) {
+                newButton.addTarget(self, action: "btnReading", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Reading", forState: .Normal)
+            }
+            /*
+            else if (index == 6) {
                 newButton.addTarget(self, action: "btnVideo", forControlEvents: .TouchUpInside)
                 newButton.setTitle("Snapshot", forState: .Normal)
             }
-            
+            */
 
         }
               return newButton
