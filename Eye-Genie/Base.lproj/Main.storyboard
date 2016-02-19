@@ -471,6 +471,13 @@
                                             <action selector="btnJenaW:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qgy-cr-5Sx"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nMe-Ee-YwH">
+                                        <rect key="frame" x="25" y="19" width="70" height="30"/>
+                                        <state key="normal" title="Thickness"/>
+                                        <connections>
+                                            <segue destination="jJo-F3-892" kind="showDetail" id="Vda-m7-4Pd"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -549,7 +556,43 @@
                     </connections>
                 </pinchGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="238" y="339"/>
+            <point key="canvasLocation" x="230" y="470"/>
+        </scene>
+        <!--Thickness Controller-->
+        <scene sceneID="6Tq-Su-RDv">
+            <objects>
+                <viewController storyboardIdentifier="ThicknessController" id="jJo-F3-892" customClass="ThicknessController" customModule="EyeGenie" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rOF-F1-WLb"/>
+                        <viewControllerLayoutGuide type="bottom" id="K8g-fU-vRg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" restorationIdentifier="ThicknessController" id="KV2-lp-PfE">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HELLO THICKNESS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zLP-mc-2Xr">
+                                <rect key="frame" x="67" y="96" width="150" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="smu-Sg-KLV">
+                                <rect key="frame" x="39" y="34" width="936" height="507"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+                    <connections>
+                        <outlet property="lblHelloThickness" destination="zLP-mc-2Xr" id="zNP-Ey-MjH"/>
+                        <outlet property="viewLens" destination="smu-Sg-KLV" id="wra-Rf-pVJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9AD-1u-EAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="655" y="-505"/>
         </scene>
         <!--LoginViewController-->
         <scene sceneID="wWV-PR-SkS">
@@ -743,9 +786,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ar-coating-1" width="1000" height="667"/>
+        <image name="ar-coating-1" width="800" height="600"/>
         <image name="ar-coating-2" width="800" height="640"/>
-        <image name="ar-coating-3" width="800" height="600"/>
+        <image name="ar-coating-3" width="1000" height="667"/>
         <image name="bg-home.jpg" width="1024" height="768"/>
         <image name="btn-checkmark-off" width="64" height="64"/>
         <image name="btn-checkmark-on" width="64" height="64"/>

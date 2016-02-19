@@ -73,6 +73,8 @@ class LensShapeBlur {
     }
     
     
+    
+    
     //Feed points are specific to Lens (redo this as generic)
     func drawLensShapeBlur() ->CGPathRef {
         
@@ -86,7 +88,7 @@ class LensShapeBlur {
             CGPathAddLineToPoint(lensPath, nil, p.x, p.y)
         }
         
-        //Now move to outer edge and draw.
+        //Make a whole by filling in the outer edges
         //CGPathMoveToPoint(lensPath, nil, 0, 0)
         //CGPathAddLineToPoint(lensPath,nil,0,800)
         //CGPathAddLineToPoint(lensPath,nil,800,800)
