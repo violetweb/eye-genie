@@ -2,7 +2,7 @@
 //  FileHelper.swift
 //  Eye-Genie
 //
-//  Created by Ryan Maxwell on 2015-12-07.
+//  Created by Valerie Trotter on 2015-12-07.
 //  Copyright © 2015 Bceen Ventures. All rights reserved.
 //
 

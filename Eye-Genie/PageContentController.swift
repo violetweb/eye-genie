@@ -2,7 +2,7 @@
 //  PageContentController.swift
 //  Eye-Genie
 //
-//  Created by Ryan Maxwell on 2016-01-12.
+//  Created by Valerie Trotter on 2016-01-12.
 //  Copyright © 2016 Bceen Ventures. All rights reserved.
 //
 

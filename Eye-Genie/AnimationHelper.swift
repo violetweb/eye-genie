@@ -15,12 +15,12 @@ extension UIView {
     func fadeIn() {
        self.alpha = 0.35
        UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.alpha = 1.0
+            self.alpha = 0.9
         }, completion: nil)
     }
 
     func fadeOut() {
-        self.alpha = 1.0
+        self.alpha = 0.9
         UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.alpha = 0.35
         }, completion: nil)

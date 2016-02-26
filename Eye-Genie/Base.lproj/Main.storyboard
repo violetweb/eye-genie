@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ukz-Tl-yTL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ukz-Tl-yTL">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--Coatings Controller-->
@@ -360,129 +360,56 @@
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nar-OY-1kf">
-                                <rect key="frame" x="816" y="73" width="208" height="651"/>
-                                <subviews>
-                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRu-hT-f9E">
-                                        <rect key="frame" x="14" y="97" width="175" height="75"/>
-                                        <state key="normal" backgroundImage="btn-jenna"/>
-                                        <connections>
-                                            <action selector="btnJena:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Szw-9O-p1j"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPR-jq-1B8">
-                                        <rect key="frame" x="15" y="254" width="175" height="75"/>
-                                        <state key="normal" backgroundImage="btn-jenna-4k"/>
-                                        <connections>
-                                            <action selector="btnJena4k:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4yC-x3-2bZ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUa-Y1-6Xo">
-                                        <rect key="frame" x="17" y="30" width="175" height="75"/>
-                                        <state key="normal" backgroundImage="btn-conventional"/>
-                                        <connections>
-                                            <action selector="btnConventional:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aeo-Vl-3gu"/>
-                                        </connections>
-                                    </button>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wcj-cM-6LE">
-                                        <rect key="frame" x="129" y="474" width="51" height="31"/>
-                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnHydrophop:" destination="BYZ-38-t0r" eventType="valueChanged" id="oDt-QE-Qrh"/>
-                                        </connections>
-                                    </switch>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="4Ri-ec-uKk">
-                                        <rect key="frame" x="63" y="383" width="118" height="31"/>
-                                        <connections>
-                                            <action selector="sliderPower:" destination="BYZ-38-t0r" eventType="valueChanged" id="d4m-WU-rGb"/>
-                                        </connections>
-                                    </slider>
-                                    <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A/R Coating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKr-QR-fmm">
-                                        <rect key="frame" x="3" y="440" width="92" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xym-eX-s8x">
-                                        <rect key="frame" x="129" y="520" width="51" height="31"/>
-                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnHardCoating:" destination="BYZ-38-t0r" eventType="valueChanged" id="wHN-ZC-mbZ"/>
-                                        </connections>
-                                    </switch>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="g3n-MH-dVV">
-                                        <rect key="frame" x="129" y="567" width="51" height="31"/>
-                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnPhotochrom:" destination="BYZ-38-t0r" eventType="valueChanged" id="pCV-RF-uW6"/>
-                                        </connections>
-                                    </switch>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GFi-zD-XtA">
-                                        <rect key="frame" x="129" y="435" width="51" height="31"/>
-                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnAntiReflectionCoating:" destination="BYZ-38-t0r" eventType="valueChanged" id="kwG-VY-A5t"/>
-                                        </connections>
-                                    </switch>
-                                    <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hard Coat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mlc-ny-UOf">
-                                        <rect key="frame" x="8" y="520" width="66" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hydrophop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZw-7P-ClM">
-                                        <rect key="frame" x="8" y="479" width="86" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Photochrom" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1b-ve-d7p">
-                                        <rect key="frame" x="8" y="567" width="79" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="DbY-vW-uBv">
-                                        <rect key="frame" x="62" y="342" width="118" height="31"/>
-                                        <connections>
-                                            <action selector="sliderAdd:" destination="BYZ-38-t0r" eventType="valueChanged" id="1yf-gM-Esy"/>
-                                        </connections>
-                                    </slider>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Power" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1j-1V-9io">
-                                        <rect key="frame" x="9" y="383" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bH1-uv-JMC">
-                                        <rect key="frame" x="8" y="346" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odI-Nj-Ehh">
-                                        <rect key="frame" x="15" y="174" width="175" height="75"/>
-                                        <state key="normal" backgroundImage="btn-jenna-wide"/>
-                                        <connections>
-                                            <action selector="btnJenaW:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qgy-cr-5Sx"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nMe-Ee-YwH">
-                                        <rect key="frame" x="25" y="19" width="70" height="30"/>
-                                        <state key="normal" title="Thickness"/>
-                                        <connections>
-                                            <segue destination="jJo-F3-892" kind="showDetail" id="Vda-m7-4Pd"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cockpit-n" translatesAutoresizingMaskIntoConstraints="NO" id="DhZ-V7-eaG">
+                                <rect key="frame" x="0.0" y="65" width="1024" height="659"/>
+                            </imageView>
+                            <view hidden="YES" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uMl-sK-2tp">
+                                <rect key="frame" x="0.0" y="523" width="1024" height="198"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hez-pH-2cQ">
+                                <rect key="frame" x="0.0" y="65" width="1024" height="660"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="SVR-fg-geF" appends="YES" id="f4o-Ok-Tnu"/>
+                                    <outletCollection property="gestureRecognizers" destination="Oat-9n-wVy" appends="YES" id="hYk-un-x7r"/>
+                                </connections>
+                            </view>
+                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRu-hT-f9E">
+                                <rect key="frame" x="835" y="157" width="175" height="75"/>
+                                <state key="normal" backgroundImage="btn-jenna"/>
+                                <connections>
+                                    <action selector="btnJena:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Szw-9O-p1j"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPR-jq-1B8">
+                                <rect key="frame" x="835" y="305" width="175" height="75"/>
+                                <state key="normal" backgroundImage="btn-jenna-4k"/>
+                                <connections>
+                                    <action selector="btnJena4k:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4yC-x3-2bZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odI-Nj-Ehh">
+                                <rect key="frame" x="835" y="231" width="175" height="75"/>
+                                <state key="normal" backgroundImage="btn-jenna-wide"/>
+                                <connections>
+                                    <action selector="btnJenaW:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qgy-cr-5Sx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUa-Y1-6Xo">
+                                <rect key="frame" x="835" y="82" width="175" height="75"/>
+                                <state key="normal" backgroundImage="btn-conventional"/>
+                                <connections>
+                                    <action selector="btnConventional:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aeo-Vl-3gu"/>
+                                </connections>
+                            </button>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="edc-aE-JTf">
-                                <rect key="frame" x="0.0" y="28" width="1024" height="44"/>
+                                <rect key="frame" x="-1" y="20" width="1024" height="44"/>
                                 <items>
                                     <navigationItem title="Eye Genie" id="leb-2b-TYm">
                                         <barButtonItem key="leftBarButtonItem" title="Settings" id="cmd-wn-D8q">
@@ -504,31 +431,140 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yvd-ry-CZr" customClass="iCarousel">
-                                <rect key="frame" x="0.0" y="693" width="1024" height="75"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hez-pH-2cQ">
-                                <rect key="frame" x="-10" y="72" width="800" height="620"/>
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fDq-RL-rBM">
+                                <rect key="frame" x="835" y="388" width="175" height="323"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bH1-uv-JMC">
+                                        <rect key="frame" x="22" y="20" width="46" height="22"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.80000000000000004" green="0.0" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="DbY-vW-uBv">
+                                        <rect key="frame" x="23" y="50" width="133" height="31"/>
+                                        <color key="thumbTintColor" red="0.80000000000000004" green="0.0" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="sliderAdd:" destination="BYZ-38-t0r" eventType="valueChanged" id="1yf-gM-Esy"/>
+                                        </connections>
+                                    </slider>
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Photochrom" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1b-ve-d7p">
+                                        <rect key="frame" x="65" y="259" width="79" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hydrophop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZw-7P-ClM">
+                                        <rect key="frame" x="65" y="165" width="86" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hard Coat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mlc-ny-UOf">
+                                        <rect key="frame" x="65" y="224" width="66" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GFi-zD-XtA">
+                                        <rect key="frame" x="84" y="165" width="51" height="31"/>
+                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="btnAntiReflectionCoating:" destination="BYZ-38-t0r" eventType="valueChanged" id="kwG-VY-A5t"/>
+                                        </connections>
+                                    </switch>
+                                    <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="g3n-MH-dVV">
+                                        <rect key="frame" x="65" y="219" width="51" height="31"/>
+                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="btnPhotochrom:" destination="BYZ-38-t0r" eventType="valueChanged" id="pCV-RF-uW6"/>
+                                        </connections>
+                                    </switch>
+                                    <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xym-eX-s8x">
+                                        <rect key="frame" x="63" y="238" width="51" height="31"/>
+                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="btnHardCoating:" destination="BYZ-38-t0r" eventType="valueChanged" id="wHN-ZC-mbZ"/>
+                                        </connections>
+                                    </switch>
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A/R Coating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKr-QR-fmm">
+                                        <rect key="frame" x="49" y="277" width="92" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wcj-cM-6LE">
+                                        <rect key="frame" x="65" y="185" width="51" height="31"/>
+                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="btnHydrophop:" destination="BYZ-38-t0r" eventType="valueChanged" id="oDt-QE-Qrh"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Power" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1j-1V-9io">
+                                        <rect key="frame" x="23" y="118" width="51" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.80000000000000004" green="0.0" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="4Ri-ec-uKk">
+                                        <rect key="frame" x="23" y="147" width="133" height="31"/>
+                                        <color key="thumbTintColor" red="0.80000000000000004" green="0.0" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="sliderPower:" destination="BYZ-38-t0r" eventType="valueChanged" id="d4m-WU-rGb"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="Oat-9n-wVy" appends="YES" id="hYk-un-x7r"/>
-                                    <outletCollection property="gestureRecognizers" destination="SVR-fg-geF" appends="YES" id="f4o-Ok-Tnu"/>
-                                </connections>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ha9-ok-BVh">
+                                <rect key="frame" x="0.0" y="724" width="1025" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <barButtonItem title="Progressive" id="39b-Mf-5o6">
+                                        <connections>
+                                            <action selector="btnProgressive:" destination="BYZ-38-t0r" id="QTR-KQ-Tef"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Singlevision" id="nGi-6s-CkP">
+                                        <color key="tintColor" red="0.80000000000000004" green="0.0" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem image="Office" id="YGA-eS-vqE"/>
+                                    <barButtonItem image="Sport" id="UnI-Ke-0MZ"/>
+                                    <barButtonItem title="Thickness" id="xiz-ZS-dEX">
+                                        <connections>
+                                            <action selector="btnThickness:" destination="BYZ-38-t0r" id="ENB-NX-OJI"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem image="Coatings" id="dYJ-o1-WKV"/>
+                                    <barButtonItem title="Transitions" id="459-q9-zm0">
+                                        <connections>
+                                            <action selector="btnTransitions:" destination="BYZ-38-t0r" id="UuK-UK-AWZ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem image="Polarized" id="BoA-4d-iem"/>
+                                    <barButtonItem image="Driverwear" id="fjB-01-1ha"/>
+                                    <barButtonItem image="Colors" id="Ot6-iN-DQf"/>
+                                    <barButtonItem title="Mirror" id="lxh-DJ-r4t"/>
+                                </items>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                     <connections>
+                        <outlet property="BottomToolbar" destination="ha9-ok-BVh" id="7Zw-5p-DdD"/>
                         <outlet property="Button1" destination="dUa-Y1-6Xo" id="wgy-YK-b47"/>
                         <outlet property="Button2" destination="IRu-hT-f9E" id="Pxs-Q9-C12"/>
                         <outlet property="Button3" destination="odI-Nj-Ehh" id="kER-FH-VSa"/>
                         <outlet property="Button4" destination="EPR-jq-1B8" id="DP9-a7-Wyp"/>
-                        <outlet property="Carasel" destination="Yvd-ry-CZr" id="kfH-Cg-gWr"/>
+                        <outlet property="btnProgressive" destination="39b-Mf-5o6" id="Lvb-Hx-nmD"/>
+                        <outlet property="globalImageView" destination="DhZ-V7-eaG" id="Kxr-YJ-5IN"/>
+                        <outlet property="globalUIView" destination="8bC-Xf-vdC" id="lDb-ip-XtB"/>
                         <outlet property="lblAdd" destination="bH1-uv-JMC" id="XiW-Uj-GY7"/>
                         <outlet property="lblCoating" destination="LKr-QR-fmm" id="lAA-XJ-IwE"/>
                         <outlet property="lblHardCoat" destination="mlc-ny-UOf" id="4hc-gl-52r"/>
@@ -536,6 +572,8 @@
                         <outlet property="lblPhotochrom" destination="L1b-ve-d7p" id="FRG-CF-iJP"/>
                         <outlet property="lblPower" destination="X1j-1V-9io" id="fcz-Qb-0X7"/>
                         <outlet property="mainImageView" destination="Hez-pH-2cQ" id="HKN-9t-Ibk"/>
+                        <outlet property="prescriptionView" destination="uMl-sK-2tp" id="g5V-3K-PS9"/>
+                        <outlet property="sidebarView" destination="fDq-RL-rBM" id="9d1-ms-rFc"/>
                         <outlet property="sliderAddOutlet" destination="DbY-vW-uBv" id="3om-er-YGD"/>
                         <outlet property="sliderPowerOutlet" destination="4Ri-ec-uKk" id="UPC-1X-P04"/>
                         <outlet property="switchAntiReflection" destination="GFi-zD-XtA" id="BGQ-PW-Ym0"/>
@@ -556,7 +594,7 @@
                     </connections>
                 </pinchGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="230" y="470"/>
+            <point key="canvasLocation" x="230" y="520"/>
         </scene>
         <!--Thickness Controller-->
         <scene sceneID="6Tq-Su-RDv">
@@ -786,6 +824,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Coatings" width="50" height="50"/>
+        <image name="Colors" width="50" height="50"/>
+        <image name="Driverwear" width="50" height="50"/>
+        <image name="Office" width="50" height="50"/>
+        <image name="Polarized" width="50" height="50"/>
+        <image name="Sport" width="50" height="50"/>
         <image name="ar-coating-1" width="800" height="600"/>
         <image name="ar-coating-2" width="800" height="640"/>
         <image name="ar-coating-3" width="1000" height="667"/>
@@ -796,6 +840,7 @@
         <image name="btn-jenna" width="175" height="75"/>
         <image name="btn-jenna-4k" width="175" height="75"/>
         <image name="btn-jenna-wide" width="175" height="75"/>
+        <image name="cockpit-n" width="1024" height="703"/>
         <image name="hardcoat-1" width="1200" height="1200"/>
         <image name="hardcoat-2" width="800" height="640"/>
         <image name="hardcoat-3" width="800" height="640"/>
@@ -805,6 +850,6 @@
         <image name="yourlogohere" width="528" height="333"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mLC-4b-ATL"/>
+        <segue reference="ki3-nD-jqZ"/>
     </inferredMetricsTieBreakers>
 </document>
