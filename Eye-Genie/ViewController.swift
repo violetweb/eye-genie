@@ -1577,37 +1577,52 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     var leftLensShape = CALayer()
     var rightLensShape = CALayer()
     
-    func drawPrescription(drawright: Bool, curveY: CGFloat){
+    func drawPrescription(drawright: Bool, AddPower: CGFloat, refractiveIndex: String){
         
-    
-       
-        let shapeWidth = CGFloat(500)
+      
+        let shapeWidth = CGFloat(500) // Static shape width.
         
-        //Setting the default starting oint to the left... if right bool is sent over, draw the right one overwrite it.
-       // var startingPoint = CGPointMake(50,thicknessLayer.frame.origin.y+(thicknessLayer.bounds.height/3))
-       // var finishingPoint = CGPointMake(shapeWidth-50,thicknessLayer.frame.origin.y+(thicknessLayer.bounds.height/3)) // 300 across.
-       // var curvePoint = CGPointMake(thicknessLayer.bounds.width/4,thicknessLayer.frame.origin.y) // make this the arc... dynamicit.
+        var tV = (10 - AddPower)
+        var centerThickness = CGFloat(20) // the height distance of thickess at the center.
+        var applyRefractiveIndex = CGFloat(3.5) // our default
+        
+        switch (refractiveIndex) {
+            case "1.5":   applyRefractiveIndex = 3.5
+            case "1.6":   applyRefractiveIndex = 3.25
+            case "1.67":  applyRefractiveIndex = 3.0
+            case "1.74":  applyRefractiveIndex = 2.5
+            default:    applyRefractiveIndex = 3.5
+        }
+
+        var CurveValue = -(tV*applyRefractiveIndex)+centerThickness
+        var curveSteepness = CGFloat(50)
+     
+        
+        if (AddPower>=0){
+            curveSteepness = AddPower*10
+            CurveValue = +(AddPower*5)
+            applyRefractiveIndex = 0
+        }
         
         var startingPoint = CGPointMake(50,thicknessLayer.frame.origin.y+(thicknessLayer.bounds.height/2))
         var finishingPoint = CGPointMake(shapeWidth-50,thicknessLayer.frame.origin.y+(thicknessLayer.bounds.height/2)) // 300 across.
-        var curvePoint = CGPointMake(thicknessLayer.bounds.width/4,startingPoint.y-50) // make this the arc.
-       
+        var curvePoint = CGPointMake(thicknessLayer.bounds.width/4,startingPoint.y-curveSteepness) // make this the arc.
         
+     
         if drawright {
             startingPoint = CGPointMake(thicknessLayer.bounds.width-(shapeWidth-50),thicknessLayer.frame.origin.y+(thicknessLayer.bounds.height/2))
             finishingPoint = CGPointMake(thicknessLayer.bounds.width-(shapeWidth-450),thicknessLayer.frame.origin.y+(thicknessLayer.bounds.height/2))
-            curvePoint = CGPointMake(thicknessLayer.bounds.width-(thicknessLayer.bounds.width/4),startingPoint.y-50)
+            curvePoint = CGPointMake(thicknessLayer.bounds.width-(thicknessLayer.bounds.width/4),startingPoint.y-curveSteepness)
         }
         
-        let tV = (10 - curveY) //(1,2,3,4,5,6,7,8,9,10 turn negs into pos
+         //(1,2,3,4,5,6,7,8,9,10 turn negs into pos
         
         let drawpath = CGPathCreateMutable()
         CGPathMoveToPoint(drawpath, nil, startingPoint.x, startingPoint.y)
         //Affecting the curvepoint on the top
         CGPathAddQuadCurveToPoint(drawpath, nil, curvePoint.x, curvePoint.y, finishingPoint.x, finishingPoint.y)
-        CGPathAddLineToPoint(drawpath, nil, finishingPoint.x, finishingPoint.y+(tV*3))  //y point = right side height of edges of lens.
-        //affecting the curepoint on the bottom
-        CGPathAddQuadCurveToPoint(drawpath,nil,curvePoint.x,curvePoint.y-(tV*3)+20,startingPoint.x,startingPoint.y+(tV*3)) // startingPoint.y = left side height of lens
+        CGPathAddLineToPoint(drawpath, nil, finishingPoint.x, finishingPoint.y+(tV*applyRefractiveIndex))  //y point = right side height of edges of lens.
+        CGPathAddQuadCurveToPoint(drawpath,nil,curvePoint.x,curvePoint.y+CurveValue,startingPoint.x,startingPoint.y+(tV*applyRefractiveIndex)) // startingPoint.y = left side height of lens
         CGPathCloseSubpath(drawpath)
         
         
@@ -1690,8 +1705,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         thicknessLayer.bounds = thicknessLayer.frame
         thicknessLayer.zPosition = 4
         
-        drawPrescription(false,curveY: -10)
-        drawPrescription(true, curveY: -10)
+        drawPrescription(false, AddPower: -10, refractiveIndex: "1.5") // set to the default value of the dial
+        drawPrescription(true, AddPower: -10, refractiveIndex: "1.5")
         
         
         fullBackgroundLayer.addSublayer(thicknessLayer)
@@ -1903,7 +1918,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         prescriptionView.addSubview(prescriptionLeftPicker)
         prescriptionView.addSubview(prescriptionRightPicker)
         
-        prescriptionLeftPicker.onPrescriptionSelected = { (prescription: Int, year: Int, titleForRow: String) in
+        prescriptionLeftPicker.onPrescriptionSelected = { (prescription: Int, year: Int, titleForRow: String, prescriptionValue: String) in
             
                 //Lens image that swaps out when user chooses the prescription
                 var lensLeftImage = CALayer()
@@ -1914,12 +1929,13 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             
                 self.fullBackgroundLayer.addSublayer(lensLeftImage)
 
-                lensLeftImage.contents = UIImage(named: "lensleft\(titleForRow)")!.CGImage
+            //    lensLeftImage.contents = UIImage(named: "lensleft\(titleForRow)")!.CGImage
             
                 //Swap out the prescription drawing/rendering based on value selected by user.
-                var value: Float = (titleForRow as NSString).floatValue
-                var normalizeValue = Float(value-1)
-                self.drawPrescription(false,curveY: CGFloat(normalizeValue))
+                let addpower: Float = (titleForRow as NSString).floatValue
+                print("add power is \(addpower)")
+                print("index is \(prescriptionValue)")
+                self.drawPrescription(false, AddPower: CGFloat(addpower), refractiveIndex: prescriptionValue)
             
         }
  

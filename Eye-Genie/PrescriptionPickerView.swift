@@ -28,7 +28,7 @@ class PrescriptionPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDa
         }
     }
     
-    var onPrescriptionSelected: ((prescription: Int, year: Int, titleForRow: String) -> Void)?
+    var onPrescriptionSelected: ((prescription: Int, year: Int, titleForRow: String, prescriptionValue: String) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -86,7 +86,7 @@ class PrescriptionPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDa
         let year = self.selectedRowInComponent(1)+1
         
         if let block = onPrescriptionSelected {
-            block(prescription: prescription, year: year, titleForRow: years[year])
+            block(prescription: prescription, year: year, titleForRow: years[year-1], prescriptionValue: prescriptions[prescription-1])
         }
         
         self.prescription = prescription
