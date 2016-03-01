@@ -364,11 +364,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cockpit-n" translatesAutoresizingMaskIntoConstraints="NO" id="DhZ-V7-eaG">
-                                <rect key="frame" x="0.0" y="65" width="1024" height="659"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DhZ-V7-eaG">
+                                <rect key="frame" x="0.0" y="65" width="1024" height="660"/>
                             </imageView>
                             <view hidden="YES" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uMl-sK-2tp">
-                                <rect key="frame" x="0.0" y="523" width="1024" height="198"/>
+                                <rect key="frame" x="0.0" y="570" width="1024" height="165"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hez-pH-2cQ">
@@ -447,58 +447,6 @@
                                             <action selector="sliderAdd:" destination="BYZ-38-t0r" eventType="valueChanged" id="1yf-gM-Esy"/>
                                         </connections>
                                     </slider>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Photochrom" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1b-ve-d7p">
-                                        <rect key="frame" x="65" y="259" width="79" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hydrophop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZw-7P-ClM">
-                                        <rect key="frame" x="65" y="165" width="86" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hard Coat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mlc-ny-UOf">
-                                        <rect key="frame" x="65" y="224" width="66" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GFi-zD-XtA">
-                                        <rect key="frame" x="84" y="165" width="51" height="31"/>
-                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnAntiReflectionCoating:" destination="BYZ-38-t0r" eventType="valueChanged" id="kwG-VY-A5t"/>
-                                        </connections>
-                                    </switch>
-                                    <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="g3n-MH-dVV">
-                                        <rect key="frame" x="65" y="219" width="51" height="31"/>
-                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnPhotochrom:" destination="BYZ-38-t0r" eventType="valueChanged" id="pCV-RF-uW6"/>
-                                        </connections>
-                                    </switch>
-                                    <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xym-eX-s8x">
-                                        <rect key="frame" x="63" y="238" width="51" height="31"/>
-                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnHardCoating:" destination="BYZ-38-t0r" eventType="valueChanged" id="wHN-ZC-mbZ"/>
-                                        </connections>
-                                    </switch>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A/R Coating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKr-QR-fmm">
-                                        <rect key="frame" x="49" y="277" width="92" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wcj-cM-6LE">
-                                        <rect key="frame" x="65" y="185" width="51" height="31"/>
-                                        <color key="onTintColor" red="0.4608592239" green="0.68634815019999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnHydrophop:" destination="BYZ-38-t0r" eventType="valueChanged" id="oDt-QE-Qrh"/>
-                                        </connections>
-                                    </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Power" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1j-1V-9io">
                                         <rect key="frame" x="23" y="118" width="51" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -512,6 +460,38 @@
                                             <action selector="sliderPower:" destination="BYZ-38-t0r" eventType="valueChanged" id="d4m-WU-rGb"/>
                                         </connections>
                                     </slider>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sj9-cM-7E5" customClass="iCarousel">
+                                        <rect key="frame" x="0.0" y="237" width="175" height="86"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vp4-9i-1bN">
+                                        <rect key="frame" x="25" y="20" width="129" height="30"/>
+                                        <state key="normal" title="Anti Reflection"/>
+                                        <connections>
+                                            <action selector="btnAntiReflectionCoating:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ThX-sx-s0L"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7W-O0-O3y">
+                                        <rect key="frame" x="43" y="88" width="89" height="30"/>
+                                        <state key="normal" title="Hydrophopic"/>
+                                        <connections>
+                                            <action selector="btnHydrophop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dF8-tT-gPz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-MZ-3DJ">
+                                        <rect key="frame" x="44" y="147" width="90" height="30"/>
+                                        <state key="normal" title="Scratchproof"/>
+                                        <connections>
+                                            <action selector="btnHardCoating:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LZl-Mk-zH0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S7x-4X-yac">
+                                        <rect key="frame" x="35" y="199" width="109" height="30"/>
+                                        <state key="normal" title="Photochromatic"/>
+                                        <connections>
+                                            <action selector="btnPhotochrom:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qih-VY-TiZ"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -519,29 +499,33 @@
                                 <rect key="frame" x="0.0" y="724" width="1025" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
-                                    <barButtonItem title="Progressive" id="39b-Mf-5o6">
+                                    <barButtonItem image="btn-progressive" id="39b-Mf-5o6">
                                         <connections>
                                             <action selector="btnProgressive:" destination="BYZ-38-t0r" id="QTR-KQ-Tef"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Singlevision" id="nGi-6s-CkP">
-                                        <color key="tintColor" red="0.80000000000000004" green="0.0" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </barButtonItem>
-                                    <barButtonItem image="Office" id="YGA-eS-vqE"/>
                                     <barButtonItem image="Sport" id="UnI-Ke-0MZ"/>
                                     <barButtonItem title="Thickness" id="xiz-ZS-dEX">
                                         <connections>
                                             <action selector="btnThickness:" destination="BYZ-38-t0r" id="ENB-NX-OJI"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem image="Coatings" id="dYJ-o1-WKV"/>
+                                    <barButtonItem title="Coatings" id="dYJ-o1-WKV">
+                                        <connections>
+                                            <action selector="btnCoatings:" destination="BYZ-38-t0r" id="tu9-AO-pCO"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem title="Transitions" id="459-q9-zm0">
                                         <connections>
                                             <action selector="btnTransitions:" destination="BYZ-38-t0r" id="UuK-UK-AWZ"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem image="Polarized" id="BoA-4d-iem"/>
-                                    <barButtonItem image="Driverwear" id="fjB-01-1ha"/>
+                                    <barButtonItem title="Driverwear" id="fjB-01-1ha">
+                                        <connections>
+                                            <action selector="btnDriverwear:" destination="BYZ-38-t0r" id="HHe-ze-XIg"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem image="Colors" id="Ot6-iN-DQf"/>
                                     <barButtonItem title="Mirror" id="lxh-DJ-r4t"/>
                                 </items>
@@ -562,24 +546,22 @@
                         <outlet property="Button2" destination="IRu-hT-f9E" id="Pxs-Q9-C12"/>
                         <outlet property="Button3" destination="odI-Nj-Ehh" id="kER-FH-VSa"/>
                         <outlet property="Button4" destination="EPR-jq-1B8" id="DP9-a7-Wyp"/>
+                        <outlet property="btnAntiReflection" destination="Vp4-9i-1bN" id="NXn-w5-s8k"/>
+                        <outlet property="btnHardCoat" destination="hqn-MZ-3DJ" id="vCi-BG-ddq"/>
+                        <outlet property="btnHydrophop" destination="K7W-O0-O3y" id="qTX-C4-cH0"/>
+                        <outlet property="btnPhotochrom" destination="S7x-4X-yac" id="cYj-MG-a9y"/>
                         <outlet property="btnProgressive" destination="39b-Mf-5o6" id="Lvb-Hx-nmD"/>
                         <outlet property="globalImageView" destination="DhZ-V7-eaG" id="Kxr-YJ-5IN"/>
                         <outlet property="globalUIView" destination="8bC-Xf-vdC" id="lDb-ip-XtB"/>
+                        <outlet property="iCarosel" destination="sj9-cM-7E5" id="Ijs-BK-SRJ"/>
+                        <outlet property="iconArrow" destination="Hez-pH-2cQ" id="OK2-VA-QnJ"/>
                         <outlet property="lblAdd" destination="bH1-uv-JMC" id="XiW-Uj-GY7"/>
-                        <outlet property="lblCoating" destination="LKr-QR-fmm" id="lAA-XJ-IwE"/>
-                        <outlet property="lblHardCoat" destination="mlc-ny-UOf" id="4hc-gl-52r"/>
-                        <outlet property="lblHydro" destination="HZw-7P-ClM" id="Ge1-dJ-LeG"/>
-                        <outlet property="lblPhotochrom" destination="L1b-ve-d7p" id="FRG-CF-iJP"/>
                         <outlet property="lblPower" destination="X1j-1V-9io" id="fcz-Qb-0X7"/>
                         <outlet property="mainImageView" destination="Hez-pH-2cQ" id="HKN-9t-Ibk"/>
                         <outlet property="prescriptionView" destination="uMl-sK-2tp" id="g5V-3K-PS9"/>
                         <outlet property="sidebarView" destination="fDq-RL-rBM" id="9d1-ms-rFc"/>
                         <outlet property="sliderAddOutlet" destination="DbY-vW-uBv" id="3om-er-YGD"/>
                         <outlet property="sliderPowerOutlet" destination="4Ri-ec-uKk" id="UPC-1X-P04"/>
-                        <outlet property="switchAntiReflection" destination="GFi-zD-XtA" id="BGQ-PW-Ym0"/>
-                        <outlet property="switchHardCoat" destination="xym-eX-s8x" id="1kx-CR-Xim"/>
-                        <outlet property="switchHydrophop" destination="Wcj-cM-6LE" id="Tst-Rz-BR4"/>
-                        <outlet property="switchPhotochrom" destination="g3n-MH-dVV" id="dDE-gp-dTH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -824,10 +806,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Coatings" width="50" height="50"/>
         <image name="Colors" width="50" height="50"/>
-        <image name="Driverwear" width="50" height="50"/>
-        <image name="Office" width="50" height="50"/>
         <image name="Polarized" width="50" height="50"/>
         <image name="Sport" width="50" height="50"/>
         <image name="ar-coating-1" width="800" height="600"/>
@@ -840,13 +819,13 @@
         <image name="btn-jenna" width="175" height="75"/>
         <image name="btn-jenna-4k" width="175" height="75"/>
         <image name="btn-jenna-wide" width="175" height="75"/>
-        <image name="cockpit-n" width="1024" height="703"/>
+        <image name="btn-progressive" width="56" height="56"/>
         <image name="hardcoat-1" width="1200" height="1200"/>
         <image name="hardcoat-2" width="800" height="640"/>
         <image name="hardcoat-3" width="800" height="640"/>
-        <image name="hydro-1" width="1600" height="1067"/>
+        <image name="hydro-1" width="800" height="800"/>
         <image name="hydro-2" width="1113" height="757"/>
-        <image name="hydro-3" width="800" height="800"/>
+        <image name="hydro-3" width="1600" height="1067"/>
         <image name="yourlogohere" width="528" height="333"/>
     </resources>
     <inferredMetricsTieBreakers>
