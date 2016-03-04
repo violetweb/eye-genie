@@ -368,7 +368,7 @@
                                 <rect key="frame" x="0.0" y="65" width="1024" height="660"/>
                             </imageView>
                             <view hidden="YES" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uMl-sK-2tp">
-                                <rect key="frame" x="0.0" y="570" width="1024" height="165"/>
+                                <rect key="frame" x="0.0" y="582" width="1024" height="165"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hez-pH-2cQ">
@@ -504,7 +504,6 @@
                                             <action selector="btnProgressive:" destination="BYZ-38-t0r" id="QTR-KQ-Tef"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem image="Sport" id="UnI-Ke-0MZ"/>
                                     <barButtonItem title="Thickness" id="xiz-ZS-dEX">
                                         <connections>
                                             <action selector="btnThickness:" destination="BYZ-38-t0r" id="ENB-NX-OJI"/>
@@ -520,13 +519,11 @@
                                             <action selector="btnTransitions:" destination="BYZ-38-t0r" id="UuK-UK-AWZ"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem image="Polarized" id="BoA-4d-iem"/>
                                     <barButtonItem title="Driverwear" id="fjB-01-1ha">
                                         <connections>
                                             <action selector="btnDriverwear:" destination="BYZ-38-t0r" id="HHe-ze-XIg"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem image="Colors" id="Ot6-iN-DQf"/>
                                     <barButtonItem title="Mirror" id="lxh-DJ-r4t"/>
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -806,9 +803,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Colors" width="50" height="50"/>
-        <image name="Polarized" width="50" height="50"/>
-        <image name="Sport" width="50" height="50"/>
         <image name="ar-coating-1" width="800" height="600"/>
         <image name="ar-coating-2" width="800" height="640"/>
         <image name="ar-coating-3" width="1000" height="667"/>

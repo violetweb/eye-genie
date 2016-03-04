@@ -9,7 +9,7 @@
 import Foundation
 import Metal
 
-class MathHelper {
+class FunctionsHelper {
     
     
     func degreesToRadians(x: Int)->Double{
@@ -19,6 +19,6 @@ class MathHelper {
     func radiansToDegrees(x: Int)->Double{
         return Double(x)/M_PI*Double(180.0)
     }
-    
-    
- }
+ 
+
+}

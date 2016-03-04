@@ -64,7 +64,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     var hardcoatLayer = CAShapeLayer()
     var hydroLayer = CAShapeLayer()
     var photochromLayer = CAShapeLayer()
-    var coatingsLayer = CALayer()
+    var coatingsLayer = CAShapeLayer()
     
     var blurRadius: Float = 0
     var context: CIContext!
@@ -76,13 +76,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     var lastSavedImgLocation = CGPointZero
     var lastSavedBlurLocation = CGPointZero
     var lastSavedRightBlurLocation = CGPointZero
+    var lastBackgroundPosition = CGPointZero
     var lastMagnifyLocation = CGPointZero
     var initialLensPosition = CGPointZero
     var initialLensMaskPosition = CGPointZero
     var hydroPosition = CGPointZero
     var reflectionPosition = CGPointZero
     var hardcoatPosition = CGPointZero
-    
+    var panBackground = false
     
     var timer = NSTimer()
     
@@ -129,11 +130,13 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             
         }else{
             //slider is the pan gesture....
-            
-            self.hydroPosition = CGPointMake(hydroLayer.position.x,hydroLayer.position.y)
-            self.reflectionPosition = reflectionLayer.position
-            self.hardcoatPosition = hardcoatLayer.position
-            
+            if (panBackground){
+                self.lastBackgroundPosition = backgroundLayer.mask!.position
+            }else{
+                self.hydroPosition = CGPointMake(hydroLayer.position.x,hydroLayer.position.y)
+                self.reflectionPosition = reflectionLayer.position
+                self.hardcoatPosition = hardcoatLayer.position
+            }
         }
     
         
@@ -187,6 +190,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
        }
         }else{
             
+            if (panLens) {
             //coatings, et el.
             let newTranslation = sender.translationInView(mainImageView)
             
@@ -200,7 +204,16 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                     hardcoatLayer.position = CGPointMake(newpos,self.hardcoatPosition.y)
                 }
             }
+            }
             
+            if (panBackground){
+                let newTranslation = sender.translationInView(globalUIView)
+                var newpos = self.lastBackgroundPosition.x + newTranslation.x
+               
+                if (newpos<512 && newpos > -480){
+                    backgroundLayer.mask!.position = CGPointMake(newpos, self.lastBackgroundPosition.y)
+                }
+            }
 
             
         }
@@ -428,24 +441,48 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             hardcoatLayer.opacity = 1.0
             lensShapelayer.addSublayer(hardcoatLayer)
         
-            
-            
-    
-        
-    }
+         }
     
     
    
     @IBAction func btnDriverwear(sender: UIBarButtonItem) {
         
-        currentBackgroundImageName = "driverwear"
-        pilotsLayer.hidden = true
-        fullBackgroundLayer.hidden = false
-        fullBackgroundLayer.contents = UIImage(named: currentBackgroundImageName + "-v")?.CGImage
-        let coatingLayer = CALayer()
-        coatingLayer.contents = UIImage(named: currentBackgroundImageName + "-n")?.CGImage
-        fullBackgroundLayer.addSublayer(coatingLayer)
         
+        //mainimageview / global ui view
+        panLens = false
+        panBackground = true
+        prescriptionView.hidden = true
+        sidebarView.hidden = true
+        thicknessLayer.hidden = true
+        lensLeftImage.hidden = true
+        lensRightImage.hidden = true
+        Button1.hidden = true
+        Button2.hidden = true
+        Button3.hidden = true
+        Button4.hidden = true
+       
+        lensShapelayer.removeFromSuperlayer()
+        imageLayer.removeFromSuperlayer()
+        
+        //let anotherLayer = CAShapeLayer()
+        coatingsLayer.bounds = backgroundLayer.bounds
+        coatingsLayer.frame = backgroundLayer.frame
+        coatingsLayer.contents = UIImage(named: "driverwear-bkg")!.CGImage
+        coatingsLayer.contentsGravity = kCAGravityBottomLeft
+        coatingsLayer.zPosition = 1
+        pilotsLayer.addSublayer(coatingsLayer)
+    
+        backgroundLayer.contents = UIImage(named: "driverwear-coating")!.CGImage
+        pilotsLayer.addSublayer(backgroundLayer)
+     
+        
+        let mask = CALayer()
+        mask.frame = backgroundLayer.frame
+        mask.bounds          = backgroundLayer.bounds
+        mask.backgroundColor = UIColor.whiteColor().CGColor
+        backgroundLayer.mask = mask;
+        
+        backgroundLayer.mask!.position = CGPointMake(backgroundLayer.mask!.position.x - backgroundLayer.bounds.width/2, backgroundLayer.mask!.position.y)
         
     }
     
@@ -674,22 +711,21 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
            }
 
-    func btnDesktop() {
+    func btnProgress3() {
         
-        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "office2", savebg: true)
-        currentBackgroundImageName = "office2"
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "progressive-bkg3", savebg: true)
+        currentBackgroundImageName = "progressive-bkg3"
         currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
         swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
         
         
     }
-    func btnAutumn() {
+    func btnProgress2() {
     
     
-        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "autumn", savebg: true)
-        currentBackgroundImageName = "autumn"
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "progressive-bkg2", savebg: true)
+        currentBackgroundImageName = "progressive-bkg2"
         currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
-        ///imageLayer.addSublayer(currentAdd.layer)
         swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
       
     }
@@ -1700,8 +1736,17 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     @IBOutlet weak var iCarosel: iCarousel!
     
     @IBAction func btnCoatings(sender: UIBarButtonItem) {
-        
+
         panLens = false
+        mainImageView.hidden = false
+        prescriptionView.hidden = true
+        lensLeftImage.hidden = true
+        lensRightImage.hidden = true
+        thicknessLayer.hidden = true
+        sidebarView.hidden = false
+        
+        backgroundLayer.addSublayer(lensShapelayer)
+        backgroundLayer.addSublayer(imageLayer)
         
         //Reposition lens back to center.
         lensShapelayer.position = initialLensPosition
@@ -1771,6 +1816,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         Button3.hidden = false
         Button4.hidden = false
         iCarosel.hidden = false
+        sliderPowerOutlet.hidden = false
+        sliderAddOutlet.hidden = false
         
         btnAntiReflection.hidden = true
         btnHydrophop.hidden = true
@@ -1778,6 +1825,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         btnPhotochrom.hidden = true
         
         prescriptionView.hidden = true
+        lensLeftImage.hidden = true
+        lensRightImage.hidden = true
+        
+        coatingsLayer.removeFromSuperlayer()
         thicknessLayer.removeFromSuperlayer()
 
         drawBackgroundLayer(0.0, imageName: currentBackgroundImageName, savebg: true)
@@ -1794,17 +1845,95 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     @IBOutlet weak var prescriptionView: UIView!
     @IBOutlet weak var lensLeftImageView: UIImageView!
     
-    
+    func setUpThickness(){
+        
+        //Clear these out before setting them up... this gets called everytime the btnThickness gets calle.d
+        
+        
+        lensLeftImage.bounds = CGRect(x:0,y:0,width:10,height:90)
+        lensLeftImage.backgroundColor = UIColor.clearColor().CGColor
+        lensLeftImage.zPosition = 4
+        lensLeftImage.contentsGravity = kCAGravityResize
+        
+        
+        lensRightImage.bounds = CGRect(x:0,y:0,width:10,height:90)
+        lensRightImage.backgroundColor = UIColor.clearColor().CGColor
+        lensRightImage.zPosition = 4
+        lensRightImage.contents = UIImage(named: "lensplus-mirror")!.CGImage
+        lensRightImage.contentsGravity = kCAGravityResize
+        
+        prescriptionLeftPicker.selectRow(0, inComponent: 0, animated: true)
+        prescriptionLeftPicker.selectRow(10, inComponent: 1, animated: true)
+        prescriptionRightPicker.selectRow(0, inComponent: 0, animated: true)
+        prescriptionRightPicker.selectRow(10, inComponent: 1, animated: true)
+        
+        
+        prescriptionLeftPicker.onPrescriptionSelected = { (prescription: Int, year: Int, titleForRow: String, prescriptionValue: String) in
+            
+            //Lens image that swaps out when user chooses the prescription
+            
+            self.fullBackgroundLayer.addSublayer(self.lensLeftImage)
+            
+            //Swap out the prescription drawing/rendering based on value selected by user.
+            let addpower: Float = (titleForRow as NSString).floatValue
+            self.drawPrescription(false, AddPower: CGFloat(addpower), refractiveIndex: prescriptionValue)
+            //increment addpower to the width combined with resizeaspect grows the image.
+            if ( Int(addpower) >= 0){
+                self.lensLeftImage.frame = CGRect(x:370,y:120, width:100,height:80)
+                self.lensLeftImage.contents = UIImage(named: "lensplus")!.CGImage
+                self.lensLeftImage.bounds = CGRect(x:0,y:0,width:10+Int(addpower*2),height:80)
+                
+            }else{
+                self.lensLeftImage.frame = CGRect(x:360,y:120, width:100,height:80)
+                self.lensLeftImage.contents = UIImage(named: "lensminus")!.CGImage
+                self.lensLeftImage.bounds = CGRect(x:0,y:0,width:10-Int(addpower*3),height:80)
+                
+            }
+            
+            
+        }
+        
+        prescriptionRightPicker.onPrescriptionSelected = { (prescription: Int, year: Int, titleForRow: String, prescriptionValue: String) in
+            
+            
+            
+            self.fullBackgroundLayer.addSublayer(self.lensRightImage)
+            
+            //Swap out the prescription drawing/rendering based on value selected by user.
+            let addpower: Float = (titleForRow as NSString).floatValue
+            self.drawPrescription(true, AddPower: CGFloat(addpower), refractiveIndex: prescriptionValue)
+            if (Int(addpower) >= 0){
+                
+                self.lensRightImage.frame = CGRect(x:550,y:120,width:100,height:80)
+                self.lensRightImage.contents = UIImage(named: "lensplus-mirror")!.CGImage
+                self.lensRightImage.bounds = CGRect(x:0,y:0,width:10+Int(addpower*2),height:80)
+                
+            }else{
+                self.lensRightImage.frame = CGRect(x:555,y:120,width:100,height:80)
+                self.lensRightImage.contents = UIImage(named: "lensminus-mirror")!.CGImage
+                self.lensRightImage.bounds = CGRect(x:0,y:0,width:10-Int(addpower*2),height:80)
+            }
+            
+            
+        }
+
+    }
     
     var plusMinusData = [String]()
     
     @IBAction func btnThickness(sender: UIBarButtonItem) {
         
+        
+        setUpThickness()
+        
         ////Swap the global image out for the Thickness image and unhide thickness related dials.
         globalImageView.image = UIImage(named: "woman")!
         mainImageView.hidden = true
         prescriptionView.hidden = false
-        //thicknessView.hidden = false
+        lensLeftImage.hidden = false
+        lensRightImage.hidden = false
+        thicknessLayer.hidden = false
+        
         sidebarView.hidden = true
         Button1.hidden = true
         Button2.hidden = true
@@ -1815,18 +1944,17 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         lensShapelayer.removeFromSuperlayer()
         backgroundLayer.removeFromSuperlayer() // Idea is to remove the "lens one" use the global one to assign the background iamge.
         
+        //Draw Default Thickness Shape.
         thicknessLayer.backgroundColor = UIColor.darkGrayColor().CGColor
         thicknessLayer.frame = CGRect(x:0,y:400,width:globalUIView.bounds.width,height:180)
         thicknessLayer.bounds = thicknessLayer.frame
         thicknessLayer.opacity = 0.9
         thicknessLayer.zPosition = 4
-        
         drawPrescription(false, AddPower: -10, refractiveIndex: "1.5") // set to the default value of the dial
         drawPrescription(true, AddPower: -10, refractiveIndex: "1.5")
-        
-        
         fullBackgroundLayer.addSublayer(thicknessLayer)
 
+        
         
     }
     
@@ -1841,7 +1969,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
      ***/
     func drawBackgroundLayer(blurRadius: Float, imageName: String, savebg: Bool){
         
-       
+       backgroundLayer.removeFromSuperlayer()
+       backgroundLayer.mask = nil
+        
        // let glContext = EAGLContext(API: .OpenGLES2) moved to global for reuse.
         context = CIContext(EAGLContext: glContext,
             options: [
@@ -2011,12 +2141,16 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         }
         
     }
+    
+    let lensLeftImage = CALayer()
+    let lensRightImage = CALayer()
 
     override func viewDidAppear(animated: Bool)
     {
         
         prescriptionView.hidden = true
-        
+        lensLeftImage.hidden = true
+        lensRightImage.hidden = true
         btnAntiReflection.hidden = true
         btnHydrophop.hidden = true
         btnAntiReflection.hidden = true
@@ -2040,6 +2174,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         iCarosel.centerItemWhenSelected = false
         iCarosel.reloadData()
         
+      
+        
+        
         
         prescriptionLeftPicker = PrescriptionPickerView(frame: CGRect(x: fullBackgroundLayer.frame.width/4-150,y: 0,width: 300,height: 150))
         prescriptionRightPicker = PrescriptionPickerView(frame: CGRect(x: fullBackgroundLayer.frame.width-fullBackgroundLayer.frame.width/4-150,y: 0,width: 300,height: 150))
@@ -2047,46 +2184,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         prescriptionView.addSubview(prescriptionLeftPicker)
         prescriptionView.addSubview(prescriptionRightPicker)
         
-        prescriptionLeftPicker.onPrescriptionSelected = { (prescription: Int, year: Int, titleForRow: String, prescriptionValue: String) in
-            
-                //Lens image that swaps out when user chooses the prescription
-                let lensLeftImage = CALayer()
-                lensLeftImage.contentsGravity = kCAGravityTopLeft
-                lensLeftImage.frame = CGRect(x:330,y:105,width:10,height:90)
-                lensLeftImage.backgroundColor = UIColor.clearColor().CGColor
-                lensLeftImage.zPosition = 4
-            
-                self.fullBackgroundLayer.addSublayer(lensLeftImage)
 
-            //    lensLeftImage.contents = UIImage(named: "lensleft\(titleForRow)")!.CGImage
-            
-                //Swap out the prescription drawing/rendering based on value selected by user.
-                let addpower: Float = (titleForRow as NSString).floatValue
-                 self.drawPrescription(false, AddPower: CGFloat(addpower), refractiveIndex: prescriptionValue)
-            
-        }
-        
-        prescriptionRightPicker.onPrescriptionSelected = { (prescription: Int, year: Int, titleForRow: String, prescriptionValue: String) in
-            
-            //Lens image that swaps out when user chooses the prescription
-            let lensRightImage = CALayer()
-            lensRightImage.contentsGravity = kCAGravityTopLeft
-            lensRightImage.frame = CGRect(x:830,y:105,width:10,height:90)
-            lensRightImage.backgroundColor = UIColor.clearColor().CGColor
-            lensRightImage.zPosition = 4
-            
-            self.fullBackgroundLayer.addSublayer(lensRightImage)
-            
-            //    lensRightImage.contents = UIImage(named: "lensright\(titleForRow)")!.CGImage
-            
-            //Swap out the prescription drawing/rendering based on value selected by user.
-            let addpower: Float = (titleForRow as NSString).floatValue
-            self.drawPrescription(true, AddPower: CGFloat(addpower), refractiveIndex: prescriptionValue)
-            
-        }
-        
-
- 
         
         super.viewDidLoad()
         
@@ -2120,11 +2218,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         return carouselImages.count
     }
  
-   var carouselImages = NSMutableArray(array: ["progressive-bkg-v","autumn-v","cockpit-v","office-v","office2-v","office3-v","reading-v"])
+   var carouselImages = NSMutableArray(array: ["progressive-bkg-v","progressive-bkg2-v","progressive-bkg3-v","cockpit-v"])
     
    func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, reusingView view: UIView?) -> UIView {
    
-        // "autumn-v","cockpit-v","office-v","office2-v","office3-v","sailing-v"
         let newButton = UIButton(type: UIButtonType.Custom)
     
         if (view == nil)  {
@@ -2140,24 +2237,15 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                 newButton.addTarget(self, action: "btnProgress", forControlEvents: .TouchUpInside)
                 newButton.setTitle("Progressive", forState: .Normal)
             }else if (index == 1){
-                newButton.addTarget(self, action: "btnAutumn", forControlEvents: .TouchUpInside)
-                newButton.setTitle("Autumn Scene", forState: .Normal)
+                newButton.addTarget(self, action: "btnProgress2", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Progressive 2", forState: .Normal)
 
             } else if (index == 2){
+                newButton.addTarget(self, action: "btnProgress3", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Progressive 3", forState: .Normal)
+            } else if (index == 3){
                 newButton.addTarget(self, action: "btnCockpit", forControlEvents: .TouchUpInside)
                 newButton.setTitle("Cockpit", forState: .Normal)
-            } else if (index == 3){
-                newButton.addTarget(self, action: "btnHotel", forControlEvents: .TouchUpInside)
-                newButton.setTitle("City View", forState: .Normal)
-            } else if (index == 4){
-                newButton.addTarget(self, action: "btnDesktop", forControlEvents: .TouchUpInside)
-                newButton.setTitle("Office", forState: .Normal)
-            } else if (index == 5){
-                newButton.addTarget(self, action: "btnOffice", forControlEvents: .TouchUpInside)
-                newButton.setTitle("Meeting", forState: .Normal)
-            } else if (index == 6) {
-                newButton.addTarget(self, action: "btnReading", forControlEvents: .TouchUpInside)
-                newButton.setTitle("Reading", forState: .Normal)
             }
             /*
             else if (index == 6) {
