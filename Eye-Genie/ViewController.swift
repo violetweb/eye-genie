@@ -151,29 +151,24 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
      
         if (panLens){
         
-        let newTranslation = sender.translationInView(mainImageView)
+            let newTranslation = sender.translationInView(mainImageView)
         
-        
-        if (sender.state == UIGestureRecognizerState.Changed){
+            if (sender.state == UIGestureRecognizerState.Changed){
           
             
-            lensShapelayer.position = CGPointMake(self.lastSavedLocation.x + newTranslation.x , self.lastSavedLocation.y + newTranslation.y)
-            imageLayer.mask!.position = CGPointMake(self.lastSavedImgLocation.x + newTranslation.x , self.lastSavedImgLocation.y + newTranslation.y)
-        
-        
-            if (sliderAddOutlet.value > 0.0){
-            
-            
-                leftBlurLayer.mask!.position = CGPointMake(self.lastSavedBlurLocation.x + newTranslation.x, self.lastSavedBlurLocation.y + newTranslation.y)
-                rightBlurLayer.mask!.position = CGPointMake(self.lastSavedRightBlurLocation.x + newTranslation.x, self.lastSavedRightBlurLocation.y + newTranslation.y)
-                magnifyLayer.mask!.position = CGPointMake(self.lastMagnifyLocation.x + newTranslation.x, self.lastMagnifyLocation.y + newTranslation.y)
+                lensShapelayer.position = CGPointMake(self.lastSavedLocation.x + newTranslation.x , self.lastSavedLocation.y + newTranslation.y)
+                imageLayer.mask!.position = CGPointMake(self.lastSavedImgLocation.x + newTranslation.x , self.lastSavedImgLocation.y + newTranslation.y)
                 
-            }
-
-        
-        } else if (sender.state == UIGestureRecognizerState.Ended){
+                if (sliderAddOutlet.value > 0.0){
             
-        
+            
+                    leftBlurLayer.mask!.position = CGPointMake(self.lastSavedBlurLocation.x + newTranslation.x, self.lastSavedBlurLocation.y + newTranslation.y)
+                    rightBlurLayer.mask!.position = CGPointMake(self.lastSavedRightBlurLocation.x + newTranslation.x, self.lastSavedRightBlurLocation.y + newTranslation.y)
+                    magnifyLayer.mask!.position = CGPointMake(self.lastMagnifyLocation.x + newTranslation.x, self.lastMagnifyLocation.y + newTranslation.y)
+                
+                }
+            } else if (sender.state == UIGestureRecognizerState.Ended){
+                
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                 
@@ -187,35 +182,31 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                 });
             });
 
-       }
+            }
         }else{
-            
-            if (panLens) {
-            //coatings, et el.
-            let newTranslation = sender.translationInView(mainImageView)
-            
-          
-            if (sender.state == UIGestureRecognizerState.Changed){
-               var newpos = self.lastSavedLocation.x + newTranslation.x
-            
-                if (self.hydroPosition.x+newTranslation.x < 0){
-                    hydroLayer.position = CGPointMake(self.hydroPosition.x+newTranslation.x, self.hydroPosition.y)
-                    reflectionLayer.position = CGPointMake(newpos,self.reflectionPosition.y)
-                    hardcoatLayer.position = CGPointMake(newpos,self.hardcoatPosition.y)
-                }
-            }
-            }
             
             if (panBackground){
                 let newTranslation = sender.translationInView(globalUIView)
                 var newpos = self.lastBackgroundPosition.x + newTranslation.x
-               
+                
                 if (newpos<512 && newpos > -480){
                     backgroundLayer.mask!.position = CGPointMake(newpos, self.lastBackgroundPosition.y)
                 }
-            }
-
+            }else{
+                
+                let newTranslation = sender.translationInView(mainImageView)
             
+                if (sender.state == UIGestureRecognizerState.Changed){
+                    var newpos = self.hydroPosition.x+newTranslation.x
+            
+                    if (newpos<0 && newpos > -480){
+                        hydroLayer.position = CGPointMake(self.hydroPosition.x+newTranslation.x, self.hydroPosition.y)
+                        reflectionLayer.position = CGPointMake(self.reflectionPosition.x+newTranslation.x,self.reflectionPosition.y)
+                        hardcoatLayer.position = CGPointMake(self.hydroPosition.x+newTranslation.x,self.hardcoatPosition.y)
+                    }
+                }
+       
+            }
         }
         
     }
@@ -353,12 +344,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             let shape = CAShapeLayer()
             shape.path = drawHalfLensPath()
         
-        hydroLayer.hidden = true
-        reflectionLayer.hidden = false
-        photochromLayer.hidden = true
-        hardcoatLayer.hidden = true
-
-
+            hydroLayer.hidden = true
+            reflectionLayer.hidden = false
+            photochromLayer.hidden = true
+            hardcoatLayer.hidden = true
         
             reflectionLayer.mask = shape //drawMaskLayer(UIColor.whiteColor().CGColor)
             reflectionLayer.fillColor = UIColor.whiteColor().CGColor
@@ -386,7 +375,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
        
         let shape = CAShapeLayer()
             shape.path = drawHalfLensPath()
-            
+        
+        
             currentBackgroundImageName = "hydrophop"
             //Background Image has its own layer now.
             backgroundLayer.contents = UIImage(named: currentBackgroundImageName+"-n")!.CGImage
@@ -396,21 +386,16 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             photochromLayer.hidden = true
             hardcoatLayer.hidden = true
         
-            hydroLayer.mask = shape    //drawMaskLayer(UIColor.brownColor().CGColor)
             hydroLayer.fillColor = UIColor.clearColor().CGColor
             hydroLayer.fillRule = kCAFillRuleNonZero
             hydroLayer.zPosition = 9
             hydroLayer.contentsGravity = kCAGravityBottomRight
+            hydroLayer.position.x = -480
             //Background Image has its own layer now.
             let img = UIImageView(image: UIImage(named: getHydro()))
             hydroLayer.addSublayer(img.layer)
             
             lensShapelayer.addSublayer(hydroLayer)
-           // self.switchHydrophop.setOn(false, animated: true)
-            
-            
-       
-
         
     }
     
@@ -450,6 +435,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         //mainimageview / global ui view
         panLens = false
+        globalImageView.hidden = true
         panBackground = true
         prescriptionView.hidden = true
         sidebarView.hidden = true
@@ -1927,6 +1913,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         setUpThickness()
         
         ////Swap the global image out for the Thickness image and unhide thickness related dials.
+        globalImageView.hidden = false
         globalImageView.image = UIImage(named: "woman")!
         mainImageView.hidden = true
         prescriptionView.hidden = false
