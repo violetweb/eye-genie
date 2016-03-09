@@ -387,6 +387,13 @@
                                     <action selector="btnJena:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Szw-9O-p1j"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUa-Y1-6Xo">
+                                <rect key="frame" x="835" y="82" width="175" height="75"/>
+                                <state key="normal" backgroundImage="btn-conventional"/>
+                                <connections>
+                                    <action selector="btnConventional:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aeo-Vl-3gu"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPR-jq-1B8">
                                 <rect key="frame" x="835" y="305" width="175" height="75"/>
                                 <state key="normal" backgroundImage="btn-jenna-4k"/>
@@ -401,12 +408,37 @@
                                     <action selector="btnJenaW:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qgy-cr-5Sx"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUa-Y1-6Xo">
-                                <rect key="frame" x="835" y="82" width="175" height="75"/>
-                                <state key="normal" backgroundImage="btn-conventional"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S7x-4X-yac">
+                                <rect key="frame" x="835" y="694" width="109" height="30"/>
+                                <state key="normal" title="Photochromatic"/>
                                 <connections>
-                                    <action selector="btnConventional:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aeo-Vl-3gu"/>
+                                    <action selector="btnPhotochrom:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qih-VY-TiZ"/>
                                 </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-MZ-3DJ">
+                                <rect key="frame" x="835" y="465" width="175" height="75"/>
+                                <state key="normal" title="Scratchproof" image="btn-antiscratch"/>
+                                <connections>
+                                    <action selector="btnHardCoating:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LZl-Mk-zH0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vp4-9i-1bN">
+                                <rect key="frame" x="835" y="542" width="175" height="75"/>
+                                <state key="normal" title="Anti Reflection" image="btn-antireflection"/>
+                                <connections>
+                                    <action selector="btnAntiReflectionCoating:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ThX-sx-s0L"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7W-O0-O3y">
+                                <rect key="frame" x="835" y="388" width="175" height="75"/>
+                                <state key="normal" title="Hydrophopic" image="btn-hydro"/>
+                                <connections>
+                                    <action selector="btnHydrophop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dF8-tT-gPz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhP-Ve-q0e">
+                                <rect key="frame" x="835" y="620" width="175" height="75"/>
+                                <state key="normal" title="Btn Smudge" image="btn-antismudge"/>
                             </button>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="edc-aE-JTf">
                                 <rect key="frame" x="-1" y="20" width="1024" height="44"/>
@@ -464,34 +496,6 @@
                                         <rect key="frame" x="0.0" y="237" width="175" height="86"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vp4-9i-1bN">
-                                        <rect key="frame" x="25" y="20" width="129" height="30"/>
-                                        <state key="normal" title="Anti Reflection"/>
-                                        <connections>
-                                            <action selector="btnAntiReflectionCoating:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ThX-sx-s0L"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7W-O0-O3y">
-                                        <rect key="frame" x="43" y="88" width="89" height="30"/>
-                                        <state key="normal" title="Hydrophopic"/>
-                                        <connections>
-                                            <action selector="btnHydrophop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dF8-tT-gPz"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-MZ-3DJ">
-                                        <rect key="frame" x="44" y="147" width="90" height="30"/>
-                                        <state key="normal" title="Scratchproof"/>
-                                        <connections>
-                                            <action selector="btnHardCoating:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LZl-Mk-zH0"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S7x-4X-yac">
-                                        <rect key="frame" x="35" y="199" width="109" height="30"/>
-                                        <state key="normal" title="Photochromatic"/>
-                                        <connections>
-                                            <action selector="btnPhotochrom:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qih-VY-TiZ"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -524,7 +528,6 @@
                                             <action selector="btnDriverwear:" destination="BYZ-38-t0r" id="HHe-ze-XIg"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Mirror" id="lxh-DJ-r4t"/>
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -544,6 +547,7 @@
                         <outlet property="Button3" destination="odI-Nj-Ehh" id="kER-FH-VSa"/>
                         <outlet property="Button4" destination="EPR-jq-1B8" id="DP9-a7-Wyp"/>
                         <outlet property="btnAntiReflection" destination="Vp4-9i-1bN" id="NXn-w5-s8k"/>
+                        <outlet property="btnAntiSmudge" destination="hhP-Ve-q0e" id="dPY-Qq-r6P"/>
                         <outlet property="btnHardCoat" destination="hqn-MZ-3DJ" id="vCi-BG-ddq"/>
                         <outlet property="btnHydrophop" destination="K7W-O0-O3y" id="qTX-C4-cH0"/>
                         <outlet property="btnPhotochrom" destination="S7x-4X-yac" id="cYj-MG-a9y"/>
@@ -807,9 +811,13 @@
         <image name="ar-coating-2" width="800" height="640"/>
         <image name="ar-coating-3" width="1000" height="667"/>
         <image name="bg-home.jpg" width="1024" height="768"/>
+        <image name="btn-antireflection" width="175" height="75"/>
+        <image name="btn-antiscratch" width="175" height="75"/>
+        <image name="btn-antismudge" width="175" height="75"/>
         <image name="btn-checkmark-off" width="64" height="64"/>
         <image name="btn-checkmark-on" width="64" height="64"/>
         <image name="btn-conventional" width="175" height="75"/>
+        <image name="btn-hydro" width="175" height="75"/>
         <image name="btn-jenna" width="175" height="75"/>
         <image name="btn-jenna-4k" width="175" height="75"/>
         <image name="btn-jenna-wide" width="175" height="75"/>
