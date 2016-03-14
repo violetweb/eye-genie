@@ -17,10 +17,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     
     @IBOutlet weak var lblPower: UILabel!
     @IBOutlet weak var lblAdd: UILabel!
-    @IBOutlet weak var lblCoating: UILabel!
-    @IBOutlet weak var lblHydro: UILabel!
-    @IBOutlet weak var lblHardCoat: UILabel!
-    @IBOutlet weak var lblPhotochrom: UILabel!
+   
     
     
     @IBAction func btnSwitch(sender: UIButton) {
@@ -1811,7 +1808,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     
     @IBOutlet weak var btnHardCoat: UIButton!
     @IBOutlet weak var btnHydrophop: UIButton!
-    @IBOutlet weak var iconArrow: UIView!
+   
     
     
     @IBOutlet weak var iCarosel: iCarousel!
@@ -1969,7 +1966,13 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         lensRightImage.hidden = true
         thicknessLayer.hidden = true
         
-        
+        /*
+        colorControl.items = ["WEEKLY", "MONTHLY", "YEARLY"]
+        colorControl.font = UIFont(name: "Avenir-Black", size: 12)
+        colorControl.borderColor = UIColor(white: 1.0, alpha: 0.3)
+        colorControl.selectedIndex = 1
+        colorControl.addTarget(self, action: "swapColor:", forControlEvents: .ValueChanged)
+        */
         //If the LensShape was removed via transitions or otherwise, add it back
        
         var hasLens = false
@@ -2000,25 +2003,36 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         drawBackgroundLayer(blurRadius, imageName: "transitions", savebg: false)
         
         colorLayer.removeFromSuperlayer()
-        let ncolorLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
-        ncolorLayer.fillColor = UIColor.brownColor().CGColor
-        ncolorLayer.fillRule = kCAFillRuleNonZero
-        ncolorLayer.zPosition = 6
-        ncolorLayer.opacity = 0.0
-        colorLayer = ncolorLayer
+        
+        colorLayer = swapLensColor(UIColor.brownColor().CGColor)
+
         lensShapelayer.addSublayer(colorLayer)
         lensShapelayer.position.x = 512 + 96 // Center it.
-        
         lastBackgroundPosition = CGPointMake(backgroundLayer.position.x,backgroundLayer.position.y)
 
         
         
     }
+    
+    
+    func swapLensColor(lensColor: CGColorRef)->CAShapeLayer {
+        
+        
+        let ncolorLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
+        ncolorLayer.fillColor = UIColor.brownColor().CGColor
+        ncolorLayer.fillRule = kCAFillRuleNonZero
+        ncolorLayer.zPosition = 6
+        ncolorLayer.opacity = 0.0
+        return ncolorLayer
+
+        
+    }
+    
   
     @IBOutlet weak var sidebarView: UIView!
     @IBOutlet weak var globalImageView: UIImageView!
     @IBOutlet weak var prescriptionView: UIView!
-    @IBOutlet weak var lensLeftImageView: UIImageView!
+   
     
     func setUpThickness(){
         
@@ -2149,9 +2163,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         
     }
-    
-    
-    @IBOutlet weak var prescriptionResult: UILabel!
+
     
     
     /***    DESCRIPTION:    BACKGROUND Layer Image:  the "-n" version, desaturated image
@@ -2334,6 +2346,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
     }
     
+ 
+    @IBOutlet weak var btnProgressive: UIBarButtonItem!
+    
+    @IBOutlet weak var btnWhatever: UIBarButtonItem!
     let lensLeftImage = CALayer()
     let lensRightImage = CALayer()
 
@@ -2374,12 +2390,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
     }
     
-    
-    @IBOutlet weak var btnProgressive: UIBarButtonItem!
-    
-    
-   
-    
+    @IBOutlet weak var btnThickness: UIBarButtonItem!
+    @IBOutlet weak var btnDriverwear: UIBarButtonItem!
+    @IBOutlet weak var btnTransitions: UIBarButtonItem!
+    @IBOutlet weak var btnCoatings: UIBarButtonItem!
     
     override func viewDidLoad(){
         
@@ -2394,7 +2408,25 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         btnHardCoat.hidden = true
         btnAntiSmudge.hidden = true
 
+       // btnProgressive.backgroundImageForState(.Selected, barMetrics: .Default)
+        btnProgressive.setBackgroundImage(UIImage(named: "btn-progressive"), forState: .Normal, style: .Plain, barMetrics: .Default)
+        btnProgressive.width = 140
+        //btnProgressive.setBackgroundImage(UIImage(named:"btn-progressive-on"), forState: .Selected, style: .Plain, barMetrics: .Default)
+               btnCoatings.setBackgroundImage(UIImage(named: "btn-coatings"), forState: .Normal, style: .Plain, barMetrics: .Default)
+       // btnCoatings.setBackgroundImage(UIImage(named:"btn-progressive-on"), forState: .Selected, style: .Plain, barMetrics: .Default)
+        btnCoatings.width = 140
+        btnTransitions.setBackgroundImage(UIImage(named: "btn-transitions"), forState: .Normal, style: .Plain, barMetrics: .Default)
+       // btnTransitions.setBackgroundImage(UIImage(named:"btn-progressive-on"), forState: .Selected, style: .Plain, barMetrics: .Default)
+        btnTransitions.width = 140
+        btnDriverwear.setBackgroundImage(UIImage(named: "btn-driverwear"), forState: .Normal, style: .Plain, barMetrics: .Default)
+       // btnDriverwear.setBackgroundImage(UIImage(named:"btn-progressive-on"), forState: .Selected, style: .Plain, barMetrics: .Default)
+       btnDriverwear.width = 140
+        btnThickness.setBackgroundImage(UIImage(named: "btn-thickness"), forState: .Normal, style: .Plain, barMetrics: .Default)
+        // btnDriverwear.setBackgroundImage(UIImage(named:"btn-progressive-on"), forState: .Selected, style: .Plain, barMetrics: .Default)
+        btnThickness.width = 140
+        
         //Global Context
+        
         context = CIContext(EAGLContext: glContext,
             options: [
                 kCIContextWorkingColorSpace: NSNull()

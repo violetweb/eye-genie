@@ -19,6 +19,6 @@ class FunctionsHelper {
     func radiansToDegrees(x: Int)->Double{
         return Double(x)/M_PI*Double(180.0)
     }
- 
-
+   
+    
 }
