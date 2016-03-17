@@ -11,6 +11,7 @@ import GLKit
 import AVFoundation
 
 
+
 class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate {
 
    
@@ -19,33 +20,22 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     @IBOutlet weak var lblAdd: UILabel!
    
     
-    
-    @IBAction func btnSwitch(sender: UIButton) {
-        
-        //Switch to Thickness // will change this layout to a pageviewcontroller later.
-        self.performSegueWithIdentifier("ThicknessSegue", sender: self)
-
-    }
-    
     var cameraActive = false
     var panLens = true
     var panTransitions = false
     
-    var currentBackground = UIImage(named: "progressive-bkg-v")
-    var currentBackgroundImageName = "progressive-bkg" // append an n = desaturated (for mainlayer), or v = vibrant image (for imageLayer)
+    var currentBackground:UIImage = UIImage(named: "progressive-bkg-v")!
+    var currentBackgroundImageName:String = "progressive-bkg" // append an n = desaturated (for mainlayer), or v = vibrant image (for imageLayer)
     var currentAdd = UIImageView()
     var lensLayer = CALayer()        //pilotslayer 2
     var backgroundLayer = CALayer()  //pilotslayer 1
     
     var imageLayer = CALayer()
-    var leftBlurLayer = CAShapeLayer()
-    var rightBlurLayer = CAShapeLayer()
-    
-    
-    
-    var BlurShapelayer = CAShapeLayer()
     
     //Lens Shape Layers
+    var leftBlurLayer = CAShapeLayer()
+    var rightBlurLayer = CAShapeLayer()
+    var BlurShapelayer = CAShapeLayer()
     var lensShapelayer = CAShapeLayer()
     var magnifyLayer = CAShapeLayer()
     var colorLayer = CAShapeLayer()
@@ -205,9 +195,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                 
             }else{
                 
-                let newTranslation = sender.translationInView(mainImageView)
-                let velocity = sender.velocityInView(mainImageView)
-                
+                let newTranslation = sender.translationInView(globalUIView)
                 
                 if (sender.state == UIGestureRecognizerState.Changed){
                     
@@ -227,12 +215,18 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                        
                         
                     }else{
-                    
-                        let newpos = self.handsLayer.position.x+newTranslation.x
+                        
+                        //Coatings Slider.
+                        let newpos = self.handsLayer.position.x + newTranslation.x
+                        
+                        //Slide between 0 and 800px.
                         if (newpos < 800 && newpos >  0){
-                            hydroLayer.position = CGPointMake(self.hydroLayer.position.x + newTranslation.x, self.hydroLayer.position.y)
+                            //The hydrolayer has a smaller range.
+                          
+                            hydroLayer.position = CGPointMake(self.handsLayer.position.x + newTranslation.x, self.hydroLayer.position.y)
                             handsLayer.position = CGPointMake(newpos, self.handsLayer.position.y)
                         }
+                        
                     }
                 }
        
@@ -246,28 +240,35 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     
     @IBOutlet var globalUIView: UIView!
     
-    @IBAction func pinchGesture(sender: UIPinchGestureRecognizer) {
+    
+    /** TURN OFF THE PINCH GESTURE FOR NOW:  RELEASE AND RETURN TO FIX ISSUE.
+    
+        @IBAction func pinchGesture(sender: UIPinchGestureRecognizer) {
+        
         
         let translate = CATransform3DMakeTranslation(0, 0, 0);
         let scale = CATransform3DMakeScale(sender.scale, sender.scale, 1);
-        let transform = CATransform3DConcat(translate, scale);
+        let lensTransform = CATransform3DConcat(translate, scale);
         
         magScale = Float(sender.scale)
         
-        lensShapelayer.transform = transform
-        
+        lensShapelayer.transform = lensTransform
        
         imageLayer.mask!.frame = lensShapelayer.frame  // Match the same frame as the outer layer
-        imageLayer.mask!.transform = transform
+        imageLayer.mask!.transform = lensTransform
         
         leftBlurLayer.mask?.frame = lensShapelayer.frame
         rightBlurLayer.mask?.frame = lensShapelayer.frame
-        leftBlurLayer.mask?.transform = transform
-        rightBlurLayer.mask?.transform = transform
+        leftBlurLayer.mask?.transform = lensTransform
+        rightBlurLayer.mask?.transform = lensTransform
                    
         magnifyLayer.mask?.frame = lensShapelayer.frame
-        magnifyLayer.mask?.transform = transform
+        magnifyLayer.mask?.transform = lensTransform
+        
+
+        
     }
+      **/
     
     
     
@@ -407,12 +408,12 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
        
         
         //Change the background image to the Bright one + 5 Blur radius please.
-        drawBackgroundLayer(5.0, imageName: "hydrophop-v", savebg: false)
+        drawBackgroundLayer(5.0, imageName: "coatings-hydro", savebg: false)
         
         imageLayer.removeFromSuperlayer()
         
         //Apply the Image to the LensShape now.
-        let imagelayer = UIImageView(image: UIImage(named: "hydrophop-v"))
+        let imagelayer = UIImageView(image: UIImage(named: "coatings-hydro"))
         imagelayer.layer.name = "lensBGImage"
         
         lensShapelayer.addSublayer(imagelayer.layer)
@@ -462,11 +463,11 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         
         //Change the background image to the Bright one + 5 Blur radius please.
-        drawBackgroundLayer(5.0, imageName: "antiscratch-v", savebg: false)
+        drawBackgroundLayer(5.0, imageName: "coatings-antiscratch", savebg: false)
         removeNamedLayer(pilotsLayer, namedLayer: "imageLayer")
         
         //Add same image to the lens shape.
-        let imagelayer = UIImageView(image: UIImage(named: "antiscratch-v"))
+        let imagelayer = UIImageView(image: UIImage(named: "coatings-antiscratch"))
         imagelayer.layer.name = "lensBGImage"
         lensShapelayer.addSublayer(imagelayer.layer)
         
@@ -489,7 +490,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     
     let handsLayer = CALayer()
    
-    @IBAction func btnDriverwear(sender: UIBarButtonItem) {
+    @IBAction func btnDriverwear() {
         
         
         //mainimageview / global ui view
@@ -517,14 +518,15 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         removeNamedLayer(pilotsLayer, namedLayer: "lensShapelayer")
         
          
-        backgroundLayer.position = CGPointMake(512,330) //Half the width half the height.
+        backgroundLayer.position = CGPointMake(512,325) //Half the width half the height.
         coatingsLayer.bounds = backgroundLayer.bounds
-        coatingsLayer.frame = backgroundLayer.frame
+        coatingsLayer.frame = backgroundLayer.bounds
         coatingsLayer.contents = UIImage(named: "driverwear-bkg")!.CGImage
         coatingsLayer.contentsGravity = kCAGravityBottomLeft
         coatingsLayer.zPosition = 1
         pilotsLayer.addSublayer(coatingsLayer)
   
+     
         //dump hands before
         removeNamedLayer(pilotsLayer, namedLayer: "handsLayer")
         
@@ -542,12 +544,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
      
         
         let mask = CALayer()
-        mask.frame = backgroundLayer.frame
+        mask.frame           = backgroundLayer.frame
         mask.bounds          = backgroundLayer.bounds
         mask.backgroundColor = UIColor.whiteColor().CGColor
         backgroundLayer.mask = mask;
-        
-       // backgroundLayer.mask!.position = CGPointMake(backgroundLayer.mask!.position.x - backgroundLayer.bounds.width/2, backgroundLayer.mask!.position.y)
         
         //Background Layer Contains the "coated" Image!!!!
         backgroundLayer.mask!.position = CGPointMake(backgroundLayer.mask!.position.x + backgroundLayer.bounds.width/2,backgroundLayer.mask!.position.y)
@@ -772,13 +772,23 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     }
     func btnCockpit() {
         
-        
         drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "cockpit", savebg: true)
         currentBackgroundImageName = "cockpit"
         currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
         swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
            }
 
+    
+    func btnProgress4() {
+        
+        drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "progressive-bkg4", savebg: true)
+        currentBackgroundImageName = "progressive-bkg4"
+        currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
+        swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
+        
+        
+    }
+    
     func btnProgress3() {
         
         drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "progressive-bkg3", savebg: true)
@@ -790,15 +800,15 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     }
     func btnProgress2() {
     
-    
         drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "progressive-bkg2", savebg: true)
         currentBackgroundImageName = "progressive-bkg2"
         currentAdd.image = UIImage(named: currentBackgroundImageName + "-v")
         swapLensImage(blurRadius, swapToImage: currentBackgroundImageName)
       
     }
+    
+    
     func btnProgress() {
-        
         
         drawBackgroundLayer(Float(sliderPowerOutlet.value), imageName: "progressive-bkg", savebg: true)
         currentBackgroundImageName = "progressive-bkg"
@@ -1136,7 +1146,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     func croppIngimage(imageToCrop:UIImage, toRect rect:CGRect) -> UIImage{
         
         let imageRef:CGImageRef = CGImageCreateWithImageInRect(imageToCrop.CGImage, rect)!
-        var cropped:UIImage = UIImage(CGImage:imageRef)
+        let cropped:UIImage = UIImage(CGImage:imageRef)
         return cropped
     }
     
@@ -1546,12 +1556,13 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         lensShapelayer.name = "lensShapelayer"
         //Add a non colored color layer (can be replaced using buttons : color).
         //Color Layer.
+        colorLayer.removeFromSuperlayer()
         let newColorLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
         newColorLayer.fillColor = UIColor.clearColor().CGColor
         newColorLayer.fillRule = kCAFillRuleNonZero
         newColorLayer.zPosition = 7
         newColorLayer.opacity = 0.0
-        colorLayer.addSublayer(newColorLayer)
+        colorLayer = newColorLayer
         colorLayer.name = "colorLayer"
         
         //COLOR LAYER
@@ -1734,14 +1745,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         var tV = (10 - AddPower)
         let centerThickness = CGFloat(20) // the height distance of thickness at the center.
-        var applyRefractiveIndex = CGFloat(3.5) // our default
+        var applyRefractiveIndex = CGFloat(3.75) // our default
         
         switch (refractiveIndex) {
-            case "1.5":   applyRefractiveIndex = 3.5
+            case "1.5":   applyRefractiveIndex = 3.75 //inc/dec to change the range of shape based ont eh ref. index Selector.
             case "1.6":   applyRefractiveIndex = 3.25
-            case "1.67":  applyRefractiveIndex = 3.0
-            case "1.74":  applyRefractiveIndex = 2.5
-            default:    applyRefractiveIndex = 3.5
+            case "1.67":  applyRefractiveIndex = 2.75
+            case "1.74":  applyRefractiveIndex = 2.00
+            default:    applyRefractiveIndex = 3.75
         }
 
         var CurveSteepnessBottom = -(tV*applyRefractiveIndex)+centerThickness
@@ -1813,7 +1824,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     
     @IBOutlet weak var iCarosel: iCarousel!
     
-    @IBAction func btnCoatings(sender: UIBarButtonItem) {
+   @IBAction func btnCoatings() {
 
         panLens = false
         panTransitions = false
@@ -1888,8 +1899,20 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
     }
     
+    func printLayers(){
+        
+        if let sublayers = lensShapelayer.sublayers {
+            
+            for layer in sublayers {
+                print(layer.name)
+                
+            }
+        }
+
+    }
     
-    @IBAction func btnProgressive(sender: UIBarButtonItem) {
+    @IBAction func btnProgressive() {
+        
         
         panLens = true
         currentBackgroundImageName = "progressive-bkg"
@@ -1916,11 +1939,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         lensRightImage.hidden = true
        
         removeNamedLayer(lensShapelayer, namedLayer: "lensBGImage")
-        colorLayer.removeFromSuperlayer()
+      
         coatingsLayer.removeFromSuperlayer()
         hydroLayer.removeFromSuperlayer()
         thicknessLayer.removeFromSuperlayer()
         handsLayer.removeFromSuperlayer()
+        
+        
+     
         
         blurRadius = 0.0
         sliderAddOutlet.value = 0.0
@@ -1935,11 +1961,12 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
         setDefaultLayers(UIImage(named: currentBackgroundImageName + "-v")!)
-        
+        colorLayer.opacity = 0.0
+                
     }
     
     
-    @IBAction func btnTransitions(sender: UIBarButtonItem) {
+    @IBAction func btnTransitions() {
         
         
         panLens = false
@@ -2019,7 +2046,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         
         let ncolorLayer = drawMaskLayer(UIColor.whiteColor().CGColor)
-        ncolorLayer.fillColor = UIColor.brownColor().CGColor
+        ncolorLayer.fillColor = lensColor
         ncolorLayer.fillRule = kCAFillRuleNonZero
         ncolorLayer.zPosition = 6
         ncolorLayer.opacity = 0.0
@@ -2038,7 +2065,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         //Clear these out before setting them up... this gets called everytime the btnThickness gets calle.d
         
-        lensLeftImage.frame = CGRect(x:370,y:120, width:100,height:80)
+        lensLeftImage.frame = CGRect(x:395,y:100, width:100,height:80)
         lensLeftImage.bounds = CGRect(x:0,y:0,width:10,height:80)
         lensLeftImage.backgroundColor = UIColor.clearColor().CGColor
         lensLeftImage.contents = UIImage(named: "lensplus")!.CGImage
@@ -2047,7 +2074,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         self.fullBackgroundLayer.addSublayer(lensLeftImage)
         
-        self.lensRightImage.frame = CGRect(x:555,y:120,width:100,height:80)
+        self.lensRightImage.frame = CGRect(x:530,y:100,width:100,height:80)
         lensRightImage.bounds = CGRect(x:0,y:0,width:10,height:80)
         lensRightImage.backgroundColor = UIColor.clearColor().CGColor
         lensRightImage.zPosition = 4
@@ -2072,18 +2099,27 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             
             //Swap out the prescription drawing/rendering based on value selected by user.
             let addpower: Float = (titleForRow as NSString).floatValue
+            var applyRefractiveIndex = Float(3.75)
+            switch (prescriptionValue) {
+            case "1.5":   applyRefractiveIndex = 3.75 //inc/dec to change the range of shape based ont eh ref. index Selector.
+            case "1.6":   applyRefractiveIndex = 3.25
+            case "1.67":  applyRefractiveIndex = 2.75
+            case "1.74":  applyRefractiveIndex = 2.00
+            default:    applyRefractiveIndex = 3.75
+            }
             self.drawPrescription(false, AddPower: CGFloat(addpower), refractiveIndex: prescriptionValue)
             //increment addpower to the width combined with resizeaspect grows the image.
             if ( Int(addpower) >= 0){
-                self.lensLeftImage.frame = CGRect(x:370,y:120, width:100,height:80)
+                self.lensLeftImage.frame = CGRect(x:395,y:100, width:100,height:80)
                 self.lensLeftImage.contents = UIImage(named: "lensplus")!.CGImage
-                self.lensLeftImage.bounds = CGRect(x:0,y:0,width:10+Int(addpower*2),height:80)
-                
+                self.lensLeftImage.bounds = CGRect(x:0,y:0,width:10+Int(addpower*applyRefractiveIndex),height:80)
+                print(self.lensLeftImage.bounds)
+             
             }else{
-                self.lensLeftImage.frame = CGRect(x:360,y:120, width:100,height:80)
+                self.lensLeftImage.frame = CGRect(x:390,y:100, width:100,height:80)
                 self.lensLeftImage.contents = UIImage(named: "lensminus")!.CGImage
-                self.lensLeftImage.bounds = CGRect(x:0,y:0,width:10-Int(addpower*3),height:80)
-                
+                self.lensLeftImage.bounds = CGRect(x:0,y:0,width:10-Int(addpower*applyRefractiveIndex),height:80)
+            
             }
             
             
@@ -2097,34 +2133,45 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             
             //Swap out the prescription drawing/rendering based on value selected by user.
             let addpower: Float = (titleForRow as NSString).floatValue
+            var applyRefractiveIndex = Float(3.75)
+            switch (prescriptionValue) {
+            case "1.5":   applyRefractiveIndex = 3.75 //inc/dec to change the range of shape based ont eh ref. index Selector.
+            case "1.6":   applyRefractiveIndex = 3.25
+            case "1.67":  applyRefractiveIndex = 2.75
+            case "1.74":  applyRefractiveIndex = 2.00
+            default:    applyRefractiveIndex = 3.75
+            }
+  
             self.drawPrescription(true, AddPower: CGFloat(addpower), refractiveIndex: prescriptionValue)
             if (Int(addpower) >= 0){
                 
-                self.lensRightImage.frame = CGRect(x:550,y:120,width:100,height:80)
+                self.lensRightImage.frame = CGRect(x:530,y:100,width:100,height:80)
                 self.lensRightImage.contents = UIImage(named: "lensplus-mirror")!.CGImage
-                self.lensRightImage.bounds = CGRect(x:0,y:0,width:10+Int(addpower*2),height:80)
+                self.lensRightImage.bounds = CGRect(x:0,y:0,width:10+Int(addpower*applyRefractiveIndex),height:80)
                 
             }else{
-                self.lensRightImage.frame = CGRect(x:555,y:120,width:100,height:80)
+                self.lensRightImage.frame = CGRect(x:535,y:100,width:100,height:80)
                 self.lensRightImage.contents = UIImage(named: "lensminus-mirror")!.CGImage
-                self.lensRightImage.bounds = CGRect(x:0,y:0,width:10-Int(addpower*2),height:80)
+                self.lensRightImage.bounds = CGRect(x:0,y:0,width:10-Int(addpower*applyRefractiveIndex),height:80)
             }
             
             
         }
 
+        
+        
     }
     
     var plusMinusData = [String]()
     
-    @IBAction func btnThickness(sender: UIBarButtonItem) {
+    @IBAction func btnThickness() {
         
         
         setUpThickness()
         
         ////Swap the global image out for the Thickness image and unhide thickness related dials.
         globalImageView.hidden = false
-        globalImageView.image = UIImage(named: "woman")!
+        globalImageView.image = UIImage(named: "women")!
         mainImageView.hidden = true
         prescriptionView.hidden = false
         lensLeftImage.hidden = false
@@ -2156,8 +2203,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         thicknessLayer.bounds = thicknessLayer.frame
         thicknessLayer.opacity = 0.9
         thicknessLayer.zPosition = 4
-        drawPrescription(false, AddPower: -10, refractiveIndex: "1.5") // set to the default value of the dial
-        drawPrescription(true, AddPower: -10, refractiveIndex: "1.5")
+        drawPrescription(false, AddPower: 0, refractiveIndex: "1.5") // set to the default value of the dial
+        drawPrescription(true, AddPower: 0, refractiveIndex: "1.5")
         fullBackgroundLayer.addSublayer(thicknessLayer)
         
         
@@ -2233,7 +2280,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         )
        
         //Set this to current background.
-        var beginImage = CIImage(image: imageName) // full size.
+        let beginImage = CIImage(image: imageName) // full size.
         if savebg {
             currentBackground = imageName
         }
@@ -2278,6 +2325,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
     }
     
+    
+    
+    @IBOutlet weak var Button4: UIButton!
+    @IBOutlet weak var Button3: UIButton!
+    @IBOutlet weak var Button2: UIButton!
+    @IBOutlet weak var Button1: UIButton!
+    
+    
     func setBtn1FromDirectory(findimage: String){
         
         let fm = NSFileManager.defaultManager()
@@ -2293,15 +2348,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         }
         
     }
-    @IBOutlet weak var Button4: UIButton!
-    @IBOutlet weak var Button3: UIButton!
-    @IBOutlet weak var Button2: UIButton!
-    @IBOutlet weak var Button1: UIButton!
-    
-    
-    
-    
-    
+
     func setBtn2FromDirectory(findimage: String){
         
         let fm = NSFileManager.defaultManager()
@@ -2347,9 +2394,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     }
     
  
-    @IBOutlet weak var btnProgressive: UIBarButtonItem!
     
-    @IBOutlet weak var btnWhatever: UIBarButtonItem!
+    
+    
     let lensLeftImage = CALayer()
     let lensRightImage = CALayer()
 
@@ -2357,31 +2404,46 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     {
         
         
+        //Manually create custom buttons for the bottom tool bar.
+        let helper = FunctionsHelper()
+        let buttonProgressive = helper.createImageButton("btn-progressive", buttonTitle: "Progressive",selector: "btnProgressive")
+        let buttonCoatings = helper.createImageButton("btn-coatings", buttonTitle: "Coatings", selector: "btnCoatings")
+        let buttonTransitions = helper.createImageButton("btn-transitions",buttonTitle: "Transitions", selector: "btnTransitions")
+        let buttonDrivewear = helper.createImageButton("btn-driverwear",buttonTitle: "Drivewear", selector: "btnDriverwear")
+        let buttonThickness = helper.createImageButton("btn-thickness", buttonTitle: "Thickness", selector: "btnThickness")
+        let items = [buttonProgressive,buttonCoatings,buttonThickness,buttonTransitions,buttonDrivewear]
+        BottomToolbar.items = items
+        
+        
+        //Set default landing page to Progressive.
         blurRadius = 0.0
         drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
         setDefaultLayers(UIImage(named: currentBackgroundImageName + "-n")!)
      
+        //Grab button images as saved in DB and set them.
         setBtn1FromDirectory(grabButtonImageName(1))
         setBtn2FromDirectory(grabButtonImageName(2))
         setBtn3FromDirectory(grabButtonImageName(3))
         setBtn4FromDirectory(grabButtonImageName(4))
         
+        //Set up the Carousel.
         iCarosel.type = .Rotary
         iCarosel.dataSource = self
         iCarosel.centerItemWhenSelected = false
         iCarosel.reloadData()
         
-        
+        //Instantiate the prescription Picker so its ready when user clicks thickness.
         prescriptionLeftPicker = PrescriptionPickerView(frame: CGRect(x: fullBackgroundLayer.frame.width/4-150,y: 0,width: 300,height: 150))
         prescriptionRightPicker = PrescriptionPickerView(frame: CGRect(x: fullBackgroundLayer.frame.width-fullBackgroundLayer.frame.width/4-150,y: 0,width: 300,height: 150))
-        
         prescriptionView.addSubview(prescriptionLeftPicker)
         prescriptionView.addSubview(prescriptionRightPicker)
         
-        initialLensPosition = lensShapelayer.position // Set the initial Lens Position (we set it back when necessary
+        //Set initial positions, so can "reset" when user moves from page to page.
+        initialLensPosition = lensShapelayer.position
         initialLensMaskPosition = imageLayer.mask!.position
         initialLeftBlurPosition = leftBlurLayer.mask!.position
         initialRightBlurPosition = rightBlurLayer.mask!.position
+        
         
         colorLayer.opacity = 0.0
         
@@ -2390,12 +2452,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
     }
     
-    @IBOutlet weak var btnThickness: UIBarButtonItem!
-    @IBOutlet weak var btnDriverwear: UIBarButtonItem!
-    @IBOutlet weak var btnTransitions: UIBarButtonItem!
-    @IBOutlet weak var btnCoatings: UIBarButtonItem!
     
     override func viewDidLoad(){
+        
+        
         
         //Turn off other layers buttons, et el.
         prescriptionView.hidden = true
@@ -2408,25 +2468,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         btnHardCoat.hidden = true
         btnAntiSmudge.hidden = true
 
-       // btnProgressive.backgroundImageForState(.Selected, barMetrics: .Default)
-        btnProgressive.setBackgroundImage(UIImage(named: "btn-progressive"), forState: .Normal, style: .Plain, barMetrics: .Default)
-        btnProgressive.width = 140
-        //btnProgressive.setBackgroundImage(UIImage(named:"btn-progressive-on"), forState: .Selected, style: .Plain, barMetrics: .Default)
-               btnCoatings.setBackgroundImage(UIImage(named: "btn-coatings"), forState: .Normal, style: .Plain, barMetrics: .Default)
-       // btnCoatings.setBackgroundImage(UIImage(named:"btn-progressive-on"), forState: .Selected, style: .Plain, barMetrics: .Default)
-        btnCoatings.width = 140
-        btnTransitions.setBackgroundImage(UIImage(named: "btn-transitions"), forState: .Normal, style: .Plain, barMetrics: .Default)
-       // btnTransitions.setBackgroundImage(UIImage(named:"btn-progressive-on"), forState: .Selected, style: .Plain, barMetrics: .Default)
-        btnTransitions.width = 140
-        btnDriverwear.setBackgroundImage(UIImage(named: "btn-driverwear"), forState: .Normal, style: .Plain, barMetrics: .Default)
-       // btnDriverwear.setBackgroundImage(UIImage(named:"btn-progressive-on"), forState: .Selected, style: .Plain, barMetrics: .Default)
-       btnDriverwear.width = 140
-        btnThickness.setBackgroundImage(UIImage(named: "btn-thickness"), forState: .Normal, style: .Plain, barMetrics: .Default)
-        // btnDriverwear.setBackgroundImage(UIImage(named:"btn-progressive-on"), forState: .Selected, style: .Plain, barMetrics: .Default)
-        btnThickness.width = 140
-        
-        //Global Context
-        
+
+        //Setup reusable global Context
         context = CIContext(EAGLContext: glContext,
             options: [
                 kCIContextWorkingColorSpace: NSNull()
@@ -2437,6 +2480,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
    }
     
+    
+       
+    
     @IBOutlet weak var BottomToolbar: UIToolbar!
   
     
@@ -2445,7 +2491,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         return carouselImages.count
     }
  
-   var carouselImages = NSMutableArray(array: ["progressive-bkg-v","progressive-bkg2-v","progressive-bkg3-v","cockpit-v"])
+   var carouselImages = NSMutableArray(array: ["progressive-bkg-v","progressive-bkg2-v","progressive-bkg3-v","progressive-bkg4-v","cockpit-v"])
     
    func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, reusingView view: UIView?) -> UIView {
    
@@ -2471,6 +2517,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                 newButton.addTarget(self, action: "btnProgress3", forControlEvents: .TouchUpInside)
                 newButton.setTitle("Progressive 3", forState: .Normal)
             } else if (index == 3){
+                newButton.addTarget(self, action: "btnProgress4", forControlEvents: .TouchUpInside)
+                newButton.setTitle("Progressive 4", forState: .Normal)
+            } else if (index == 4){
                 newButton.addTarget(self, action: "btnCockpit", forControlEvents: .TouchUpInside)
                 newButton.setTitle("Cockpit", forState: .Normal)
             }
@@ -2498,11 +2547,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     
     
     
-       override func didReceiveMemoryWarning() {
+   override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-        
-        
+    
     }
     
     override func shouldAutorotate() -> Bool {

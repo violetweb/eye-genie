@@ -364,7 +364,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DhZ-V7-eaG">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DhZ-V7-eaG">
                                 <rect key="frame" x="0.0" y="65" width="1024" height="660"/>
                             </imageView>
                             <view hidden="YES" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uMl-sK-2tp">
@@ -376,7 +376,6 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="SVR-fg-geF" appends="YES" id="f4o-Ok-Tnu"/>
                                     <outletCollection property="gestureRecognizers" destination="Oat-9n-wVy" appends="YES" id="hYk-un-x7r"/>
                                 </connections>
                             </view>
@@ -499,42 +498,11 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <toolbar autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.90000000000000002" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ha9-ok-BVh">
+                            <toolbar autoresizesSubviews="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ha9-ok-BVh">
                                 <rect key="frame" x="0.0" y="725" width="1024" height="44"/>
-                                <items>
-                                    <barButtonItem style="plain" id="39b-Mf-5o6">
-                                        <inset key="imageInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                        <connections>
-                                            <action selector="btnProgressive:" destination="BYZ-38-t0r" id="QTR-KQ-Tef"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" id="dYJ-o1-WKV">
-                                        <inset key="imageInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                        <connections>
-                                            <action selector="btnCoatings:" destination="BYZ-38-t0r" id="tu9-AO-pCO"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" id="xiz-ZS-dEX">
-                                        <inset key="imageInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                        <connections>
-                                            <action selector="btnThickness:" destination="BYZ-38-t0r" id="ENB-NX-OJI"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" id="459-q9-zm0">
-                                        <inset key="imageInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                        <connections>
-                                            <action selector="btnTransitions:" destination="BYZ-38-t0r" id="UuK-UK-AWZ"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" id="fjB-01-1ha">
-                                        <inset key="imageInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                        <connections>
-                                            <action selector="btnDriverwear:" destination="BYZ-38-t0r" id="HHe-ze-XIg"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -552,15 +520,9 @@
                         <outlet property="Button4" destination="EPR-jq-1B8" id="DP9-a7-Wyp"/>
                         <outlet property="btnAntiReflection" destination="Vp4-9i-1bN" id="NXn-w5-s8k"/>
                         <outlet property="btnAntiSmudge" destination="hhP-Ve-q0e" id="dPY-Qq-r6P"/>
-                        <outlet property="btnCoatings" destination="dYJ-o1-WKV" id="Tge-30-NRo"/>
-                        <outlet property="btnDriverwear" destination="fjB-01-1ha" id="NhH-p7-ICq"/>
                         <outlet property="btnHardCoat" destination="hqn-MZ-3DJ" id="vCi-BG-ddq"/>
                         <outlet property="btnHydrophop" destination="K7W-O0-O3y" id="qTX-C4-cH0"/>
                         <outlet property="btnPhotochrom" destination="S7x-4X-yac" id="cYj-MG-a9y"/>
-                        <outlet property="btnProgressive" destination="39b-Mf-5o6" id="28b-lr-nIz"/>
-                        <outlet property="btnThickness" destination="xiz-ZS-dEX" id="Ggb-IK-Qb8"/>
-                        <outlet property="btnTransitions" destination="459-q9-zm0" id="aSU-Nf-rd6"/>
-                        <outlet property="btnWhatever" destination="xiz-ZS-dEX" id="pXj-2k-L9e"/>
                         <outlet property="globalImageView" destination="DhZ-V7-eaG" id="Kxr-YJ-5IN"/>
                         <outlet property="globalUIView" destination="8bC-Xf-vdC" id="lDb-ip-XtB"/>
                         <outlet property="iCarosel" destination="sj9-cM-7E5" id="Ijs-BK-SRJ"/>
@@ -579,11 +541,7 @@
                         <action selector="panGesture:" destination="BYZ-38-t0r" id="De1-rK-Lxw"/>
                     </connections>
                 </panGestureRecognizer>
-                <pinchGestureRecognizer id="SVR-fg-geF">
-                    <connections>
-                        <action selector="pinchGesture:" destination="BYZ-38-t0r" id="W9M-Qp-xAz"/>
-                    </connections>
-                </pinchGestureRecognizer>
+                <pinchGestureRecognizer id="SVR-fg-geF"/>
             </objects>
             <point key="canvasLocation" x="230" y="520"/>
         </scene>
