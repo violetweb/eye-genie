@@ -16,10 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        dropData() //- dumps the genie.db and resets up everything... used while testing.
+        //dropData() //- dumps the genie.db and resets up everything... used while testing.
         setUpDatabase()
         setUpFiles()
-
         return true
     }
 
@@ -282,7 +281,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
         databasePath = documentsURL.URLByAppendingPathComponent("genie.db").path!
         
-        if !NSFileManager.defaultManager().fileExistsAtPath(databasePath) {
+        if NSFileManager.defaultManager().fileExistsAtPath(databasePath) {
             
             
             let genieDB = FMDatabase(path: String(databasePath))
@@ -316,6 +315,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     print("Error: \(genieDB.lastErrorMessage())")
                 }else{
                     print("table created for material")
+                }
+                
+                let sql_stmt5 = "CREATE TABLE IF NOT EXISTS ORDERS (ID INTEGER PRIMARY KEY AUTOINCREMENT, CLIENTID TEXT, SELECTEDGLASSES TEXT)"
+                if !genieDB.executeStatements(sql_stmt5) {
+                    print("Error: \(genieDB.lastErrorMessage())")
+                }else{
+                    print("table created for order")
                 }
               
                 

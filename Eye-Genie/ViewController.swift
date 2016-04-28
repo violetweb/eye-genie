@@ -105,6 +105,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         timer = NSTimer.scheduledTimerWithTimeInterval(interval, target:self, selector: Selector("LogoutTimed"), userInfo: nil, repeats: true)
        
 
+        //Grabs the initial position of that received a touch event.
         if (panLens){
             
             
@@ -1473,8 +1474,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             var points = [CGPoint]()
             var lenspoints = [770,400,777,374,784,346,788,318,789,288,785,260,774,233,756,211,733,192,707,177,680,165,653,156,627,148,602,142,578,136,555,132,532,129,511,126,490,124,469,122,449,121,429,120,410,120,390,120,371,121,351,121,331,122,310,124,289,125,267,127,244,130,220,133,195,138,169,143,141,150,114,160,87,173,62,189,40,209,24,233,14,259,11,288,12,317,17,346,23,374,30,400,38,425,48,450,58,473,68,495,80,516,93,537,107,556,123,573,139,590,156,605,174,618,193,630,212,641,231,650,251,658,271,664,291,670,311,673,331,677,351,679,371,680,390,680,410,680,429,678,449,676,468,673,487,669,507,664,526,658,545,650,563,642,582,632,600,622,617,610,634,597,651,582,667,567,683,550,697,532,712,513,725,493,737,472,749,449,760,425]
             
-            
-            for var po=0; po<lenspoints.count-1; po++ {
+                        for var po=0; po<lenspoints.count-1; po++ {
                 if (po%2) == 0{
                     points.append(CGPointMake(CGFloat(lenspoints[po]),CGFloat(lenspoints[po+1])-70)) //-minus 70 on the y plane brings the lens up on the screen
                     // print(String(lenspoints[po]) + " : " + String(lenspoints[po+1]))
@@ -1914,6 +1914,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     @IBAction func btnProgressive() {
         
         
+        
         panLens = true
         currentBackgroundImageName = "progressive-bkg"
         mainImageView.hidden = false
@@ -1964,8 +1965,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         colorLayer.opacity = 0.0
                 
     }
-    
-    
+    @IBAction func btnMeasure(){
+        //launch away!.
+    }
     @IBAction func btnTransitions() {
         
         
@@ -2409,9 +2411,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         let buttonProgressive = helper.createImageButton("btn-progressive", buttonTitle: "Progressive",selector: "btnProgressive")
         let buttonCoatings = helper.createImageButton("btn-coatings", buttonTitle: "Coatings", selector: "btnCoatings")
         let buttonTransitions = helper.createImageButton("btn-transitions",buttonTitle: "Transitions", selector: "btnTransitions")
-        let buttonDrivewear = helper.createImageButton("btn-driverwear",buttonTitle: "Drivewear", selector: "btnDriverwear")
+        let buttonDrivewear = helper.createImageButton("btn-driverwear",buttonTitle: "Progressive", selector: "btnDriverwear")
         let buttonThickness = helper.createImageButton("btn-thickness", buttonTitle: "Thickness", selector: "btnThickness")
-        let items = [buttonProgressive,buttonCoatings,buttonThickness,buttonTransitions,buttonDrivewear]
+        let buttonMeasure = helper.createImageButton("btn-coatings",buttonTitle: "Measure PD", selector: "btnMeasure")
+        let items = [buttonProgressive,buttonCoatings,buttonThickness,buttonTransitions,buttonDrivewear, buttonMeasure]
         BottomToolbar.items = items
         
         

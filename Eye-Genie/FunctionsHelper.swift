@@ -26,16 +26,16 @@ class FunctionsHelper: UIView {
         
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(UIImage(named: buttonImage),forState: .Normal)
-        button.setTitle(buttonTitle, forState: .Normal)
-        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        button.setTitleColor(UIColor.redColor(), forState: .Highlighted)
-        button.setTitleColor(UIColor.grayColor(), forState: .Selected)
-
+        
+        
         button.bounds = CGRectMake(0,0,140,40)
        
         button.exclusiveTouch = true
         button.addTarget(self, action: selector, forControlEvents: .TouchUpInside)
-        
+        button.setTitle(buttonTitle, forState: .Normal)
+        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        button.setTitleColor(UIColor.redColor(), forState: .Highlighted)
+
         let barButton = UIBarButtonItem()
         barButton.customView = button
         return barButton
@@ -44,5 +44,34 @@ class FunctionsHelper: UIView {
         
     }
 
+    
+    //  Returns:        UIBarButtonItem
+    //  Description:    To create custom image + label Buttons on the Bottom Toolbar!
+    //Selector("imageTouch:withEvent:")
+    func createDragButton(buttonImage:  String, buttonTitle: String, selector: Selector, bounds: CGRect, frame: CGRect)->UIButton {
+        
+        let button = UIButton(type: UIButtonType.Custom)
+        
+        if buttonImage != "" {
+            button.setImage(UIImage(named: buttonImage),forState: .Normal)
+        }
+        
+        button.bounds = bounds
+        button.frame = frame
+        button.exclusiveTouch = true
+        
+        button.addTarget(self, action: selector, forControlEvents: .TouchDown)
+        button.addTarget(self, action: Selector("imageDrag:event:"), forControlEvents: .TouchDragInside)
+        
+        
+        button.setTitle(buttonTitle, forState: .Normal)
+        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        button.setTitleColor(UIColor.redColor(), forState: .Highlighted)
+        
+        return button
+        
+        
+        
+    }
     
 }

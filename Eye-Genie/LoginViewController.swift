@@ -152,7 +152,7 @@ class LoginViewController: UIViewController {
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
             
                 self.UserLoggedIn = true
-                self.performSegueWithIdentifier("LoginSegue", sender: self)
+                self.performSegueWithIdentifier("TabBarSegue", sender: self)
         
         }else{
             stopSpinner("Login Result", alertMessage: "We are unable to find an account with the username and password provided.  If you are having trouble loggin in, please contact your client service representative.")

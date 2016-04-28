@@ -203,6 +203,8 @@ class SettingsController: UIViewController, UIImagePickerControllerDelegate, UIN
         
     }
    
+       
+    
     override func viewDidAppear(animated: Bool)
     {
         
