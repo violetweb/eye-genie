@@ -26,6 +26,28 @@ func saveImage (image: UIImage, path: String, filename: String) -> Bool{
     
 }
 
+func savePNG (image: UIImage, path: String, filename: String) -> Bool{
+    let pngImageData = UIImagePNGRepresentation(image)
+    let result = pngImageData!.writeToFile(path + "/" + filename, atomically: true)
+    return result
+    
+}
+
+func grabFromDirectory(findimage: String, ext: String)->String{
+    
+    print(findimage);
+    var imagePath = ""
+    let fm = NSFileManager.defaultManager()
+    let path = getSupportPath("images")  // applicationSupportdirectory + images
+    let items = try! fm.contentsOfDirectoryAtPath(path)
+    for item in items {
+        if item.hasPrefix(findimage) {
+            imagePath = path + "/" + item + ext
+        }
+    }
+    
+    return imagePath
+}
 
 
 //We return the APPLICATION SUPPORT DIRECTORY!!!! IMPORTANT.

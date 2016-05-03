@@ -45,6 +45,16 @@ class FunctionsHelper: UIView {
     }
 
     
+    func savePNG (image: UIImage, path: String, filename: String) -> Bool{
+        let pngImageData = UIImagePNGRepresentation(image)
+        //let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
+        let result = pngImageData!.writeToFile(path + "/" + filename, atomically: true)
+        return result
+        
+    }
+
+    
+    
     //  Returns:        UIBarButtonItem
     //  Description:    To create custom image + label Buttons on the Bottom Toolbar!
     //Selector("imageTouch:withEvent:")
@@ -73,5 +83,31 @@ class FunctionsHelper: UIView {
         
         
     }
+    
+    //Convert Degrees to Radians!!!!
+    func degree2radian(a:CGFloat)->CGFloat {
+        let b = CGFloat(M_PI) * a/180
+        return b
+    }
+
+    
+    func polygonPointArray(sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat)->[CGPoint] {
+        let angle = degree2radian(360/CGFloat(sides)) //how many sides
+        let cx = x // x origin
+        let cy = y // y origin
+        let r  = radius // radius of circle
+        var i = 0
+        var points = [CGPoint]()
+        while i <= sides {
+            let xpo = cx + r * cos(angle * CGFloat(i))
+            let ypo = cy + r * sin(angle * CGFloat(i))
+            points.append(CGPoint(x: xpo, y: ypo))
+            i++;
+        }
+        return points
+    }
+    
+
+    
     
 }

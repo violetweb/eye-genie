@@ -255,15 +255,7 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
         }
         
     }
-    
-    func saveImage (image: UIImage, path: String, filename: String) -> Bool{
-        //let pngImageData = UIImagePNGRepresentation(image)
-        let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
-        let result = jpgImageData!.writeToFile(path + "/" + filename, atomically: true)
-        return result
-        
-    }
-    
+       
     func saveData(data: Order)->Bool{
         
         var success = false
@@ -306,6 +298,7 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
             self.tabBarController?.selectedIndex = 1
             let measureViewController = self.tabBarController!.viewControllers![1] as! MeasureToolController // or whatever tab index you're trying to access
             measureViewController.selectedImage.image = UIImage(named: path + "/" + selectedGlasses)
+            //measureViewController.selectedImageName.text = selectedGlasses
             measureViewController.selectedImageName.text = selectedGlasses
         }
 
@@ -334,7 +327,7 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
         pickedImage = imgC.image!
         
         if !CGSizeEqualToSize(pickedImage.size, CGSizeZero){
-            selectedGlasses = "third-choice"
+            selectedGlasses = "third-option"
             saveImage(pickedImage, path: path, filename: "third-option") //save image to our application directory.
             self.tabBarController?.selectedIndex = 1
             let measureViewController = self.tabBarController!.viewControllers![1] as! MeasureToolController // or whatever tab index you're trying to access
@@ -358,6 +351,7 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
             let measureViewController = self.tabBarController!.viewControllers![1] as! MeasureToolController // or whatever tab index you're trying to access
             measureViewController.selectedImage.image = UIImage(named: path + "/" + selectedGlasses)
             measureViewController.selectedImageName.text = selectedGlasses
+        
         }
         
         
@@ -454,7 +448,12 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
         imgD.addGestureRecognizer(lngPressDTap)
         DBounds = imgD.frame
         
-        
+     
+        //Grab the last set of first - fourth choice images (we're only going to hold onto them until next set is taken)
+        imgA.image = UIImage(named: grabFromDirectory("first-option", ext: "jpg"))
+        imgB.image = UIImage(named: grabFromDirectory("second-option", ext: "jpg"))
+        imgC.image = UIImage(named: grabFromDirectory("third-option", ext: "jpg"))
+        imgD.image = UIImage(named: grabFromDirectory("fourth-option", ext: "jpg"))
      
      
         

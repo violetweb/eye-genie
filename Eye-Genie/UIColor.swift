@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+//      Use:    (UIColor( red: 255, green:255, blue:255, alpha: 1.0 )).CGColor
+//      
+
 extension UIColor {
     
     
