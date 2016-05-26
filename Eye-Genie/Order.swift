@@ -2,7 +2,7 @@
 //  Order.swift
 //  EyeGenie
 //
-//  Created by Ryan Maxwell on 2016-04-26.
+//  Created by Valerie Trotter on 2016-04-26.
 //  Copyright © 2016 Bceen Ventures. All rights reserved.
 //
 

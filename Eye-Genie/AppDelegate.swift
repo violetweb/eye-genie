@@ -16,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        //dropData() //- dumps the genie.db and resets up everything... used while testing.
+        dropData() //- dumps the genie.db and resets up everything... used while testing.
+        dropFilesFromApplicationPath()
         setUpDatabase()
         setUpFiles()
         return true
@@ -71,6 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("failed: \(error.localizedDescription)")
             }
         }
+        print("dropped the database...")
     }
     
     
@@ -208,6 +210,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    func insertMaterialListing(){
+        
+        let genieDB = FMDatabase(path: String(databasePath))
+        var insertSQL = ""
+        
+        if genieDB.open() {
+            
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Standard',1.5,0.0,-3.0,0.0,3.0,0,1,2,3)"
+            if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
+                print("Standard 1.5 added")
+            }
+            
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Slightly Thinner',1.56,0.0,-3.5,0.0,3.5,0,0,0,0)"
+            if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
+                print("Slightly Thinner 1.56 added")
+            }
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Trivex',1.53,0.0,-4.0,0.0,4.0,1,1,5,5)"
+            if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
+                print("Trivex 1.53 added")
+            }
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Polycarbonate',1.59,0.0,-8.5,0.0,5.5,1,1,5,5)"
+            if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
+                print("Polycarbonate 1.59 added")
+            }
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Thin',1.61,-2.0,-7.0,2.0,5.0,0,1,4,4)"
+            if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
+                print("Thin 1.61 added")
+            }
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Very Thin',1.67,-3.0,-8.0,3.0,5.5,0,1,3,3)"
+            if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
+                print("Very Thin 1.67 added")
+            }
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Thinnest',1.74,-4.0,-12.0,4.0,8.0,0,1,0,2)"
+            if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
+                print("Thinnest 1.74 added")
+            }
+            
+            
+            genieDB.close()
+        }else{
+            print("Database failed to open")
+        }
+        
+        
+
+    }
+    
     
     //TODO:  CREATE FUNCTION THAT "CREATES THE APPLICATION SUPPORT DIRECTORY, SO THAT WE CAN COPY THE GENIEDB TO THAT, INSTEAD OF USING THE DOCUMENTS DIRECTORY!!!!!!!
     func setUpFiles(){
@@ -234,7 +283,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let copyitem = copyfrompath + "/" + image
             let copytoitem = copytopath + "/" + image
             do {
-                //try fm.removeItemAtPath(copytoitem) // If exists already, first remove it.
+                try fm.removeItemAtPath(copytoitem) // If exists already, first remove it.
                 try fm.copyItemAtPath(copyitem,toPath: copytoitem)
                 print("Copied files from appdefaults to application support directory.")
             }catch let error as NSError {
@@ -281,7 +330,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
         databasePath = documentsURL.URLByAppendingPathComponent("genie.db").path!
         
-        if NSFileManager.defaultManager().fileExistsAtPath(databasePath) {
+        if !NSFileManager.defaultManager().fileExistsAtPath(databasePath) {
             
             
             let genieDB = FMDatabase(path: String(databasePath))
@@ -291,7 +340,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             if genieDB.open() {
-                print("opened the database successfully")
+               
                 let sql_stmt1 = "CREATE TABLE IF NOT EXISTS GENERAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, HOMEIMAGE TEXT, LOGOIMAGE TEXT, ARCOATINGIMAGE TEXT, HYDROIMAGE TEXT, HARDCOATIMAGE TEXT, LOGINIDENTIFIER TEXT, COMPANYNAME TEXT, COMPANYPHONE TEXT, ACTIVE INTEGER)"
                 if !genieDB.executeStatements(sql_stmt1) {
                     print("Error: \(genieDB.lastErrorMessage())")
@@ -324,6 +373,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     print("table created for order")
                 }
               
+                let sql_stmt6 = "CREATE TABLE IF NOT EXISTS MATERIALS (ID INTEGER PRIMARY KEY AUTOINCREMENT, MATERIALNAME TEXT, MATERIALINDEX REAL, MINUSMIN REAL, MINUSMAX REAL, PLUSMIN REAL, PLUSMAX REAL, SAFETY INTEGER, PHOTOCHROMATIC INTEGER, DRILLMOUNT INTEGER, NYLONMOUNT INTEGER)"
+                if !genieDB.executeStatements(sql_stmt6){
+                    print("Error: \(genieDB.lastErrorMessage())")
+                }else{
+                    insertMaterialListing()
+                    print("table created for material lookup")
+                }
                 
                 genieDB.close()
                 print("Database initialized; skipped as already exists")

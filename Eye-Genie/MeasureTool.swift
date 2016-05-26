@@ -113,7 +113,8 @@ class MeasureTool {
         self.centerLinePosition = CGPointZero
         self.outerLeftPosition = CGPointZero
         self.outerRightPosition = CGPointZero
-        
+        self.leftEyePosition = CGPointZero
+        self.rightEyePosition = CGPointZero
         
     }
 
@@ -138,6 +139,24 @@ class MeasureTool {
         
         return self.bottomPosition
     }
+    
+    func setLeftEyePosition(pos: CGPoint){
+        self.leftEyePosition = pos
+    }
+    func getLeftEyePosition()->CGPoint{
+        return self.leftEyePosition
+    }
+    
+    func setRightEyePosition(pos: CGPoint){
+        self.rightEyePosition = pos
+    }
+    func getRightEyePosition()->CGPoint{
+        return self.rightEyePosition
+    }
+   
+    
+    var leftEyePosition: CGPoint
+    var rightEyePosition: CGPoint
     
     
     var topPosition: CGPoint
@@ -194,7 +213,7 @@ class MeasureTool {
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(image,forState: .Normal)
         button.bounds = CGRectMake(0,0,100,100)
-        button.frame = CGRectMake(100,100,100,100)
+        button.frame = CGRectMake(eyePosition.x,eyePosition.y,100,100)
         button.exclusiveTouch = true
         button.userInteractionEnabled = true
         button.addTarget(self, action: Selector("imageDrag:event:"), forControlEvents: .TouchDown)
@@ -208,15 +227,7 @@ class MeasureTool {
     
     
     
-    func drawReferencePoint(imageToMagnify: String)->UIButton{
-        
-        //let imageToMagnify = "first-choice"
-         //  let grabFile = grabFromDirectory(imageToMagnify,ext: ".png")
-      //  let image = UIImage(contentsOfFile: grabFile)
-        
-      //  let size = CGSizeApplyAffineTransform(image!.size, CGAffineTransformMakeScale(0.5, 0.5))
-      //  let hasAlpha = false
-      //  let scale: CGFloat = 3.0 // Automatically use scale factor of main screen
+    func drawReferencePoint(position: CGFloat)->UIButton{
         
         
         let frame = CGSize(width:80, height:80)
@@ -251,15 +262,13 @@ class MeasureTool {
         
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         
-        
-        
-     
+       
         UIGraphicsEndImageContext()
         
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(scaledImage,forState: .Normal)
         button.bounds = CGRectMake(0,0,100,100)
-        button.frame = CGRectMake(100,100,100,100)
+        button.frame = CGRectMake(position,50,100,100)
         button.exclusiveTouch = true
         button.userInteractionEnabled = true
         button.addTarget(self, action: Selector("referenceDrag:event:"), forControlEvents: .TouchDown)
@@ -284,16 +293,16 @@ class MeasureTool {
    func drawCenterLine() ->UIButton {
         
         
-        let frame = CGSize(width: 3, height: 50)
+        let frame = CGSize(width: 50, height: 50)
         
         UIGraphicsBeginImageContext(frame)
         let ctx = UIGraphicsGetCurrentContext();
         
         //2
         CGContextBeginPath(ctx);
-        CGContextMoveToPoint(ctx, 0.0, 0.0);
-        CGContextAddLineToPoint(ctx, 0.0, 50.0);
-        CGContextSetLineWidth(ctx, 3);
+        CGContextMoveToPoint(ctx, 25.0, 0.0);
+        CGContextAddLineToPoint(ctx, 25.0, 50.0);
+        CGContextSetLineWidth(ctx, 1);
         
         //3
         CGContextClosePath(ctx);
@@ -305,7 +314,7 @@ class MeasureTool {
         
         let button = UIButton(type: UIButtonType.Custom)
         button.bounds = CGRectMake(0,0,3,50)
-        button.frame = CGRectMake(UIScreen.mainScreen().bounds.width/2,100,3,50)
+        button.frame = CGRectMake(UIScreen.mainScreen().bounds.width/2,100,50,50)
         button.setImage(image,forState: .Normal)
         button.exclusiveTouch = true
         return button
@@ -319,8 +328,8 @@ class MeasureTool {
         
     }
     
-    
-    let horizontalLineWidth = CGFloat(UIScreen.mainScreen().bounds.width - 200)
+    //manually set based on the UI View being 970, with 50 on each side.
+    let horizontalLineWidth = CGFloat(924.0) // 50 on each side.
     
     
     
@@ -334,9 +343,9 @@ class MeasureTool {
         
         //2
         CGContextBeginPath(ctx);
-        CGContextMoveToPoint(ctx, 0.0, 24.0);
-        CGContextAddLineToPoint(ctx, horizontalLineWidth, 24.0);
-        CGContextSetLineWidth(ctx, 3);
+        CGContextMoveToPoint(ctx, 0.0, 25.0);
+        CGContextAddLineToPoint(ctx, horizontalLineWidth, 25.0);
+        CGContextSetLineWidth(ctx, 1);
         
         //3
         CGContextClosePath(ctx); 
@@ -348,7 +357,8 @@ class MeasureTool {
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(image,forState: .Normal)
         button.bounds = CGRectMake(0,0,horizontalLineWidth,50)
-        button.frame = CGRectMake(leftPositionToCenter(CGFloat(horizontalLineWidth)),100,horizontalLineWidth,50)
+        
+        button.frame = CGRectMake(50,100,horizontalLineWidth,50)
         button.exclusiveTouch = true
         button.userInteractionEnabled = true
         button.addTarget(self, action: Selector("buttonDragHorizontal:event:"), forControlEvents: .TouchDown)
@@ -376,9 +386,9 @@ class MeasureTool {
         
         //2
         CGContextBeginPath(ctx);
-        CGContextMoveToPoint(ctx, 0.0, 24.0);
-        CGContextAddLineToPoint(ctx, horizontalLineWidth, 24.0);
-        CGContextSetLineWidth(ctx, 3);
+        CGContextMoveToPoint(ctx, 0.0, 25.0);
+        CGContextAddLineToPoint(ctx, horizontalLineWidth, 25.0);
+        CGContextSetLineWidth(ctx, 1);
         
         //3
         CGContextClosePath(ctx);
@@ -390,7 +400,7 @@ class MeasureTool {
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(image,forState: .Normal)
         button.bounds = CGRectMake(0,0,horizontalLineWidth,50)
-        button.frame = CGRectMake(leftPositionToCenter(CGFloat(horizontalLineWidth)),450,horizontalLineWidth,50)
+        button.frame = CGRectMake(50,350,horizontalLineWidth,50)
         button.exclusiveTouch = true
         button.userInteractionEnabled = true
         button.addTarget(self, action: Selector("buttonDragHorizontal:event:"), forControlEvents: .TouchDown)
@@ -403,19 +413,21 @@ class MeasureTool {
         return button
     }
     
+
+    
     func drawOuterLeftLine()->UIButton {
         
         
-        let frame = CGSize(width: 50, height: 500)
+        let frame = CGSize(width: 50, height: 525)
         
         UIGraphicsBeginImageContext(frame)
         let ctx = UIGraphicsGetCurrentContext();
         
         //Define the line in 2d space.
         CGContextBeginPath(ctx);
-        CGContextMoveToPoint(ctx, 24.0, 0.0);
-        CGContextAddLineToPoint(ctx, 24.0, 500.0);
-        CGContextSetLineWidth(ctx, 3);
+        CGContextMoveToPoint(ctx, 25.0, 0.0);
+        CGContextAddLineToPoint(ctx, 25.0, 525.0);
+        CGContextSetLineWidth(ctx, 1);
        
         //3. close
         CGContextClosePath(ctx);
@@ -437,8 +449,8 @@ class MeasureTool {
         //7 assign image to the button.
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(image,forState: .Normal)
-        button.bounds = CGRectMake(0,0,50,500)
-        button.frame = CGRectMake(76,25,50,500)
+        button.bounds = CGRectMake(0,0,50,525)
+        button.frame = CGRectMake(76,25,50,525)
         button.exclusiveTouch = true
         button.userInteractionEnabled = true
         button.addTarget(self, action: Selector("buttonDragVertical:event:"), forControlEvents: .TouchDown)
@@ -454,16 +466,16 @@ class MeasureTool {
     func drawInnerLeftLine()->UIButton {
         
         
-        let frame = CGSize(width: 50, height: 500)
+        let frame = CGSize(width: 50, height: 525)
         
         UIGraphicsBeginImageContext(frame)
         let ctx = UIGraphicsGetCurrentContext();
         
         //2
         CGContextBeginPath(ctx);
-        CGContextMoveToPoint(ctx, 24.0, 0.0);
-        CGContextAddLineToPoint(ctx, 24.0, 500.0);
-        CGContextSetLineWidth(ctx, 3);
+        CGContextMoveToPoint(ctx, 25.0, 0.0);
+        CGContextAddLineToPoint(ctx, 25.0, 525.0);
+        CGContextSetLineWidth(ctx, 1);
         
         //4 color
         let colorspace = CGColorSpaceCreateDeviceRGB();
@@ -482,8 +494,8 @@ class MeasureTool {
         
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(image,forState: .Normal)
-        button.bounds = CGRectMake(0,0,50,500)
-        button.frame = CGRectMake(CGFloat(UIScreen.mainScreen().bounds.width/2-150),25,50,500)
+        button.bounds = CGRectMake(0,0,50,525)
+        button.frame = CGRectMake(CGFloat(UIScreen.mainScreen().bounds.width/2-150),25,50,525)
         button.exclusiveTouch = true
         button.userInteractionEnabled = true
         button.addTarget(self, action: Selector("buttonDragVertical:event:"), forControlEvents: .TouchDown)
@@ -495,22 +507,21 @@ class MeasureTool {
         
         return button
     }
-
     
 
     func drawOuterRightLine()->UIButton {
         
         
-        let frame = CGSize(width: 50, height: 500)
+        let frame = CGSize(width: 50, height: 525)
         
         UIGraphicsBeginImageContext(frame)
         let ctx = UIGraphicsGetCurrentContext();
         
         //Define the line in 2d space.
         CGContextBeginPath(ctx);
-        CGContextMoveToPoint(ctx, 24.0, 0.0);
-        CGContextAddLineToPoint(ctx, 24.0, 500.0);
-        CGContextSetLineWidth(ctx, 3);
+        CGContextMoveToPoint(ctx, 25.0, 0.0);
+        CGContextAddLineToPoint(ctx, 25.0, 525.0);
+        CGContextSetLineWidth(ctx, 1);
         
         //3. close
         CGContextClosePath(ctx);
@@ -531,8 +542,8 @@ class MeasureTool {
         //7 assign image to the button.
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(image,forState: .Normal)
-        button.bounds = CGRectMake(0,0,50,500)
-        button.frame = CGRectMake(UIScreen.mainScreen().bounds.width-126,25,50,500)
+        button.bounds = CGRectMake(0,0,50,525)
+        button.frame = CGRectMake(UIScreen.mainScreen().bounds.width-126,25,50,525)
         
         //  print("frame is \("frame)
         button.exclusiveTouch = true
@@ -552,16 +563,16 @@ class MeasureTool {
     func drawInnerRightLine()->UIButton {
         
         
-        let frame = CGSize(width: 50, height: 500)
+        let frame = CGSize(width: 50, height: 525)
         
         UIGraphicsBeginImageContext(frame)
         let ctx = UIGraphicsGetCurrentContext();
         
         //2
         CGContextBeginPath(ctx);
-        CGContextMoveToPoint(ctx, 24.0, 0.0);
-        CGContextAddLineToPoint(ctx, 24.0, 500.0);
-        CGContextSetLineWidth(ctx, 3);
+        CGContextMoveToPoint(ctx, 25.0, 0.0);
+        CGContextAddLineToPoint(ctx, 25.0, 525.0);
+        CGContextSetLineWidth(ctx, 1);
         
         //4 color
         let colorspace = CGColorSpaceCreateDeviceRGB();
@@ -580,8 +591,8 @@ class MeasureTool {
         
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(image,forState: .Normal)
-        button.bounds = CGRectMake(0,0,50,500)
-        button.frame = CGRectMake(CGFloat(UIScreen.mainScreen().bounds.width/2+150),25,50,500)
+        button.bounds = CGRectMake(0,0,50,525)
+        button.frame = CGRectMake(CGFloat(UIScreen.mainScreen().bounds.width/2+150),25,50,525)
         button.exclusiveTouch = true
         button.userInteractionEnabled = true
         button.addTarget(self, action: Selector("buttonDragVertical:event:"), forControlEvents: .TouchDown)

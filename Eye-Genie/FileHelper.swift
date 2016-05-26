@@ -33,9 +33,39 @@ func savePNG (image: UIImage, path: String, filename: String) -> Bool{
     
 }
 
+
+let copytopath = getSupportPath("images") //ApplicationSupport/images
+let fm = NSFileManager.defaultManager()
+let copyfrompath = NSBundle.mainBundle().resourcePath! + "/appdefaults" // I-Care-New.app directory.
+
+let images = try! fm.contentsOfDirectoryAtPath(copyfrompath)
+
+
+func dropFilesFromApplicationPath()-> Bool{
+   
+    
+    let pathName = getSupportPath("images")
+    var dropped = false;
+    let fm = NSFileManager.defaultManager()
+    let images = try! fm.contentsOfDirectoryAtPath(pathName)
+    
+    for image in images {
+        let dropitem = pathName + "/" + image
+        do {
+            try fm.removeItemAtPath(dropitem) // If exists already, first remove it.
+            print("\(dropitem) has been dropped successfully.")
+            dropped = true
+        }catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    return dropped
+}
+
 func grabFromDirectory(findimage: String, ext: String)->String{
     
-    print(findimage);
+    
+   
     var imagePath = ""
     let fm = NSFileManager.defaultManager()
     let path = getSupportPath("images")  // applicationSupportdirectory + images

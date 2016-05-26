@@ -12,7 +12,7 @@ import AVFoundation
 
 
 
-class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate {
+class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate, UITableViewDataSource, UITableViewDelegate {
 
    
     
@@ -134,7 +134,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                
             }
         }
-    
         
     }
   
@@ -224,7 +223,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                         if (newpos < 800 && newpos >  0){
                             //The hydrolayer has a smaller range.
                           
-                            hydroLayer.position = CGPointMake(self.handsLayer.position.x + newTranslation.x, self.hydroLayer.position.y)
+                            hydroLayer.position = CGPointMake(self.hydroLayer.position.x + newTranslation.x, self.hydroLayer.position.y)
                             handsLayer.position = CGPointMake(newpos, self.handsLayer.position.y)
                         }
                         
@@ -1228,27 +1227,27 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                         var c6y = shapes!["C6Y"] as! CGFloat
                         
                         
-                        p1x = ((p1x+40)*10)-80
+                        p1x = ((p1x+40)*10)-40
                         p1y = (-p1y+40)*10
-                        p2x = ((p2x+40)*10)-80
+                        p2x = ((p2x+40)*10)-40
                         p2y = (-p2y+40)*10
-                        p3x = ((p3x+40)*10)-80
+                        p3x = ((p3x+40)*10)-40
                         p3y = (-p3y+40)*10
-                        p4x = ((p4x+40)*10)-80
+                        p4x = ((p4x+40)*10)-40
                         p4y = (-p4y+40)*10
                         
                         
-                        c1x = (c1x+40)*10-80
+                        c1x = (c1x+40)*10-40
                         c1y = (-c1y+40)*10
-                        c2x = (c2x+40)*10-80
+                        c2x = (c2x+40)*10-40
                         c2y = (-c2y+40)*10
-                        c3x = (c3x+40)*10-80
+                        c3x = (c3x+40)*10-40
                         c3y = (-c3y+40)*10
-                        c4x = (c4x+40)*10-80
+                        c4x = (c4x+40)*10-40
                         c4y = (-c4y+40)*10
-                        c5x = (c5x+40)*10-80
+                        c5x = (c5x+40)*10-40
                         c5y = (-c5y+40)*10
-                        c6x = (c6x+40)*10-80
+                        c6x = (c6x+40)*10-40
                         c6y = (-c6y+40)*10
                         
                         CGPathMoveToPoint(shape, nil, p1x, p1y)
@@ -1357,9 +1356,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                     CGPathAddCurveToPoint(shape, nil, c1x, c1y, c2x, c2y, p2x, p2y)
                     CGPathAddCurveToPoint(shape, nil, c3x, c3y, c4x, c4y, p3x, p3y)
                     CGPathAddCurveToPoint(shape, nil, c5x, c5y, c6x, c6y, p4x, p4y)
-                    CGPathAddLineToPoint(shape, nil, 800, p4y)
-                    CGPathAddLineToPoint(shape, nil, 800, p1y)
-                    CGPathCloseSubpath(shape)
+                  ///  CGPathAddLineToPoint(shape, nil, 800, p4y)
+                  //  CGPathAddLineToPoint(shape, nil, 800, p1y)
+                   // CGPathCloseSubpath(shape)
                     
                 }else{
                     print("No results")
@@ -1470,17 +1469,19 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     }
         
     func lensPoints()->[CGPoint]{
+        
+        let adjustYPos = CGFloat(100.0)
+        let adjustXPos = CGFloat(25.0)
+        var points = [CGPoint]()
+        var lenspoints = [770,400,777,374,784,346,788,318,789,288,785,260,774,233,756,211,733,192,707,177,680,165,653,156,627,148,602,142,578,136,555,132,532,129,511,126,490,124,469,122,449,121,429,120,410,120,390,120,371,121,351,121,331,122,310,124,289,125,267,127,244,130,220,133,195,138,169,143,141,150,114,160,87,173,62,189,40,209,24,233,14,259,11,288,12,317,17,346,23,374,30,400,38,425,48,450,58,473,68,495,80,516,93,537,107,556,123,573,139,590,156,605,174,618,193,630,212,641,231,650,251,658,271,664,291,670,311,673,331,677,351,679,371,680,390,680,410,680,429,678,449,676,468,673,487,669,507,664,526,658,545,650,563,642,582,632,600,622,617,610,634,597,651,582,667,567,683,550,697,532,712,513,725,493,737,472,749,449,760,425]
             
-            var points = [CGPoint]()
-            var lenspoints = [770,400,777,374,784,346,788,318,789,288,785,260,774,233,756,211,733,192,707,177,680,165,653,156,627,148,602,142,578,136,555,132,532,129,511,126,490,124,469,122,449,121,429,120,410,120,390,120,371,121,351,121,331,122,310,124,289,125,267,127,244,130,220,133,195,138,169,143,141,150,114,160,87,173,62,189,40,209,24,233,14,259,11,288,12,317,17,346,23,374,30,400,38,425,48,450,58,473,68,495,80,516,93,537,107,556,123,573,139,590,156,605,174,618,193,630,212,641,231,650,251,658,271,664,291,670,311,673,331,677,351,679,371,680,390,680,410,680,429,678,449,676,468,673,487,669,507,664,526,658,545,650,563,642,582,632,600,622,617,610,634,597,651,582,667,567,683,550,697,532,712,513,725,493,737,472,749,449,760,425]
-            
-                        for var po=0; po<lenspoints.count-1; po++ {
-                if (po%2) == 0{
-                    points.append(CGPointMake(CGFloat(lenspoints[po]),CGFloat(lenspoints[po+1])-70)) //-minus 70 on the y plane brings the lens up on the screen
+         for var po=0; po<lenspoints.count-1; po++ {
+             if (po%2) == 0{
+                 points.append(CGPointMake(CGFloat(lenspoints[po])+adjustXPos, CGFloat(lenspoints[po+1]) - adjustYPos)) //-minus 70 on the y plane brings the lens up on the screen
                     // print(String(lenspoints[po]) + " : " + String(lenspoints[po+1]))
-                }
-            }
-            return points
+              }
+         }
+         return points
     }
         
 
@@ -1745,14 +1746,17 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         var tV = (10 - AddPower)
         let centerThickness = CGFloat(20) // the height distance of thickness at the center.
-        var applyRefractiveIndex = CGFloat(3.75) // our default
+        var applyRefractiveIndex = CGFloat(4.25) // our default
         
         switch (refractiveIndex) {
-            case "1.5":   applyRefractiveIndex = 3.75 //inc/dec to change the range of shape based ont eh ref. index Selector.
-            case "1.6":   applyRefractiveIndex = 3.25
+            
+            case "1.50":   applyRefractiveIndex = 4.25 //inc/dec to change the range of shape based ont eh ref. index Selector.
+            case "1.60":   applyRefractiveIndex = 3.25
             case "1.67":  applyRefractiveIndex = 2.75
-            case "1.74":  applyRefractiveIndex = 2.00
-            default:    applyRefractiveIndex = 3.75
+            case "1.74":  applyRefractiveIndex = 1.25
+            
+            default:      applyRefractiveIndex = 4.25
+        
         }
 
         var CurveSteepnessBottom = -(tV*applyRefractiveIndex)+centerThickness
@@ -1761,8 +1765,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         if (AddPower>=0){
             //Refractive index applied to calculations before nullifying it for the "edges"...
-            curveSteepnessTop = ((AddPower+1)*10)+(applyRefractiveIndex*5) // Steepness of top curve.
-            CurveSteepnessBottom = +((AddPower+1)*5)+(applyRefractiveIndex*5)
+            curveSteepnessTop = ((AddPower+1)*10)+(applyRefractiveIndex*8) // Steepness of top curve.
+            CurveSteepnessBottom = +((AddPower+1)*5)+(applyRefractiveIndex*8)
             
             //NULLIFYING VALUES FOR THE END POINTS.
             tV = 1 // nullify
@@ -1824,7 +1828,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     
     @IBOutlet weak var iCarosel: iCarousel!
     
-   @IBAction func btnCoatings() {
+   func btnCoatings() {
 
         panLens = false
         panTransitions = false
@@ -1849,7 +1853,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         if let sublayers = pilotsLayer.sublayers {
             
             for layer in sublayers {
-                print(layer.name)
                 if layer.name == "lensShapelayer"{
                     hasLens = true
                 }
@@ -1865,7 +1868,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         colorLayer.opacity = 0.0
         
         removeNamedLayer(pilotsLayer, namedLayer: "handsLayer")
-             //Make it fresh again.!
+    
+        //Make it fresh again.!
         handsLayer.frame = pilotsLayer.bounds
         handsLayer.bounds = pilotsLayer.bounds
         handsLayer.contents = UIImage(named: "with-without")!.CGImage
@@ -1911,7 +1915,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
 
     }
     
-    @IBAction func btnProgressive() {
+   func btnProgressive() {
         
         
         
@@ -1928,13 +1932,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         sliderAddOutlet.hidden = false
         lblAdd.hidden = false
         lblPower.hidden = false
-        
         btnAntiReflection.hidden = true
         btnHydrophop.hidden = true
         btnHardCoat.hidden = true
         btnPhotochrom.hidden = true
-        
-        
         prescriptionView.hidden = true
         lensLeftImage.hidden = true
         lensRightImage.hidden = true
@@ -1945,9 +1946,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         hydroLayer.removeFromSuperlayer()
         thicknessLayer.removeFromSuperlayer()
         handsLayer.removeFromSuperlayer()
-        
-        
-     
+      
         
         blurRadius = 0.0
         sliderAddOutlet.value = 0.0
@@ -1959,8 +1958,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         imageLayer.mask!.position = initialLensMaskPosition
         rightBlurLayer.mask!.position = initialRightBlurPosition
         leftBlurLayer.mask!.position = initialLeftBlurPosition
-        
-        drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
+  
+    drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
         setDefaultLayers(UIImage(named: currentBackgroundImageName + "-v")!)
         colorLayer.opacity = 0.0
                 
@@ -2101,26 +2100,26 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             
             //Swap out the prescription drawing/rendering based on value selected by user.
             let addpower: Float = (titleForRow as NSString).floatValue
-            var applyRefractiveIndex = Float(3.75)
+            var applyRefractiveIndex = Float(4.25)
             switch (prescriptionValue) {
-            case "1.5":   applyRefractiveIndex = 3.75 //inc/dec to change the range of shape based ont eh ref. index Selector.
-            case "1.6":   applyRefractiveIndex = 3.25
-            case "1.67":  applyRefractiveIndex = 2.75
-            case "1.74":  applyRefractiveIndex = 2.00
-            default:    applyRefractiveIndex = 3.75
+                case "1.50":   applyRefractiveIndex = 4.25 //inc/dec to change the range of shape based ont eh ref. index Selector.
+                case "1.60":   applyRefractiveIndex = 3.25
+                case "1.67":  applyRefractiveIndex = 2.75
+                case "1.74":  applyRefractiveIndex = 1.25
+                default:    applyRefractiveIndex = 4.25
             }
             self.drawPrescription(false, AddPower: CGFloat(addpower), refractiveIndex: prescriptionValue)
             //increment addpower to the width combined with resizeaspect grows the image.
             if ( Int(addpower) >= 0){
                 self.lensLeftImage.frame = CGRect(x:395,y:100, width:100,height:80)
                 self.lensLeftImage.contents = UIImage(named: "lensplus")!.CGImage
-                self.lensLeftImage.bounds = CGRect(x:0,y:0,width:10+Int(addpower*applyRefractiveIndex),height:80)
-                print(self.lensLeftImage.bounds)
+                self.lensLeftImage.bounds = CGRect(x:0,y:0,width:10+Int(addpower*(applyRefractiveIndex/2)),height:80)
+               
              
             }else{
                 self.lensLeftImage.frame = CGRect(x:390,y:100, width:100,height:80)
                 self.lensLeftImage.contents = UIImage(named: "lensminus")!.CGImage
-                self.lensLeftImage.bounds = CGRect(x:0,y:0,width:10-Int(addpower*applyRefractiveIndex),height:80)
+                self.lensLeftImage.bounds = CGRect(x:0,y:0,width:10-Int(addpower*(applyRefractiveIndex/2)),height:80)
             
             }
             
@@ -2135,13 +2134,13 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
             
             //Swap out the prescription drawing/rendering based on value selected by user.
             let addpower: Float = (titleForRow as NSString).floatValue
-            var applyRefractiveIndex = Float(3.75)
+            var applyRefractiveIndex = Float(4.25)
             switch (prescriptionValue) {
-            case "1.5":   applyRefractiveIndex = 3.75 //inc/dec to change the range of shape based ont eh ref. index Selector.
-            case "1.6":   applyRefractiveIndex = 3.25
+            case "1.50":   applyRefractiveIndex = 4.25 //inc/dec to change the range of shape based ont eh ref. index Selector.
+            case "1.60":   applyRefractiveIndex = 3.25
             case "1.67":  applyRefractiveIndex = 2.75
-            case "1.74":  applyRefractiveIndex = 2.00
-            default:    applyRefractiveIndex = 3.75
+            case "1.74":  applyRefractiveIndex = 1.25
+            default:    applyRefractiveIndex = 4.25
             }
   
             self.drawPrescription(true, AddPower: CGFloat(addpower), refractiveIndex: prescriptionValue)
@@ -2149,12 +2148,12 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                 
                 self.lensRightImage.frame = CGRect(x:530,y:100,width:100,height:80)
                 self.lensRightImage.contents = UIImage(named: "lensplus-mirror")!.CGImage
-                self.lensRightImage.bounds = CGRect(x:0,y:0,width:10+Int(addpower*applyRefractiveIndex),height:80)
+                self.lensRightImage.bounds = CGRect(x:0,y:0,width:10+Int(addpower*(applyRefractiveIndex/2)),height:80)
                 
             }else{
                 self.lensRightImage.frame = CGRect(x:535,y:100,width:100,height:80)
                 self.lensRightImage.contents = UIImage(named: "lensminus-mirror")!.CGImage
-                self.lensRightImage.bounds = CGRect(x:0,y:0,width:10-Int(addpower*applyRefractiveIndex),height:80)
+                self.lensRightImage.bounds = CGRect(x:0,y:0,width:10-Int(addpower*(applyRefractiveIndex/2)),height:80)
             }
             
             
@@ -2297,9 +2296,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         let currentFilter = CIFilter(name: "CIGaussianBlur")!
       //  let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
         
-
-        
-        
         clampFilter.setValue(beginImage!, forKey: "inputImage")
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         currentFilter.setValue(clampFilter.outputImage, forKey: "inputImage")
@@ -2309,12 +2305,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
        // let cgimg = context.createCGImage(currentFilter.outputImage!, fromRect: CGRectMake(0,0,800,660))
 
         let processedImage = UIImage(CGImage: cgimg).CGImage //has to have the CGImage piece on the end!!!!!
-        
-        //pilotsLayer.zPosition = 1
-       // pilotsLayer.backgroundColor = UIColor.whiteColor().CGColor
-       // pilotsLayer.contentsGravity = kCAGravityBottomLeft
-       // pilotsLayer.masksToBounds = true  //Important: tell this layer to be the boundary which cuts other layers (rect)
-       // pilotsLayer.contents = processedImage
         
         
         //try adding background image to its own layer 2/4/2016.
@@ -2406,15 +2396,227 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
     {
         
         
+        
+        
+        
+    }
+    
+    
+    //Show all results initially.
+    var results = ["Standard: 1.5","Thinner: 1.56", "Trivex: 1.53","Polycarbonate: 1.59", "Thin: 1.61", "Very Thin: 1.67", "Thinnest: 1.74"]
+
+   
+    @IBOutlet weak var switchIndustrial: UISwitch!
+    @IBOutlet weak var switchSports: UISwitch!
+    @IBOutlet weak var switchDrillmount: UISwitch!
+    @IBOutlet weak var switchPhotochromatic: UISwitch!
+    @IBOutlet weak var tableMaterials: UITableView!
+    @IBOutlet weak var textSphere: UITextField!
+    @IBOutlet weak var switchNylonmount: UISwitch!
+    
+    func materialResults(){
+        
+        //Based on existing values... change results in the table view.
+     
+        var sql = ""
+        if (!textSphere.text!.isEmpty){
+        if Float(textSphere.text!) > 0.0 || Float(textSphere.text!) < 0.0 {
+            sql = "SELECT MATERIALNAME, MATERIALINDEX FROM MATERIALS WHERE "
+        
+            if (Float(textSphere.text!) < 0.0){
+                sql += textSphere.text! + "> MINUSMIN AND "+textSphere.text! + "<MINUSMAX"
+            }
+            if (Float(textSphere.text!)! > 0.0){
+                sql += textSphere.text! + "> PLUSMIN AND "+textSphere.text! + "<PLUSMAX"
+            }
+            if switchIndustrial.on || switchSports.on {
+                sql += " AND SAFETY=1"
+            }
+            if switchPhotochromatic.on {
+                    sql += " AND PHOTOCHROMATIC=1"
+            }
+            if (switchDrillmount.on) {
+                sql += " AND DRILLMOUNT>3"
+            }
+            if (switchNylonmount.on){
+               sql += " AND NYLONMOUNT>3"
+            }
+            
+ 
+        if (sql.characters.count > 0){
+           
+            results.removeAll()
+            let databasePath = getSupportPath("genie.db") // grab the database.
+            let genieDB = FMDatabase(path: String(databasePath))
+            if genieDB.open() {
+                
+                if let rs = genieDB.executeQuery(sql, withArgumentsInArray:nil) {
+                    print(sql)
+                    while rs.next() {
+                        let label = ((rs.stringForColumn("MATERIALNAME")!) + ": " + (rs.stringForColumn("MATERIALINDEX")!))
+                        results.append(label)
+                    }
+                } else {
+                    print("select failure: \(genieDB.lastErrorMessage())")
+                }
+                genieDB.close()
+  
+            }
+            print(results)
+            tableMaterials.reloadData()
+            
+            }
+        }
+        }
+        
+    }
+    
+    
+    
+    @IBAction func switchDrillmount_Change(sender: UISwitch) {
+        
+        if (textSphere.text!.isEmpty){
+            sender.setOn(false, animated:false)
+            sphereEmptyAlert()
+        }else{
+            materialResults()
+        }
+
+    }
+    
+    
+    @IBAction func switchPhoto_change(sender: UISwitch) {
+        
+        
+        if (textSphere.text!.isEmpty){
+            sender.setOn(false, animated:false)
+            sphereEmptyAlert()
+        }else{
+            materialResults()
+        }
+    
+    }
+    @IBAction func switchSports(sender: UISwitch) {
+        if (textSphere.text!.isEmpty){
+            sender.setOn(false, animated:false)
+            sphereEmptyAlert()
+        }else{
+            materialResults()
+        }
+    
+    }
+    @IBAction func switchIndustrial_Change(sender: UISwitch) {
+        if (textSphere.text!.isEmpty){
+            sender.setOn(false, animated:false)
+            sphereEmptyAlert()
+        }else{
+            materialResults()
+        }
+    }
+   
+    func sphereEmptyAlert(){
+         // turn it off!
+        textSphere.becomeFirstResponder()
+        let alert = UIAlertController(title: "Prescription Not Entered!", message: "Sphere must contain a value BELOW 0.0 or ABOVE 0.0", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: { action in
+            switch action.style{
+            case .Default:
+                print("default")
+                
+            case .Cancel:
+                print("cancel")
+                
+            case .Destructive:
+                print("destructive")
+            }
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+
+    }
+    
+    @IBAction func textSphere_Change(sender: UITextField) {
+        
+        if (!textSphere.text!.isEmpty){
+                materialResults()
+        }else{
+            sphereEmptyAlert()
+        }
+        
+        
+    }
+    
+    func btnMaterial(){
+       
+        //Turn off other layers buttons, et el.
+        panLens = false
+        panBackground = false
+        panTransitions = false
+        
+        //Turn on Matial View Panel
+        materialView.hidden = false
+        globalImageView.hidden = false
+        globalImageView.image = UIImage(named: "snapshot-default")
+        globalImageView.layer.opacity = 0.5
+        materialView.layer.zPosition = 10
+        
+        //Turn off Defaults
+        mainImageView.hidden = true
+        sidebarView.hidden = true
+        Button1.hidden = true
+        Button2.hidden = true
+        Button3.hidden = true
+        Button4.hidden = true
+        btnHydrophop.hidden = true
+        btnAntiReflection.hidden = true
+        btnHardCoat.hidden = true
+        btnPhotochrom.hidden = true
+      
+        
+        //Turn off Thickness Layers
+        prescriptionView.hidden = true
+        lensLeftImage.hidden = true
+        lensRightImage.hidden = true
+        thicknessLayer.hidden = true
+        
+        
+        
+    }
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return results.count
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as UITableViewCell
+        cell.textLabel?.text = self.results[indexPath.row]
+        return cell
+        
+        
+    }
+
+    
+ 
+    @IBOutlet weak var materialView: UIView!
+    
+    override func viewDidLoad(){
+        
+        
+        super.viewDidLoad()
+
+        self.tableMaterials.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+
         //Manually create custom buttons for the bottom tool bar.
         let helper = FunctionsHelper()
         let buttonProgressive = helper.createImageButton("btn-progressive", buttonTitle: "Progressive",selector: "btnProgressive")
         let buttonCoatings = helper.createImageButton("btn-coatings", buttonTitle: "Coatings", selector: "btnCoatings")
-        let buttonTransitions = helper.createImageButton("btn-transitions",buttonTitle: "Transitions", selector: "btnTransitions")
-        let buttonDrivewear = helper.createImageButton("btn-driverwear",buttonTitle: "Progressive", selector: "btnDriverwear")
+        let buttonTransitions = helper.createImageButton("btn-transitions",buttonTitle: "Photochromatic", selector: "btnTransitions")
+        let buttonDrivewear = helper.createImageButton("btn-driverwear",buttonTitle: "Drivewear", selector: "btnDriverwear")
         let buttonThickness = helper.createImageButton("btn-thickness", buttonTitle: "Thickness", selector: "btnThickness")
-        let buttonMeasure = helper.createImageButton("btn-coatings",buttonTitle: "Measure PD", selector: "btnMeasure")
-        let items = [buttonProgressive,buttonCoatings,buttonThickness,buttonTransitions,buttonDrivewear, buttonMeasure]
+        let buttonMaterial = helper.createImageButton("btn-thickness",buttonTitle: "Material", selector: "btnMaterial")
+        let items = [buttonProgressive,buttonCoatings,buttonThickness,buttonTransitions,buttonDrivewear,buttonMaterial]
         BottomToolbar.items = items
         
         
@@ -2422,7 +2624,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         blurRadius = 0.0
         drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
         setDefaultLayers(UIImage(named: currentBackgroundImageName + "-n")!)
-     
+        
         //Grab button images as saved in DB and set them.
         setBtn1FromDirectory(grabButtonImageName(1))
         setBtn2FromDirectory(grabButtonImageName(2))
@@ -2436,8 +2638,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         iCarosel.reloadData()
         
         //Instantiate the prescription Picker so its ready when user clicks thickness.
-        prescriptionLeftPicker = PrescriptionPickerView(frame: CGRect(x: fullBackgroundLayer.frame.width/4-150,y: 0,width: 300,height: 150))
-        prescriptionRightPicker = PrescriptionPickerView(frame: CGRect(x: fullBackgroundLayer.frame.width-fullBackgroundLayer.frame.width/4-150,y: 0,width: 300,height: 150))
+        prescriptionLeftPicker = PrescriptionPickerView(frame: CGRect(x: fullBackgroundLayer.frame.width/4-150,y: 10,width: 300,height: 150))
+        prescriptionRightPicker = PrescriptionPickerView(frame: CGRect(x: fullBackgroundLayer.frame.width-fullBackgroundLayer.frame.width/4-150,y: 10,width: 300,height: 150))
         prescriptionView.addSubview(prescriptionLeftPicker)
         prescriptionView.addSubview(prescriptionRightPicker)
         
@@ -2449,15 +2651,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         
         
         colorLayer.opacity = 0.0
-        
-        super.viewDidLoad()
-        
-        
-    }
-    
-    
-    override func viewDidLoad(){
-        
+
         
         
         //Turn off other layers buttons, et el.
@@ -2470,7 +2664,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
         btnPhotochrom.hidden = true
         btnHardCoat.hidden = true
         btnAntiSmudge.hidden = true
-
+        materialView.hidden = true
 
         //Setup reusable global Context
         context = CIContext(EAGLContext: glContext,
@@ -2478,13 +2672,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate 
                 kCIContextWorkingColorSpace: NSNull()
             ]
         )
-
         
-        
-   }
+      tableMaterials.delegate = self
+      tableMaterials.dataSource = self
+   
     
     
-       
+    }
+ 
     
     @IBOutlet weak var BottomToolbar: UIToolbar!
   
