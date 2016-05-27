@@ -66,6 +66,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
     var lastBackgroundPosition = CGPointZero
     var lastMagnifyLocation = CGPointZero
     var lastHandsPosition = CGPointZero
+    var lastHydroPosition = CGPointZero
     var initialLensPosition = CGPointZero
     var initialLensMaskPosition = CGPointZero
     var initialLeftBlurPosition = CGPointZero
@@ -130,7 +131,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
             }else{
               
                 self.lastHandsPosition = handsLayer.position
-                self.hydroPosition = hydroLayer.position
+                self.lastHydroPosition = hydroLayer.position
                
             }
         }
@@ -222,9 +223,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
                         //Slide between 0 and 800px.
                         if (newpos < 800 && newpos >  0){
                             //The hydrolayer has a smaller range.
-                          
-                            hydroLayer.position = CGPointMake(self.hydroLayer.position.x + newTranslation.x, self.hydroLayer.position.y)
-                            handsLayer.position = CGPointMake(newpos, self.handsLayer.position.y)
+                            
+                            hydroLayer.position = CGPointMake(lastHydroPosition.x + newTranslation.x, self.hydroLayer.position.y)
+                            handsLayer.position = CGPointMake(lastHandsPosition.x + newTranslation.x, self.handsLayer.position.y)
                         }
                         
                     }
@@ -234,6 +235,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         }
         
     }
+    
     
     
     @IBOutlet weak var btnAntiSmudge: UIButton!
@@ -504,6 +506,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         thicknessLayer.hidden = true
         lensLeftImage.hidden = true
         lensRightImage.hidden = true
+        materialView.hidden = true
         Button1.hidden = true
         Button2.hidden = true
         Button3.hidden = true
@@ -701,9 +704,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         if (cameraActive){
             
         }else{
-            swapLensImage(Float(blurRadius),swapToImage: currentBackgroundImageName)
+            self.swapLensImage(self.blurRadius, swapToImage: self.currentBackgroundImageName)
+            
+     
         }
-        
     }
     
     @IBAction func sliderPower(sender: UISlider) {
@@ -1035,6 +1039,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
     
     var magSize = Float(20)
     var magScale = Float(1.0)
+    var magimg = UIImage()
     
     func swapMagnifyLayer(blurRadius:  Float){
         
@@ -1042,14 +1047,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         let bulgx = lensShapelayer.position.x-112 //adjustment for the full image (sidebar).
         let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/4))
         
-        /*** set the MAGNIFY LAYER ***/
-        magnifyLayer.removeFromSuperlayer()
-        let img = magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName + "-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale: magScale)
-      
-        let image = UIImageView(image: img)
+       magimg = magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName + "-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale: magScale)
+        let image = UIImageView(image: magimg)
         magnifyLayer.addSublayer(image.layer)
-        magnifyLayer.path = drawLensPath()
-        imageLayer.addSublayer(magnifyLayer)
+      
     }
     
     func swapMagnifyLayerALT(blurRadius:  Float){
@@ -1072,17 +1073,17 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
     func swapLensImage(blurRadius: Float, swapToImage: String){
       
         
-   
+        
             leftBlurLayer.removeFromSuperlayer()
             rightBlurLayer.removeFromSuperlayer()
         
             swapMagnifyLayer(blurRadius)
-     
+       
             let bulgx = lensShapelayer.frame.width-112 //adjustment for sidebar
             let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/3))
         
             //Use the magnify image and blur it per sender values.
-            let img = UIImageView(image: magnifyImage(blurRadius,imageName: UIImage(named: swapToImage+"-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale:magScale))
+            let img = UIImageView(image: magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName+"-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale:magScale))
             let leftimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
             let rightimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
       
@@ -1107,12 +1108,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         
         return CGPathCreateCopyByStrokingPath(copyFrom, nil, strokeWidth, .Butt, .Miter, 0.0)!
     }
-
+    
     
     func blurImg(blurRadius: Float, imageName: UIImage)->UIImage{
-    
         
-        let glContext = EAGLContext(API: .OpenGLES2)
         context = CIContext(EAGLContext: glContext,
             options: [
                 kCIContextWorkingColorSpace: NSNull()
@@ -1120,29 +1119,22 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         )
         
         
-        let beginImage = CIImage(image: imageName)
-        let transform = CGAffineTransformIdentity
-        
         let clampFilter = CIFilter(name: "CIAffineClamp")!
         let currentFilter = CIFilter(name: "CIGaussianBlur")!
         
-        clampFilter.setValue(beginImage!, forKey: "inputImage")
+        clampFilter.setValue(beginImage, forKey: "inputImage")
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         
         currentFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
         currentFilter.setValue(blurRadius*2, forKey: "inputRadius")
         
-        let cgimg = context.createCGImage(currentFilter.outputImage!, fromRect: beginImage!.extent)
+        let cgimg = context.createCGImage(currentFilter.outputImage!, fromRect: beginImage.extent)
         return UIImage(CGImage: cgimg) //has to have the CGImage piece on the end!!!!!
         
     }
     
     
-    let glContext = EAGLContext(API: .OpenGLES2)
-    let transform = CGAffineTransformIdentity
-    let clampFilter = CIFilter(name: "CIAffineClamp")!
-    let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
-
+   
     func croppIngimage(imageToCrop:UIImage, toRect rect:CGRect) -> UIImage{
         
         let imageRef:CGImageRef = CGImageCreateWithImageInRect(imageToCrop.CGImage, rect)!
@@ -1153,12 +1145,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
     
     func magnifyImage(blurRadius: Float,imageName: UIImage, bulgeX: CGFloat, bulgeY: CGFloat, magSize: Float, magScale: Float) ->UIImage{
         
+    
+        beginImage = CIImage(image: imageName)!
         
-        let beginImage = CIImage(image: imageName)
-        
-        
-        
-        clampFilter.setValue(beginImage!, forKey: "inputImage")
+        clampFilter.setValue(beginImage, forKey: "inputImage")
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         
         bulgeFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
@@ -1172,7 +1162,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
        // print("Mag:\(magScale)")
         //bulgeFilter.setValue(magScale, forKey: "inputScale")
         
-        let cgimg = context.createCGImage(bulgeFilter.outputImage!, fromRect: beginImage!.extent)
+        let cgimg = context.createCGImage(bulgeFilter.outputImage!, fromRect: beginImage.extent)
         return UIImage(CGImage: cgimg) //has to have the CGImage piece on the end!!!!!
 
 
@@ -1834,7 +1824,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         panTransitions = false
         panBackground = false
         
-        
+        globalImageView.hidden = true
         mainImageView.hidden = false
         sidebarView.hidden = true
         Button1.hidden = false
@@ -1847,6 +1837,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         lensLeftImage.hidden = true
         lensRightImage.hidden = true
         thicknessLayer.hidden = true
+        materialView.hidden = true
         
         //If the LensShape was removed via transitions or otherwise, add it back
         var hasLens = false
@@ -1939,7 +1930,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         prescriptionView.hidden = true
         lensLeftImage.hidden = true
         lensRightImage.hidden = true
-       
+        materialView.hidden = true
+        globalImageView.hidden = true
+    
+    
         removeNamedLayer(lensShapelayer, namedLayer: "lensBGImage")
       
         coatingsLayer.removeFromSuperlayer()
@@ -1976,6 +1970,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         panTransitions = true
         
         //Turn off Defaults
+        
         mainImageView.hidden = false
         sidebarView.hidden = true
         Button1.hidden = true
@@ -1993,6 +1988,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         lensLeftImage.hidden = true
         lensRightImage.hidden = true
         thicknessLayer.hidden = true
+        materialView.hidden = true
+        
         
         /*
         colorControl.items = ["WEEKLY", "MONTHLY", "YEARLY"]
@@ -2174,6 +2171,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         globalImageView.hidden = false
         globalImageView.image = UIImage(named: "women")!
         mainImageView.hidden = true
+        materialView.hidden = true
+        
         prescriptionView.hidden = false
         lensLeftImage.hidden = false
         lensRightImage.hidden = false
@@ -2231,10 +2230,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
             ]
         )
         
-        let clampFilter = CIFilter(name: "CIAffineClamp")!
+       // let clampFilter = CIFilter(name: "CIAffineClamp")!
         let currentFilter = CIFilter(name: "CIGaussianBlur")!
    
-        var beginImage = CIImage()
+      //  var beginImage = CIImage()
         if savebg {
             beginImage = CIImage(image: UIImage(named: imageName + "-n")!)! // append normal
             currentBackgroundImageName = imageName // Save the name!!!! so we can switch, we dont want to switch for photochrom hence, flag!
@@ -2242,7 +2241,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
             beginImage = CIImage(image: UIImage(named: imageName)!)!
         }
         
-        let transform = CGAffineTransformIdentity
+      //  let transform = CGAffineTransformIdentity
         clampFilter.setValue(beginImage, forKey: "inputImage")
         clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
         currentFilter.setValue(clampFilter.outputImage, forKey: "inputImage")
@@ -2291,8 +2290,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
       //  let smallerImage = context.createCGImage(beginImage!, fromRect: imageSize)
         
         
-        let transform = CGAffineTransformIdentity
-        let clampFilter = CIFilter(name: "CIAffineClamp")!
+       // let transform = CGAffineTransformIdentity
+        //let clampFilter = CIFilter(name: "CIAffineClamp")!
         let currentFilter = CIFilter(name: "CIGaussianBlur")!
       //  let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
         
@@ -2424,7 +2423,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
             sql = "SELECT MATERIALNAME, MATERIALINDEX FROM MATERIALS WHERE "
         
             if (Float(textSphere.text!) < 0.0){
-                sql += textSphere.text! + "> MINUSMIN AND "+textSphere.text! + "<MINUSMAX"
+                sql += textSphere.text! + "< MINUSMIN AND "+textSphere.text! + ">MINUSMAX"
             }
             if (Float(textSphere.text!)! > 0.0){
                 sql += textSphere.text! + "> PLUSMIN AND "+textSphere.text! + "<PLUSMAX"
@@ -2462,8 +2461,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
                 genieDB.close()
   
             }
-            print(results)
-            tableMaterials.reloadData()
+                       tableMaterials.reloadData()
             
             }
         }
@@ -2484,6 +2482,15 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
 
     }
     
+    @IBAction func switchNylon_Change(sender: UISwitch) {
+        
+        if (textSphere.text!.isEmpty){
+            sender.setOn(false, animated:false)
+            sphereEmptyAlert()
+        }else{
+            materialResults()
+        }
+    }
     
     @IBAction func switchPhoto_change(sender: UISwitch) {
         
@@ -2537,11 +2544,18 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
     @IBAction func textSphere_Change(sender: UITextField) {
         
         if (!textSphere.text!.isEmpty){
+            
+            let numbers = NSCharacterSet.decimalDigitCharacterSet();
+            let value = sender.text!.rangeOfCharacterFromSet(numbers);
+            if let result = value {
                 materialResults()
+            }
+            
         }else{
             sphereEmptyAlert()
         }
-        
+       
+
         
     }
     
@@ -2556,7 +2570,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         materialView.hidden = false
         globalImageView.hidden = false
         globalImageView.image = UIImage(named: "snapshot-default")
-        globalImageView.layer.opacity = 0.5
         materialView.layer.zPosition = 10
         
         //Turn off Defaults
@@ -2676,10 +2689,18 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
       tableMaterials.delegate = self
       tableMaterials.dataSource = self
    
-    
-    
+        //set up globals for reuse of image processing (reduce memory)
+        beginImage = CIImage(image: UIImage(named:currentBackgroundImageName+"-v")!)!
+        magnifyLayer.path = drawLensPath()
+        
     }
- 
+    
+    let glContext = EAGLContext(API: .OpenGLES2)
+    var beginImage = CIImage()
+    let transform = CGAffineTransformIdentity
+    let clampFilter = CIFilter(name: "CIAffineClamp")!
+    let bulgeFilter = CIFilter(name: "CIBumpDistortion")!
+
     
     @IBOutlet weak var BottomToolbar: UIToolbar!
   

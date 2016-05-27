@@ -106,15 +106,6 @@ class ReferencePoint {
             print("target is nil")
             return
         }
-        /*
-        var rad: CGFloat = 0
-        let size = target!.frame.size
-        if let r = self.radius {
-            rad = r
-        } else {
-            rad = min(size.height, size.width)
-        }
-        */
         
         referencePoint = createReferenceShape()
         referencePoint.fillRule = kCAFillRuleEvenOdd

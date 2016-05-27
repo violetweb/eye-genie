@@ -63,19 +63,19 @@ class CredentialController: UIViewController {
         
     }
     
-    /*
+    
     @IBAction func btnSendLogin(sender: UIButton) {
         
         
          sender.buttonBounce()
         
         //Activate the spinner (don't allow any interaction until results are returned.
-       // spinner = UIActivityIndicatorView(frame: CGRectMake(0,0,50,50))
-       // spinner.center = self.view.center
-        //spinner.hidesWhenStopped = true
-        //spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-       // view.addSubview(spinner)
-       // spinner.startAnimating()
+        spinner = UIActivityIndicatorView(frame: CGRectMake(0,0,50,50))
+        spinner.center = self.view.center
+        spinner.hidesWhenStopped = true
+        spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(spinner)
+        spinner.startAnimating()
         UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         processEmail() {
             jsonString in
@@ -100,7 +100,7 @@ class CredentialController: UIViewController {
     
     }
 
-*/
+
     func processEmail(completion: (NSDictionary) -> ()) {
         
         

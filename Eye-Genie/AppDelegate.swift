@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        dropData() //- dumps the genie.db and resets up everything... used while testing.
+      //  dropData() //- dumps the genie.db and resets up everything... used while testing.
         dropFilesFromApplicationPath()
         setUpDatabase()
         setUpFiles()

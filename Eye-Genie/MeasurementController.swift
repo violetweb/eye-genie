@@ -172,14 +172,15 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
     
     //AS OF RIGHT NOW, SINGLE = DOUBLE, AND VICE VERSA (NAMING CONVENTION-WISE) SUCKS WHEN YOU SWITCH.
     
-    //double tap
+    
+    
     func sglADetected(){
        
         imageview = imgA
         
         let basealpha = imgA.image != nil ? CGFloat(1.0) : CGFloat(0.5)
         
-        if (imgA.image != nil){
+        
             if (imageview.frame.size == self.MainView.frame.size){
             
             UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
@@ -191,8 +192,12 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
                 self.imgD.frame = self.DBounds
                 }, completion: nil)
             
-            }else {
-            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            } else {
+                
+                if (imgA.image != nil){
+                    
+
+                    UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
                 self.imageview.alpha = 1.0
                 self.imageview.frame = CGRect(x: self.imageview.frame.origin.x, y: self.imageview.frame.origin.y, width: self.MainView.frame.size.width, height: self.MainView.frame.size.height)
@@ -205,8 +210,7 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
                 self.imgC.layer.zPosition = 1
                 self.imgD.layer.zPosition = 1
                 }, completion:nil)
-            }
-
+                }
         }
     }
     
@@ -216,7 +220,7 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
        
         let basealpha = imgB.image != nil ? CGFloat(1.0) : CGFloat(0.5)
         
-        if (imgB.image != nil){
+        
             
        
             if (imageview.frame.size == self.MainView.frame.size){
@@ -231,7 +235,8 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
                 }, completion: nil)
             
             }else {
-            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                if (imgB.image != nil){
+                    UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 
                 self.imageview.alpha = 1.0
                 self.imageview.frame = CGRect(x: self.imageview.frame.origin.x-self.MainView.frame.size.width/2, y: self.imageview.frame.origin.y, width: self.MainView.frame.size.width, height: self.MainView.frame.size.height)
@@ -246,8 +251,7 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
                 self.imgD.layer.zPosition = 1
                 
                 }, completion: nil)
-                    }
-        }
+                }        }
         
     }
     func sglCDetected(){
@@ -256,7 +260,6 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
         let basealpha = imgC.image != nil ? CGFloat(1.0) : CGFloat(0.5)
         MainView.bringSubviewToFront(imgC)
         
-        if (imgC.image != nil){
         
         if (imageview.frame.size == self.MainView.frame.size){
             
@@ -270,19 +273,21 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
                 }, completion: nil)
             
         }else {
-            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            if (imgC.image != nil){
+
+                UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 
-                self.imageview.alpha = 1.0
-                self.imageview.frame = CGRect(x: self.imgC.frame.origin.x, y: self.imgC.frame.origin.y-self.MainView.frame.size.height/2, width: self.MainView.frame.size.width, height: self.MainView.frame.size.height)
+                    self.imageview.alpha = 1.0
+                    self.imageview.frame = CGRect(x: self.imgC.frame.origin.x, y: self.imgC.frame.origin.y-self.MainView.frame.size.height/2, width: self.MainView.frame.size.width, height: self.MainView.frame.size.height)
                 
-                 self.imgA.frame = self.ABounds
-                self.imgB.frame = self.BBounds
-                self.imgD.frame = self.DBounds
-                self.imgA.layer.zPosition = 1
-                self.imgB.layer.zPosition = 1
-                self.imgC.layer.zPosition = 2
-                self.imgD.layer.zPosition = 1
-                }, completion: nil)
+                        self.imgA.frame = self.ABounds
+                    self.imgB.frame = self.BBounds
+                    self.imgD.frame = self.DBounds
+                    self.imgA.layer.zPosition = 1
+                    self.imgB.layer.zPosition = 1
+                    self.imgC.layer.zPosition = 2
+                    self.imgD.layer.zPosition = 1
+                    }, completion: nil)
            
             }
         }
@@ -294,8 +299,7 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
      
         let basealpha = imgD.image != nil ? CGFloat(1.0) : CGFloat(0.5)
         
-        if (imgD.image != nil){
-            
+        
             if (imageview.frame.size == self.MainView.frame.size){
             
                 UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
@@ -308,25 +312,24 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
                 }, completion: nil)
             
             }else {
-                UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+              
+                if (imgD.image != nil){
+
+                    UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 
-                self.imageview.alpha = 1.0
-                self.imageview.frame = CGRect(x: self.imgD.frame.origin.x-self.MainView.frame.size.width/2, y: self.imgD.frame.origin.y-self.MainView.frame.size.height/2, width: self.MainView.frame.size.width, height: self.MainView.frame.size.height)
+                        self.imageview.alpha = 1.0
+                        self.imageview.frame = CGRect(x: self.imgD.frame.origin.x-self.MainView.frame.size.width/2, y: self.imgD.frame.origin.y-self.MainView.frame.size.height/2, width: self.MainView.frame.size.width, height: self.MainView.frame.size.height)
                 
-                self.imgA.frame = self.ABounds
-                self.imgB.frame = self.BBounds
-                self.imgC.frame = self.CBounds
-                self.imgA.layer.zPosition = 1
-                self.imgB.layer.zPosition = 1
-                self.imgC.layer.zPosition = 1
-                self.imgD.layer.zPosition = 2
+                        self.imgA.frame = self.ABounds
+                        self.imgB.frame = self.BBounds
+                        self.imgC.frame = self.CBounds
+                        self.imgA.layer.zPosition = 1
+                        self.imgB.layer.zPosition = 1
+                        self.imgC.layer.zPosition = 1
+                        self.imgD.layer.zPosition = 2
                 }, completion: nil)
-            
-                
-                //Add an overlay that lets the user know that they double tap to minimize.
-                
-            }
-        }
+                    
+                }        }
         
     }
        
@@ -532,6 +535,7 @@ class MeasurementController: UIViewController, UIImagePickerControllerDelegate, 
         instructionView.layer.zPosition = 3
         
         picker.delegate = self;
+        
         
         
         //Save frame initial sizing ( used by animation to return to its original size)
