@@ -722,12 +722,12 @@
                                     <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg-home.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="9nv-on-VjF">
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="703"/>
                                     </imageView>
-                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="demo" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wie-3V-mhl">
+                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wie-3V-mhl">
                                         <rect key="frame" x="360" y="161" width="305" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                     </textField>
-                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="12345" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GWB-Ns-rVR">
+                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GWB-Ns-rVR">
                                         <rect key="frame" x="360" y="209" width="305" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
@@ -1112,7 +1112,11 @@ EEZpdHRpbmcgSGVpZ2h0A
                                                 <segue destination="yKN-1g-Kqo" kind="show" id="3G0-9K-iD4"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Logout" id="YG6-As-maM"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Logout" id="YG6-As-maM">
+                                            <connections>
+                                                <segue destination="ukz-Tl-yTL" kind="showDetail" id="znB-wQ-Elf"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -1406,7 +1410,7 @@ EEZpdHRpbmcgSGVpZ2h0A
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="T6r-Eu-niq"/>
-        <segue reference="m4h-bP-kbA"/>
-        <segue reference="sKk-nL-HGK"/>
+        <segue reference="znB-wQ-Elf"/>
+        <segue reference="3G0-9K-iD4"/>
     </inferredMetricsTieBreakers>
 </document>
