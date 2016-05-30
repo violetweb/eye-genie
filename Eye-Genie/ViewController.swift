@@ -210,7 +210,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
                         
                         let newpos = self.lastBackgroundPosition.x + newTranslation.x
                         
-                        var percentage = Float(newpos/1962)/2 //Width of the part where we start to consider the opacity, divided by 2, cause we don't want full opacity **max of 50% never 1.0)***.
+                        var percentage = Float(newpos/1525)/2 //Width of the part where we start to consider the opacity, divided by 2, cause we don't want full opacity **max of 50% never 1.0)***.
                         percentage = -percentage
                         
                         if (newpos > -1825 && newpos < 500){
