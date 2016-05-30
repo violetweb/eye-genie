@@ -12,7 +12,7 @@ import AVFoundation
 
 
 
-class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
    
     
@@ -20,6 +20,9 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
     @IBOutlet weak var lblAdd: UILabel!
    
     
+    @IBOutlet weak var lblAddDisplay: UILabel!
+    @IBOutlet weak var lblPowerDisplay: UILabel!
+ 
     var cameraActive = false
     var panLens = true
     var panTransitions = false
@@ -112,14 +115,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
             
             self.lastSavedLocation = lensShapelayer.position  // Works with panGesture... track the last position.
             self.lastSavedImgLocation = imageLayer.mask!.position
-    
-            if (sliderAddOutlet.value > 0.0){
-                self.lastSavedBlurLocation = leftBlurLayer.mask!.position
-                self.lastSavedRightBlurLocation = rightBlurLayer.mask!.position
-                self.lastMagnifyLocation = magnifyLayer.mask!.position
-                
-            }
+            self.lastSavedBlurLocation = leftBlurLayer.mask!.position
+            self.lastSavedRightBlurLocation = rightBlurLayer.mask!.position
             
+            if (sliderAddOutlet.value > 0.0){
+                
+                 self.lastMagnifyLocation = magnifyLayer.mask!.position
+            }
+           
         }else{
             //slider is the pan gesture....
             if (panTransitions){
@@ -155,12 +158,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
                 lensShapelayer.position = CGPointMake(self.lastSavedLocation.x + newTranslation.x , self.lastSavedLocation.y + newTranslation.y)
                 imageLayer.mask!.position = CGPointMake(self.lastSavedImgLocation.x + newTranslation.x , self.lastSavedImgLocation.y + newTranslation.y)
                 
+                
+                leftBlurLayer.mask!.position = CGPointMake(self.lastSavedBlurLocation.x + newTranslation.x, self.lastSavedBlurLocation.y + newTranslation.y)
+                rightBlurLayer.mask!.position = CGPointMake(self.lastSavedRightBlurLocation.x + newTranslation.x, self.lastSavedRightBlurLocation.y + newTranslation.y)
+                
                 if (sliderAddOutlet.value > 0.0){
             
             
-                    leftBlurLayer.mask!.position = CGPointMake(self.lastSavedBlurLocation.x + newTranslation.x, self.lastSavedBlurLocation.y + newTranslation.y)
-                    rightBlurLayer.mask!.position = CGPointMake(self.lastSavedRightBlurLocation.x + newTranslation.x, self.lastSavedRightBlurLocation.y + newTranslation.y)
-                    magnifyLayer.mask!.position = CGPointMake(self.lastMagnifyLocation.x + newTranslation.x, self.lastMagnifyLocation.y + newTranslation.y)
+                           magnifyLayer.mask!.position = CGPointMake(self.lastMagnifyLocation.x + newTranslation.x, self.lastMagnifyLocation.y + newTranslation.y)
                 
                 }
             } else if (sender.state == UIGestureRecognizerState.Ended){
@@ -235,6 +240,10 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         }
         
     }
+    
+    
+    @IBOutlet weak var outletPlusSphere: UIButton!
+    @IBOutlet weak var outletMinusSphere: UIButton!
     
     
     
@@ -701,9 +710,11 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
     @IBAction func sliderAdd(sender: UISlider) {
       
         blurRadius = sender.value
+        
         if (cameraActive){
             
         }else{
+            lblAddDisplay.text = String(format:"%.2f",blurRadius)
             self.swapLensImage(self.blurRadius, swapToImage: self.currentBackgroundImageName)
             
      
@@ -721,6 +732,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
             
             //drawBackgroundLayer(blurRadius, imageName: blurImageName, savebg: true)
         }else{
+            
+            lblPowerDisplay.text = String(format:"%.2f",blurRadius)
             drawBackgroundLayer(blurRadius, imageName: currentBackgroundImageName, savebg: true)
         }
         
@@ -1047,7 +1060,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         let bulgx = lensShapelayer.position.x-112 //adjustment for the full image (sidebar).
         let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/4))
         
-       magimg = magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName + "-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale: magScale)
+       magimg = magnifyImage(blurRadius, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale: magScale)
         let image = UIImageView(image: magimg)
         magnifyLayer.addSublayer(image.layer)
       
@@ -1060,7 +1073,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/4))
         
         magnifyLayer.removeFromSuperlayer()
-        let img = magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName + "-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale: magScale)
+        let img = magnifyImage(blurRadius, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale: magScale)
         let image = UIImageView(image: img)
         magnifyLayer.addSublayer(image.layer)
         magnifyLayer.path = drawLensPath()
@@ -1083,10 +1096,13 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
             let bulgy = mainImageView.frame.height - (lensShapelayer.position.y+(lensShapelayer.frame.height/3))
         
             //Use the magnify image and blur it per sender values.
-            let img = UIImageView(image: magnifyImage(blurRadius,imageName: UIImage(named: currentBackgroundImageName+"-v")!, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale:magScale))
+            let img = UIImageView(image: magnifyImage(blurRadius, bulgeX: bulgx, bulgeY: bulgy, magSize: magSize, magScale:magScale))
             let leftimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
             let rightimg = UIImageView(image: blurImg(blurRadius, imageName: img.image!))
       
+      
+        
+        
             leftBlurLayer.path = leftMask.path
             leftBlurLayer.fillColor = UIColor.clearColor().CGColor
             leftBlurLayer.addSublayer(leftimg.layer)
@@ -1143,6 +1159,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
     }
     
     
+   /*
     func magnifyImage(blurRadius: Float,imageName: UIImage, bulgeX: CGFloat, bulgeY: CGFloat, magSize: Float, magScale: Float) ->UIImage{
         
     
@@ -1167,7 +1184,23 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
 
 
     }
-    
+  */
+   
+    func magnifyImage(blurRadius: Float, bulgeX: CGFloat, bulgeY: CGFloat, magSize: Float, magScale: Float)->UIImage{
+        beginImage = CIImage(image: UIImage(named: currentBackgroundImageName + "-v")!)!
+        clampFilter.setValue(beginImage, forKey: "inputImage")
+        clampFilter.setValue(NSValue(CGAffineTransform: transform), forKey: "inputTransform")
+        bulgeFilter.setValue(clampFilter.outputImage!, forKey: "inputImage")
+        var bulgeValue = Float(0.0)
+        if (sliderAddOutlet.value>0) {
+            bulgeValue = (sliderAddOutlet.value+4 * 40)/magScale
+        }
+        bulgeFilter.setValue(bulgeValue,forKey: "inputRadius")
+        bulgeFilter.setValue(CIVector(x: bulgeX, y: bulgeY), forKey: kCIInputCenterKey)
+        let finalimage = context.createCGImage(bulgeFilter.outputImage!, fromRect: beginImage.extent)
+        return UIImage(CGImage: finalimage)
+    }
+
  
     
     
@@ -1260,8 +1293,6 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         }else{
             print("database failed to open.")
         }
-        
-        
         return shape
     }
     
@@ -1644,12 +1675,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         imageLayer.name = "imageLayer";
         
         
+        
         leftBlurLayer.frame = pilotsLayer.bounds
         leftBlurLayer.path = leftMask.path
         leftBlurLayer.bounds = CGRect(x: 0, y: 0, width: pilotsLayer.frame.width, height: pilotsLayer.frame.height)
         leftBlurLayer.fillRule = kCAFillRuleEvenOdd;
         leftBlurLayer.zPosition = 4
         leftBlurLayer.name = "leftBlurLayer"
+        
         
         rightBlurLayer.frame = pilotsLayer.bounds
         rightBlurLayer.path = rightMask.path
@@ -2168,10 +2201,12 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         setUpThickness()
         
         ////Swap the global image out for the Thickness image and unhide thickness related dials.
-        globalImageView.hidden = false
+    
         globalImageView.image = UIImage(named: "women")!
         mainImageView.hidden = true
         materialView.hidden = true
+        globalImageView.hidden = false
+
         
         prescriptionView.hidden = false
         lensLeftImage.hidden = false
@@ -2420,7 +2455,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         var sql = ""
         if (!textSphere.text!.isEmpty){
         if Float(textSphere.text!) > 0.0 || Float(textSphere.text!) < 0.0 {
-            sql = "SELECT MATERIALNAME, MATERIALINDEX FROM MATERIALS WHERE "
+            sql = "SELECT MATERIALNAME, MATERIALINDEX, DRILLMOUNT,NYLONMOUNT,COST FROM MATERIALS WHERE "
         
             if (Float(textSphere.text!) < 0.0){
                 sql += textSphere.text! + "< MINUSMIN AND "+textSphere.text! + ">MINUSMAX"
@@ -2434,12 +2469,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
             if switchPhotochromatic.on {
                     sql += " AND PHOTOCHROMATIC=1"
             }
-            if (switchDrillmount.on) {
-                sql += " AND DRILLMOUNT>3"
-            }
-            if (switchNylonmount.on){
-               sql += " AND NYLONMOUNT>3"
-            }
+           
             
  
         if (sql.characters.count > 0){
@@ -2452,7 +2482,14 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
                 if let rs = genieDB.executeQuery(sql, withArgumentsInArray:nil) {
                     print(sql)
                     while rs.next() {
-                        let label = ((rs.stringForColumn("MATERIALNAME")!) + ": " + (rs.stringForColumn("MATERIALINDEX")!))
+                        let starsDrillmount = Int(rs.stringForColumn("DRILLMOUNT"))
+                        let starsNylonmount = rs.stringForColumn("NYLONMOUNT")
+                        var displayDrill = ""
+                        for var i=0; i<starsDrillmount; i++ {
+                            displayDrill = displayDrill + "*"
+                        }
+                        
+                        let label = ((rs.stringForColumn("MATERIALNAME")!) + ": " + (rs.stringForColumn("MATERIALINDEX")!)) +  " | Display Mount Rating: " + displayDrill + "  Cost: " + rs.stringForColumn("COST")
                         results.append(label)
                     }
                 } else {
@@ -2541,8 +2578,23 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
 
     }
     
+    @IBAction func textSphere_EditingChange(sender: UITextField) {
+       
+        if (!textSphere.text!.isEmpty){
+            
+            let numbers = NSCharacterSet.decimalDigitCharacterSet();
+            let value = sender.text!.rangeOfCharacterFromSet(numbers);
+            if let result = value {
+                materialResults()
+            }
+            
+        }else{
+            sphereEmptyAlert()
+        }
+
+    }
     @IBAction func textSphere_Change(sender: UITextField) {
-        
+      
         if (!textSphere.text!.isEmpty){
             
             let numbers = NSCharacterSet.decimalDigitCharacterSet();
@@ -2558,6 +2610,18 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
 
         
     }
+
+    @IBAction func btnPlusSphere(sender: UIButton) {
+        
+        let value = Float(textSphere.text!)
+        textSphere.text = String(value! + 1.0)
+        textSphere.sendActionsForControlEvents(.EditingChanged)
+        
+    }
+    @IBAction func btnMinusSphere(sender: UIButton) {
+        let value = Float(textSphere.text!)
+        textSphere.text = String(value! - 1.0)
+    }
     
     func btnMaterial(){
        
@@ -2570,7 +2634,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         materialView.hidden = false
         globalImageView.hidden = false
         globalImageView.image = UIImage(named: "snapshot-default")
-        materialView.layer.zPosition = 10
+        materialView.layer.zPosition = 3
         
         //Turn off Defaults
         mainImageView.hidden = true
@@ -2625,7 +2689,7 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
         let helper = FunctionsHelper()
         let buttonProgressive = helper.createImageButton("btn-progressive", buttonTitle: "Progressive",selector: "btnProgressive")
         let buttonCoatings = helper.createImageButton("btn-coatings", buttonTitle: "Coatings", selector: "btnCoatings")
-        let buttonTransitions = helper.createImageButton("btn-transitions",buttonTitle: "Photochromatic", selector: "btnTransitions")
+        let buttonTransitions = helper.createImageButton("btn-transitions",buttonTitle: "Color-Changing", selector: "btnTransitions")
         let buttonDrivewear = helper.createImageButton("btn-driverwear",buttonTitle: "Drivewear", selector: "btnDriverwear")
         let buttonThickness = helper.createImageButton("btn-thickness", buttonTitle: "Thickness", selector: "btnThickness")
         let buttonMaterial = helper.createImageButton("btn-thickness",buttonTitle: "Material", selector: "btnMaterial")
@@ -2667,6 +2731,8 @@ class ViewController: UIViewController,  iCarouselDataSource, iCarouselDelegate,
 
         
         
+        globalImageView.hidden = true
+        materialView.hidden = true
         //Turn off other layers buttons, et el.
         prescriptionView.hidden = true
         lensLeftImage.hidden = true

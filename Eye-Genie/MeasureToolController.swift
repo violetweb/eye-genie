@@ -169,7 +169,7 @@ class MeasureToolController: UIViewController, UIImagePickerControllerDelegate, 
     
     @IBAction func pinchGesture(sender: UIPinchGestureRecognizer) {
        
-        print("Pinched happened")
+       
         if sender.state == .Changed || sender.state == .Began {
             
             let translate = CATransform3DMakeTranslation(0, 0, 0);
@@ -543,12 +543,11 @@ class MeasureToolController: UIViewController, UIImagePickerControllerDelegate, 
 
         }
         
-     
+       
             
    }
 
-    
-
+   
    
     
     func hasEyes() {
@@ -628,7 +627,18 @@ class MeasureToolController: UIViewController, UIImagePickerControllerDelegate, 
    }
 
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        
         return selectedImage
+        //eturn toolView
+    
     }
 
+    
+    func scrollViewDidZoom(scrollView: UIScrollView) {
+        
+        var oldFrame = toolView.frame;
+        oldFrame.origin = scrollView.contentOffset;
+        toolView.frame = oldFrame;
+    }
+    
 }

@@ -16,8 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-      //  dropData() //- dumps the genie.db and resets up everything... used while testing.
-        dropFilesFromApplicationPath()
         setUpDatabase()
         setUpFiles()
         return true
@@ -217,32 +215,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if genieDB.open() {
             
-            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Standard',1.5,0.0,-3.0,0.0,3.0,0,1,2,3)"
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT,COST) VALUES ('Standard',1.5,0.0,-3.0,0.0,3.0,0,1,2,3,'$')"
             if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
                 print("Standard 1.5 added")
             }
             
-            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Slightly Thinner',1.56,0.0,-3.5,0.0,3.5,0,0,0,0)"
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT,COST) VALUES ('Slightly Thinner',1.56,0.0,-3.5,0.0,3.5,0,0,0,0,'$')"
             if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
                 print("Slightly Thinner 1.56 added")
             }
-            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Trivex',1.53,0.0,-4.0,0.0,4.0,1,1,5,5)"
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT,COST) VALUES ('Trivex',1.53,0.0,-4.0,0.0,4.0,1,1,5,5,'$$')"
             if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
                 print("Trivex 1.53 added")
             }
-            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Polycarbonate',1.59,0.0,-8.5,0.0,5.5,1,1,5,5)"
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT,COST) VALUES ('Polycarbonate',1.59,0.0,-8.5,0.0,5.5,1,1,5,5,'$$')"
             if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
                 print("Polycarbonate 1.59 added")
             }
-            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Thin',1.61,-2.0,-7.0,2.0,5.0,0,1,4,4)"
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT,COST) VALUES ('Thin',1.61,-2.0,-7.0,2.0,5.0,0,1,4,4,'$$')"
             if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
                 print("Thin 1.61 added")
             }
-            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Very Thin',1.67,-3.0,-8.0,3.0,5.5,0,1,3,3)"
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT,COST) VALUES ('Very Thin',1.67,-3.0,-8.0,3.0,5.5,0,1,3,3,'$$$')"
             if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
                 print("Very Thin 1.67 added")
             }
-            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT) VALUES ('Thinnest',1.74,-4.0,-12.0,4.0,8.0,0,1,0,2)"
+            insertSQL = "INSERT INTO MATERIALS (MATERIALNAME,MATERIALINDEX,MINUSMIN,MINUSMAX,PLUSMIN,PLUSMAX,SAFETY,PHOTOCHROMATIC,DRILLMOUNT,NYLONMOUNT,COST) VALUES ('Thinnest',1.74,-4.0,-12.0,4.0,8.0,0,1,0,2,'$$$$')"
             if genieDB.executeUpdate(insertSQL, withArgumentsInArray: nil){
                 print("Thinnest 1.74 added")
             }
@@ -312,35 +310,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    
     //Add all tables here, as "set-up" with default values.
     func setUpDatabase(){
         
-        
+                
         var appSupportDir = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)
+        
         if !NSFileManager.defaultManager().fileExistsAtPath(appSupportDir[0], isDirectory: nil){
             do {
                 try NSFileManager.defaultManager().createDirectoryAtPath(appSupportDir[0], withIntermediateDirectories: true, attributes:nil)
             } catch {
-                print("Did not create a directory for support")
+                print("Unable to create support directory; an error occured.")
             }
+        }else{
+            print("Application Support Directory already exists; did not create.")
         }
-        
         
         let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)[0]
         databasePath = documentsURL.URLByAppendingPathComponent("genie.db").path!
-        
+      
+        //if the database does NOT exist at all... create it, and set up the tables.
         if !NSFileManager.defaultManager().fileExistsAtPath(databasePath) {
             
-            
+            //if the file does NOT exist, create the DATABASE!
             let genieDB = FMDatabase(path: String(databasePath))
-            
+            genieDB.setUserVersion(1)
+        
             if genieDB == nil {
                 print("Error: \(genieDB.lastErrorMessage())")
             }
             
             if genieDB.open() {
-               
                 let sql_stmt1 = "CREATE TABLE IF NOT EXISTS GENERAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, HOMEIMAGE TEXT, LOGOIMAGE TEXT, ARCOATINGIMAGE TEXT, HYDROIMAGE TEXT, HARDCOATIMAGE TEXT, LOGINIDENTIFIER TEXT, COMPANYNAME TEXT, COMPANYPHONE TEXT, ACTIVE INTEGER)"
                 if !genieDB.executeStatements(sql_stmt1) {
                     print("Error: \(genieDB.lastErrorMessage())")
@@ -350,7 +350,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let sql_stmt2 = "CREATE TABLE IF NOT EXISTS DESIGNS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESIGNTYPENAME TEXT, IMAGENAME TEXT, MAXBLUR INTEGER)"
                 if !genieDB.executeStatements(sql_stmt2) {
                     print("Error: \(genieDB.lastErrorMessage())")
-                }else{
                 }
                 let sql_stmt3 = "CREATE TABLE IF NOT EXISTS DESIGNPOINTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESIGNID INTEGER, P1X REAL, P1Y REAL, P2X REAL, P2Y REAL, P3X REAL, P3Y REAL, P4X REAL, P4Y REAL, C1X REAL, C1Y REAL, C2X REAL, C2Y REAL, C3X REAL, C3Y REAL, C4X REAL, C4Y REAL, C5X REAL, C5Y REAL, C6X REAL, C6Y REAL)"
                 if !genieDB.executeStatements(sql_stmt3) {
@@ -373,7 +372,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     print("table created for order")
                 }
               
-                let sql_stmt6 = "CREATE TABLE IF NOT EXISTS MATERIALS (ID INTEGER PRIMARY KEY AUTOINCREMENT, MATERIALNAME TEXT, MATERIALINDEX REAL, MINUSMIN REAL, MINUSMAX REAL, PLUSMIN REAL, PLUSMAX REAL, SAFETY INTEGER, PHOTOCHROMATIC INTEGER, DRILLMOUNT INTEGER, NYLONMOUNT INTEGER)"
+                let sql_stmt6 = "CREATE TABLE IF NOT EXISTS MATERIALS (ID INTEGER PRIMARY KEY AUTOINCREMENT, MATERIALNAME TEXT, MATERIALINDEX REAL, MINUSMIN REAL, MINUSMAX REAL, PLUSMIN REAL, PLUSMAX REAL, SAFETY INTEGER, PHOTOCHROMATIC INTEGER, DRILLMOUNT INTEGER, NYLONMOUNT INTEGER,COST TEXT)"
                 if !genieDB.executeStatements(sql_stmt6){
                     print("Error: \(genieDB.lastErrorMessage())")
                 }else{
@@ -389,8 +388,113 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }else{
-            print("Database already initialized")
-        }
+            
+            // we know it exists, grab the Version and close it again.
+            let genieDB = FMDatabase(path: String(databasePath))
+            var userVer = UInt32(0)
+            if genieDB.open() {
+                userVer = genieDB.userVersion()
+                genieDB.close()
+            }
+            //Last version was 0... it is currently set to 1. now...
+            //compare last version to this version, and make any changes as necessary.
+            switch userVer {
+                 
+               case 0 :
+                   dropFilesFromApplicationPath()
+                   dropData()
+                   let genieDB = FMDatabase(path: String(databasePath))
+                   if genieDB.open() {
+                        
+                            let sql_stmt1 = "CREATE TABLE IF NOT EXISTS GENERAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, HOMEIMAGE TEXT, LOGOIMAGE TEXT, ARCOATINGIMAGE TEXT, HYDROIMAGE TEXT, HARDCOATIMAGE TEXT, LOGINIDENTIFIER TEXT, COMPANYNAME TEXT, COMPANYPHONE TEXT, ACTIVE INTEGER)"
+                            if !genieDB.executeStatements(sql_stmt1) {
+                                print("Error: \(genieDB.lastErrorMessage())")
+                            }else{
+                                insertDefaultGeneral()
+                            }
+                            let sql_stmt2 = "CREATE TABLE IF NOT EXISTS DESIGNS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESIGNTYPENAME TEXT, IMAGENAME TEXT, MAXBLUR INTEGER)"
+                            if !genieDB.executeStatements(sql_stmt2) {
+                                print("Error: \(genieDB.lastErrorMessage())")
+                            }
+                            let sql_stmt3 = "CREATE TABLE IF NOT EXISTS DESIGNPOINTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESIGNID INTEGER, P1X REAL, P1Y REAL, P2X REAL, P2Y REAL, P3X REAL, P3Y REAL, P4X REAL, P4Y REAL, C1X REAL, C1Y REAL, C2X REAL, C2Y REAL, C3X REAL, C3Y REAL, C4X REAL, C4Y REAL, C5X REAL, C5Y REAL, C6X REAL, C6Y REAL)"
+                            if !genieDB.executeStatements(sql_stmt3) {
+                                print("Error: \(genieDB.lastErrorMessage())")
+                            }else{
+                                insertDesigns()
+                            }
+                            let sql_stmt4 = "CREATE TABLE IF NOT EXISTS MATERIAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, MATERIALNAME TEXT, MATERIALINDEX REAL, ABBEVALUE REAL, SPECIFICGRAVITY REAL)"
+                            if !genieDB.executeStatements(sql_stmt4) {
+                                print("Error: \(genieDB.lastErrorMessage())")
+                            }else{
+                                print("table created for material")
+                            }
+                            let sql_stmt5 = "CREATE TABLE IF NOT EXISTS ORDERS (ID INTEGER PRIMARY KEY AUTOINCREMENT, CLIENTID TEXT, SELECTEDGLASSES TEXT)"
+                            if !genieDB.executeStatements(sql_stmt5) {
+                                print("Error: \(genieDB.lastErrorMessage())")
+                            }else{
+                                print("table created for order")
+                            }
+                            let sql_stmt6 = "CREATE TABLE IF NOT EXISTS MATERIALS (ID INTEGER PRIMARY KEY AUTOINCREMENT, MATERIALNAME TEXT, MATERIALINDEX REAL, MINUSMIN REAL, MINUSMAX REAL, PLUSMIN REAL, PLUSMAX REAL, SAFETY INTEGER, PHOTOCHROMATIC INTEGER, DRILLMOUNT INTEGER, NYLONMOUNT INTEGER,COST TEXT)"
+                            if !genieDB.executeStatements(sql_stmt6){
+                                print("Error: \(genieDB.lastErrorMessage())")
+                            }else{
+                                insertMaterialListing()
+                                print("table created for material lookup")
+                            }
+                            genieDB.setUserVersion(1)
+                            genieDB.close()
+                    }
+                    //next version do this instead.
+                 case 1:
+                    print("Okay so now you are using the lastest version. next time you come round... you got to ALTER THE DB!!!!")
+                 default:
+                    dropFilesFromApplicationPath()
+                    dropData()
+                    let genieDB = FMDatabase(path: String(databasePath))
+                    if genieDB.open() {
+                        
+                        let sql_stmt1 = "CREATE TABLE IF NOT EXISTS GENERAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, HOMEIMAGE TEXT, LOGOIMAGE TEXT, ARCOATINGIMAGE TEXT, HYDROIMAGE TEXT, HARDCOATIMAGE TEXT, LOGINIDENTIFIER TEXT, COMPANYNAME TEXT, COMPANYPHONE TEXT, ACTIVE INTEGER)"
+                        if !genieDB.executeStatements(sql_stmt1) {
+                            print("Error: \(genieDB.lastErrorMessage())")
+                        }else{
+                            insertDefaultGeneral()
+                        }
+                        let sql_stmt2 = "CREATE TABLE IF NOT EXISTS DESIGNS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESIGNTYPENAME TEXT, IMAGENAME TEXT, MAXBLUR INTEGER)"
+                        if !genieDB.executeStatements(sql_stmt2) {
+                            print("Error: \(genieDB.lastErrorMessage())")
+                        }
+                        let sql_stmt3 = "CREATE TABLE IF NOT EXISTS DESIGNPOINTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DESIGNID INTEGER, P1X REAL, P1Y REAL, P2X REAL, P2Y REAL, P3X REAL, P3Y REAL, P4X REAL, P4Y REAL, C1X REAL, C1Y REAL, C2X REAL, C2Y REAL, C3X REAL, C3Y REAL, C4X REAL, C4Y REAL, C5X REAL, C5Y REAL, C6X REAL, C6Y REAL)"
+                        if !genieDB.executeStatements(sql_stmt3) {
+                            print("Error: \(genieDB.lastErrorMessage())")
+                        }else{
+                            insertDesigns()
+                        }
+                        let sql_stmt4 = "CREATE TABLE IF NOT EXISTS MATERIAL (ID INTEGER PRIMARY KEY AUTOINCREMENT, MATERIALNAME TEXT, MATERIALINDEX REAL, ABBEVALUE REAL, SPECIFICGRAVITY REAL)"
+                        if !genieDB.executeStatements(sql_stmt4) {
+                            print("Error: \(genieDB.lastErrorMessage())")
+                        }else{
+                            print("table created for material")
+                        }
+                        let sql_stmt5 = "CREATE TABLE IF NOT EXISTS ORDERS (ID INTEGER PRIMARY KEY AUTOINCREMENT, CLIENTID TEXT, SELECTEDGLASSES TEXT)"
+                        if !genieDB.executeStatements(sql_stmt5) {
+                            print("Error: \(genieDB.lastErrorMessage())")
+                        }else{
+                            print("table created for order")
+                        }
+                        let sql_stmt6 = "CREATE TABLE IF NOT EXISTS MATERIALS (ID INTEGER PRIMARY KEY AUTOINCREMENT, MATERIALNAME TEXT, MATERIALINDEX REAL, MINUSMIN REAL, MINUSMAX REAL, PLUSMIN REAL, PLUSMAX REAL, SAFETY INTEGER, PHOTOCHROMATIC INTEGER, DRILLMOUNT INTEGER, NYLONMOUNT INTEGER,COST TEXT)"
+                        if !genieDB.executeStatements(sql_stmt6){
+                            print("Error: \(genieDB.lastErrorMessage())")
+                        }else{
+                            insertMaterialListing()
+                            print("table created for material lookup")
+                        }
+                        genieDB.setUserVersion(1)
+                        genieDB.close()
+                    }
+                }
+                
+           }
+            
         
     }
 
