@@ -45,6 +45,16 @@ class FunctionsHelper: UIView {
     }
 
     
+    func generateRandomColor() -> UIColor {
+        
+        let hue = CGFloat(arc4random() % 256) / 256
+        let saturation = CGFloat(arc4random() % 128) / 256 + 0.5
+        let brightness = CGFloat(arc4random() % 128) / 256 + 0.5
+        
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
+    }
+
+    
     func savePNG (image: UIImage, path: String, filename: String) -> Bool{
         let pngImageData = UIImagePNGRepresentation(image)
         //let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG

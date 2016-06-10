@@ -178,6 +178,14 @@
     [self setNeedsLayout];
 }
 
+/*- (return_type) method_name:( argumentType1 )argumentName1
+ joiningArgument2:( argumentType2 )argumentName2 ...
+ joiningArgumentn:( argumentTypen )argumentNamen
+ {
+ body of the function
+ }
+ */
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if ((self = [super initWithCoder:aDecoder]))

@@ -161,6 +161,12 @@ class LoginViewController: UIViewController {
     }
     
     
+    let titleKey = "title"
+    let paraKey = "para"
+    let buttonKey = "button"
+    
+    
+    
     func processLogin(completion: (NSDictionary) -> ()){
        
         
@@ -172,7 +178,7 @@ class LoginViewController: UIViewController {
         let escapedPassword = Password.text!.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet)
         
         
-        //Check User Authorization Status
+        //** TO HOOK INTO LIVE DATA API
         let url = NSURL(string: "https://lens.care/EyeWizardService.svc/EyeWizard")
         let params: [String: String] = ["Username": "\(escapedUsername!)", "Password": "\(escapedPassword!)"]
         let request = NSMutableURLRequest(URL:url!)
